@@ -4,6 +4,8 @@ import styles from './page.module.css'
 export default function Home() {
   return (
     <main className={styles.main}>
+      <Link href="/login">Login</Link>
+      <a href="/api/auth/logout">Logout</a>
       <div className={styles.description}>
         <p>
           Get started below
