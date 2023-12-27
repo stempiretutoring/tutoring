@@ -30,8 +30,7 @@ export default function App() {
       </CardHeader>
       <Divider />
       <CardBody>
-        <Link href="/login/tutor" showAnchorIcon>Tutor Sign Up/Login</Link>
-        <Link href="/api/auth/login" showAnchorIcon>Client Sign Up/Login</Link>
+        <Link href="/api/auth/login" showAnchorIcon>Sign Up/Login</Link>
       </CardBody>
     </Card>
     </div>
