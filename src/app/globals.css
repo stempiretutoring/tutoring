@@ -109,3 +109,9 @@ a {
     color-scheme: dark;
   }
 }
+
+@layer utilities {
+  .center-all {
+    @apply flex justify-center items-center h-screen;
+  }
+}

@@ -27,5 +27,5 @@ export default withMiddlewareAuthRequired(async function middleware(req: NextReq
 });
 
 export const config = {
-  matcher: '/user/tutor' 
+  matcher: '/user/set-time' 
 }
