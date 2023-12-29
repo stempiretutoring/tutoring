@@ -16,12 +16,16 @@ export async function GET(request: NextRequest) {
       const all = await tutor.toArray();
 
       return NextResponse.json(all[0], { status: 200 });
-    } else {
-      const tutor = tutors.find({});
+    } else if (searchParams.has("email")) {
+      const email = searchParams.get("email");
+      const tutor = tutors.find({email: email});
 
       const all = await tutor.toArray();
 
-      return NextResponse.json(all, { status: 200 });
+      return NextResponse.json(all[0], {status: 200})
+    } 
+    else {
+      return NextResponse.json({}, { status: 204 });
     }
   } catch (e) {
     console.error(e);
