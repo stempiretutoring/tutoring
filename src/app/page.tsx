@@ -1,13 +1,16 @@
-import Link from 'next/link';
-import styles from './page.module.css'
+"use client"
+import Link from "next/link";
+import styles from "./page.module.css";
+import { useUser } from "@auth0/nextjs-auth0/client";
 
 export default function Home() {
+  const { user, isLoading } = useUser();
   return (
     <main className={styles.main}>
+      {!user && !isLoading && <Link href="/login">Login</Link>}
+      {user && !isLoading && <a href="/api/auth/logout">Logout</a>}
       <div className={styles.description}>
-        <p>
-          Get started below
-        </p>
+        <p>Get started below</p>
       </div>
 
       <div className={styles.grid}>
@@ -35,6 +38,5 @@ export default function Home() {
         </Link>
       </div>
     </main>
-  )
+  );
 }
-

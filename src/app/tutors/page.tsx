@@ -19,7 +19,7 @@ export default function App() {
       <div className="flex justify-center items-center">
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-2 gap-y-1">
         <TutorCard name="Joe Kash" />
-        <TutorCard name="Joe Kash" />
+        <TutorCard name="Jeevan Shah" />
         <TutorCard name="Joe Kash" />
         <TutorCard name="Joe Kash" />
         <TutorCard name="Joe Kash" />
