@@ -5,6 +5,8 @@ import TutorCard from "./components/card";
 import styles from "./page.module.css";
 
 export default function App() {
+
+
   return (
     <>
       <div className="flex flex-col items-center justify-center">
@@ -17,7 +19,7 @@ export default function App() {
       </div>
       <Divider />
       <div className="flex justify-center items-center">
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-2 gap-y-1">
+      <div className="mt-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-5 gap-y-1">
         <TutorCard name="Joe Kash" />
         <TutorCard name="Jeevan Shah" />
         <TutorCard name="Joe Kash" />

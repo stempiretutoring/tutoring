@@ -14,6 +14,7 @@ interface cardProps {
 
 export default function TutorCard({ name }: cardProps) {
   const [info, setInfo] = useState<tutorGET>();
+  const url = process.env.NEXT_PUBLIC_IMAGE_URL
 
   useEffect(() => {
     axios
@@ -41,7 +42,7 @@ export default function TutorCard({ name }: cardProps) {
                 <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
                   <div className="container mx-full">
                     {info?.subjects.map((subject, idx) => (
-                      <Chip key={idx} className="w-full">
+                      <Chip key={idx} className="w-full m-1">
                         {subject}
                       </Chip>
                     ))}
@@ -52,9 +53,10 @@ export default function TutorCard({ name }: cardProps) {
                 <CardBody className="overflow-visible py-2">
                   <Image
                     alt="Card background"
-                    className="object-cover rounded-xl"
-                    src={`./${info?.picture}`}
+                    className="object-cover rounded-xl size-64"
+                    src={`${url}/${info?.picture}`}
                     width={270}
+                    height={190}
                   />
                 </CardBody>
               </Card>
