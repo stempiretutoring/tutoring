@@ -22,7 +22,7 @@ export default function ProfileClient() {
       )}
       {!user && (
         <div>
-          <h1>You're not logged in!</h1>
+          <h1>You&aposre not logged in!</h1>
           <Link href="/login" showAnchorIcon> Login Here!</Link>
         </div>
       )}

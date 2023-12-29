@@ -25,7 +25,7 @@ export default function TutorCard({ name }: cardProps) {
       .catch((error) => {
         console.error(`Error fetching data: ${error}`);
       });
-  }, []);
+  });
 
   return (
     <>

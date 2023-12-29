@@ -5,7 +5,7 @@ export default function App() {
   return (
     <div className="flex justify-center items-center h-screen">
       <div className="whitespace-pre-line">
-      Sorry you're not allowed here! 
+      Sorry you&aposre not allowed here! 
       Return home <Link showAnchorIcon href="/">here</Link>
       </div>
     </div>
