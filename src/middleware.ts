@@ -5,23 +5,20 @@ import {
 } from "@auth0/nextjs-auth0/edge";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
+import { isTutor } from "./app/api/user";
 
 // DOC: middleware to only allow whitelisted tutors to view the freetime set page
-export default withMiddlewareAuthRequired(async function middleware(req: NextRequest) {
+export default withMiddlewareAuthRequired(async function middleware(
+  req: NextRequest,
+) {
   const res = NextResponse.next();
-  const user = await getSession(req, res);
 
-  const emails: string[] = await (await fetch(process.env.NEXT_PUBLIC_BASE_URL + '/api/auth/tutors')).json();
-
-  if (user) {
-    const userEmail = (JSON.stringify(user['user']['email'])).replace(/"/g, '');
-    if (!emails.includes(userEmail)) {
-       return NextResponse.rewrite(new URL('/not-allowed', req.url)) 
-    }
-    return res;
+  if (!(await isTutor(req, res))) {
+    return NextResponse.rewrite(new URL("/not-allowed", req.url));
   }
+  return res;
 });
 
 export const config = {
-  matcher: '/user/set-time' 
-}
+  matcher: "/user/set-time",
+};
