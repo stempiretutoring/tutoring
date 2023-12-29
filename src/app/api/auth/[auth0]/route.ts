@@ -2,4 +2,4 @@
 import { handleAuth } from '@auth0/nextjs-auth0';
 
 export const GET = handleAuth();
-export const runtime = 'edge'
+export const runtime = 'experimental-edge'
