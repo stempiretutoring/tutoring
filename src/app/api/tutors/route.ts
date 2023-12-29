@@ -72,3 +72,5 @@ export async function POST(request: NextRequest) {
     console.error(e);
   }
 }
+
+export const runtime = 'edge'
