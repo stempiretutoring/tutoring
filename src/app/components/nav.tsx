@@ -7,13 +7,20 @@ import {
   NavbarItem,
   Link,
   Button,
+  Dropdown,
+  DropdownMenu,
+  DropdownItem,
+  DropdownTrigger,
+  Avatar,
 } from "@nextui-org/react";
 import { FaHome } from "react-icons/fa";
 import { usePathname } from "next/navigation";
+import { useUser } from "@auth0/nextjs-auth0/client";
 
 export function Nav() {
   const path = usePathname().split("/").slice(1);
-
+  const { user } = useUser();
+  
   return (
     <div className="mb-4">
       <Navbar
@@ -38,36 +45,92 @@ export function Nav() {
       >
         <NavbarBrand>
           <Link color="foreground" href="/">
-            <Button isIconOnly color="default" aria-label="home">
+            <Button
+              variant={path[0] === "" ? "ghost" : "faded"}
+              isIconOnly
+              color="default"
+              aria-label="home"
+            >
               <FaHome />
             </Button>
           </Link>
         </NavbarBrand>
 
+        <NavbarItem isActive={path.includes("book") || path.includes("deck")}>
+          <Link href="/mission" color="foreground" aria-current="page">
+            Mission
+          </Link>
+        </NavbarItem>
+
         <NavbarContent className="hidden sm:flex gap-4" justify="center">
-          <NavbarItem isActive={path.includes("create-deck")}>
+          <NavbarItem isActive={path.includes("tutors")}>
             <Link aria-current="page" color="foreground" href="/tutors">
-              Our Tutors
+              Tutors
             </Link>
           </NavbarItem>
 
-          <NavbarItem isActive={path.includes("view") || path.includes("deck")}>
+          <NavbarItem isActive={path.includes("book") || path.includes("deck")}>
             <Link href="/book" color="foreground" aria-current="page">
               Appointments
             </Link>
           </NavbarItem>
         </NavbarContent>
-        <NavbarContent justify="end">
-          <NavbarItem className="hidden lg:flex">
-            {/* TODO: eventually need to check if user is logged in or not and change classname based on that fact */}
-            <Link href="#">Login</Link>
-          </NavbarItem>
-          <NavbarItem>
-            <Button as={Link} color="primary" href="#" variant="flat">
-              Sign Up
-            </Button>
-          </NavbarItem>
-        </NavbarContent>
+
+        {!user && (
+          <NavbarContent justify="end">
+            <NavbarItem className="hidden lg:flex">
+              <Link href="#">Login</Link>
+            </NavbarItem>
+            <NavbarItem>
+              <Button as={Link} color="primary" href="#" variant="flat">
+                Sign Up
+              </Button>
+            </NavbarItem>
+          </NavbarContent>
+        )}
+        {user && (
+          <NavbarContent as="div" justify="end">
+            <Dropdown placement="bottom-end">
+              <DropdownTrigger>
+                <Avatar
+                  isBordered
+                  as="button"
+                  aria-label="Avatar"
+                  className="transition-transform"
+                  color="primary"
+                  size="sm"
+                  src={
+                    user.picture ||
+                    "https://wvnpa.org/content/uploads/blank-profile-picture-973460_1280-768x768.png"
+                  }
+                />
+              </DropdownTrigger>
+              <DropdownMenu aria-label="Profile Actions" variant="flat">
+                <DropdownItem key="profile" className="h-14 gap-2">
+                  <p className="font-semibold">Signed in as</p>
+                  <p className="font-semibold">{user.name}</p>
+                </DropdownItem>
+                <DropdownItem key="settings" href="/user">
+                  My Profile
+                </DropdownItem>
+                <DropdownItem key="cart" href="/cart">
+                  Cart
+                </DropdownItem>
+
+                <DropdownItem key="help_and_feedback" href="/help">
+                  Help & Feedback
+                </DropdownItem>
+                <DropdownItem
+                  key="logout"
+                  color="danger"
+                  href="/api/auth/logout"
+                >
+                  Log Out
+                </DropdownItem>
+              </DropdownMenu>
+            </Dropdown>
+          </NavbarContent>
+        )}
       </Navbar>
     </div>
   );

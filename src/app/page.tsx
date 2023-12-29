@@ -7,8 +7,6 @@ export default function Home() {
   const { user, isLoading } = useUser();
   return (
     <main className={styles.main}>
-      {!user && !isLoading && <Link href="/login">Login</Link>}
-      {user && !isLoading && <a href="/api/auth/logout">Logout</a>}
       <div className={styles.description}>
         <p>Get started below</p>
       </div>
