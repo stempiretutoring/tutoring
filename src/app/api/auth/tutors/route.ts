@@ -17,4 +17,4 @@ export async function GET(request: NextRequest) {
   }
 }
 
-export const runtime = 'experimental-edge'
+export const runtime = 'edge'
