@@ -13,12 +13,8 @@ export default withMiddlewareAuthRequired(async function middleware(req: NextReq
 
   const emails: string[] = await (await fetch(process.env.NEXT_PUBLIC_BASE_URL + '/api/auth/tutors')).json();
 
-  console.log(emails);
-  
   if (user) {
     const userEmail = (JSON.stringify(user['user']['email'])).replace(/"/g, '');
-    console.log(userEmail);
-    console.log(userEmail === emails[0]);
     if (!emails.includes(userEmail)) {
        return NextResponse.rewrite(new URL('/not-allowed', req.url)) 
     }

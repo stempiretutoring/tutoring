@@ -36,8 +36,6 @@ export async function POST(request: NextRequest) {
     const { searchParams } = new URL(request.url);
     const name = searchParams.get("name");
 
-    console.log(name)
-    
     const database = client.db("Tutoring");
     const tutors = database.collection("Tutors");
 
@@ -68,7 +66,6 @@ export async function POST(request: NextRequest) {
         }
       }
     )
-    console.log(data.get("monday-start-time"))
     return NextResponse.json( {message: "submitted"}, { status: 200 })
     
   } catch (e) {

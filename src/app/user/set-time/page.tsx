@@ -9,8 +9,6 @@ export default function ProfileClient() {
 
   const setTime = (formData: FormData) => {
     const monday = formData.get("monday-start-time");
-    console.log(monday);
-    console.log(formData);
 
     axios.post(`/api/tutors?name=${user?.name}`, formData, {
       headers: {
