@@ -16,5 +16,3 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ err: "Error fetching data" }, { status: 500 });
   }
 }
-
-export const runtime = 'edge'
