@@ -50,12 +50,12 @@ export async function GET(request: NextRequest) {
         .then((res) =>
           NextResponse.json(res.data, { status: 200 }),
         )
-        .catch((err) => NextResponse.json(err, { status: 500 }));
+        .catch((err) => NextResponse.json(err.data, { status: 500 }));
     }
   } catch (e) {
     console.error(e);
 
-    return NextResponse.json({ err: "Error fetching data" }, { status: 500 });
+    return NextResponse.json({ message: "Error fetching data", error: e }, { status: 500 });
   }
 }
 
@@ -108,7 +108,7 @@ export async function POST(request: NextRequest) {
       .then((res) =>
         NextResponse.json(res.data, { status: 200 }),
       )
-      .catch((err) => NextResponse.json(err, { status: 500 }));
+      .catch((err) => NextResponse.json(err.data, { status: 500 }));
   } catch (e) {
     console.error(e);
     return NextResponse.json({ error: e }, { status: 500 });
