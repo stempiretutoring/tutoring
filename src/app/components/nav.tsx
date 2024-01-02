@@ -78,12 +78,9 @@ export function Nav() {
 
         {!user && (
           <NavbarContent justify="end">
-            <NavbarItem className="hidden lg:flex">
-              <Link href="#">Login</Link>
-            </NavbarItem>
             <NavbarItem>
-              <Button as={Link} color="primary" href="#" variant="flat">
-                Sign Up
+              <Button as={Link} color="primary" href="/api/auth/login" variant="flat">
+                Sign Up/Login
               </Button>
             </NavbarItem>
           </NavbarContent>

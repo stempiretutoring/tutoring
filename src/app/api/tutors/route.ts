@@ -9,7 +9,7 @@ export async function GET(request: NextRequest) {
       const name = searchParams.get("name");
       let config = {
         method: "post",
-        url: process.env.MONGO_URI + "/action/findOne",
+        url: "https://us-east-1.aws.data.mongodb-api.com/app/data-zlddq/endpoint/data/v1/action/findOne",
         headers: {
           "Content-Type": "application/json",
           "Access-Control-Request-Headers": "*",
@@ -27,7 +27,7 @@ export async function GET(request: NextRequest) {
 
       return axios(config)
         .then((res) =>
-          NextResponse.json(JSON.stringify(res.data), { status: 200 }),
+          NextResponse.json(res.data, { status: 200 }),
         )
         .catch((err) => NextResponse.json(err, { status: 500 }));
     } else {
@@ -41,14 +41,14 @@ export async function GET(request: NextRequest) {
         },
         data: {
           collection: "Tutors",
-          databse: "Tutoring",
+          database: "Tutoring",
           dataSource: "studyDB",
           filter: {},
         },
       };
       return axios(config)
         .then((res) =>
-          NextResponse.json(JSON.stringify(res.data), { status: 200 }),
+          NextResponse.json(res.data, { status: 200 }),
         )
         .catch((err) => NextResponse.json(err, { status: 500 }));
     }
@@ -106,7 +106,7 @@ export async function POST(request: NextRequest) {
 
     return axios(config)
       .then((res) =>
-        NextResponse.json(JSON.stringify(res.data), { status: 200 }),
+        NextResponse.json(res.data, { status: 200 }),
       )
       .catch((err) => NextResponse.json(err, { status: 500 }));
   } catch (e) {
