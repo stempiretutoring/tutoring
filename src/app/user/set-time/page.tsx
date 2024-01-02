@@ -8,8 +8,6 @@ export default function ProfileClient() {
   const { user, error, isLoading } = useUser();
 
   const setTime = (formData: FormData) => {
-    const monday = formData.get("monday-start-time");
-
     axios.post(`/api/tutors?name=${user?.name}`, formData, {
       headers: {
         "Content-Type": "multipart/from-data",

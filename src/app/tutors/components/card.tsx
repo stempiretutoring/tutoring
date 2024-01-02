@@ -20,12 +20,12 @@ export default function TutorCard({ name }: cardProps) {
     axios
       .get(`/api/tutors?name=${name}`)
       .then((response) => {
-        setInfo(response.data);
+        setInfo(response.data['document']);
       })
       .catch((error) => {
         console.error(`Error fetching data: ${error}`);
       });
-  });
+  }, []);
 
   return (
     <>
