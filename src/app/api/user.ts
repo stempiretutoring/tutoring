@@ -10,7 +10,7 @@ export async function isTutor(req: NextRequest, res: NextResponse) {
   ).json();
 
   if (user) {
-    const userEmail = JSON.stringify(user["user"]["email"]).replace(/"/g, "");
+    const userEmail = JSON.stringify(user["res"]).replace(/"/g, "");
 
     return emails.includes(userEmail);
   } else {
