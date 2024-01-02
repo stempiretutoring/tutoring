@@ -1,7 +1,5 @@
-import { ObjectId } from "mongodb";
-
 export type tutorGET = {
-  _id: ObjectId,
+  _id: string,
   name: string,
   occupation: string,
   subjects: string[],

@@ -114,3 +114,5 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: e }, { status: 500 });
   }
 }
+
+export const runtime = 'edge'
