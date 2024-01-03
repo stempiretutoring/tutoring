@@ -13,14 +13,14 @@ import {
   DropdownTrigger,
   Avatar,
 } from "@nextui-org/react";
-import { FaHome } from "react-icons/fa";
+import { FaChevronDown, FaHome } from "react-icons/fa";
 import { usePathname } from "next/navigation";
 import { useUser } from "@auth0/nextjs-auth0/client";
 
 export function Nav() {
   const path = usePathname().split("/").slice(1);
   const { user } = useUser();
-  
+
   return (
     <div className="mb-4">
       <Navbar
@@ -56,11 +56,29 @@ export function Nav() {
           </Link>
         </NavbarBrand>
 
-        <NavbarItem isActive={path.includes("book") || path.includes("deck")}>
-          <Link href="/mission" color="foreground" aria-current="page">
-            Mission
-          </Link>
-        </NavbarItem>
+        <Dropdown>
+          <NavbarItem isActive={path.includes("about")}>
+            <DropdownTrigger>
+              <Button
+                className="p-0 bg-transparent data-[hover=true]:bg-transparent"
+                endContent={<FaChevronDown fill="currentColor" size={16} />}
+                radius="sm"
+                variant="light"
+              >
+                About Us
+              </Button>
+            </DropdownTrigger>
+          </NavbarItem>
+          <DropdownMenu
+            aria-label="About us"
+            itemClasses={{
+              base: "gap-4",
+            }}
+          >
+            <DropdownItem href="/about/mission" key="mission">Our Mission</DropdownItem>
+            <DropdownItem href="/about/rates" key="rates">Rates</DropdownItem>
+          </DropdownMenu>
+        </Dropdown>
 
         <NavbarContent className="hidden sm:flex gap-4" justify="center">
           <NavbarItem isActive={path.includes("tutors")}>
@@ -79,7 +97,12 @@ export function Nav() {
         {!user && (
           <NavbarContent justify="end">
             <NavbarItem>
-              <Button as={Link} color="primary" href="/api/auth/login" variant="flat">
+              <Button
+                as={Link}
+                color="primary"
+                href="/api/auth/login"
+                variant="flat"
+              >
                 Sign Up/Login
               </Button>
             </NavbarItem>
