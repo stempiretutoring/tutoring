@@ -4,11 +4,11 @@ import styles from "./page.module.css";
 import { useUser } from "@auth0/nextjs-auth0/client";
 
 export default function Home() {
-  const { user, isLoading } = useUser();
   return (
     <main className={styles.main}>
       <div className={styles.description}>
-        <p>Get started below</p>
+        <p className="font-bold italic text-xl">At STEMpire Tutoring, we believe quality academic assistance should be available for a reasonable price.  Our experienced team of college and high school students seeks to help those struggling with schoolwork and instill within them a sense of pride in their work. 
+</p>
       </div>
 
       <div className={styles.grid}>

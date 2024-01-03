@@ -4,7 +4,6 @@ import { Card, CardHeader, CardBody, Image, Divider } from "@nextui-org/react";
 import { Popover, PopoverTrigger, PopoverContent } from "@nextui-org/react";
 import { Spinner, Chip } from "@nextui-org/react";
 import styles from "./page.module.css";
-import axios from "axios";
 import { tutorGET } from "@/app/api/types";
 import Link from "next/link";
 
@@ -14,29 +13,19 @@ interface cardProps {
 
 export default function TutorCard({ name }: cardProps) {
   const [info, setInfo] = useState<tutorGET>();
-  const url = process.env.NEXT_PUBLIC_IMAGE_URL
+  const url = process.env.NEXT_PUBLIC_IMAGE_URL;
 
   useEffect(() => {
-    axios
-      .get(`/api/tutors?name=${name}`)
-      .then((response) => {
-        setInfo(response.data['document']);
-      })
-      .catch((error) => {
-        console.error(`Error fetching data: ${error}`);
-      });
+    fetch(`/api/tutors?name=${name}`)
+      .then((response) => response.json())
+      .then((data) => setInfo(data["document"]));
   }, []);
 
   return (
     <>
       {info ? (
         <div className={styles.main}>
-          <Popover
-            showArrow
-            placement="right"
-            backdrop="blur"
-            color="primary"
-          >
+          <Popover showArrow placement="right" backdrop="blur" color="primary">
             <PopoverTrigger>
               <Card className="py-4">
                 <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
@@ -64,7 +53,10 @@ export default function TutorCard({ name }: cardProps) {
             <PopoverContent>
               <div className="px-1 py-2">
                 <div>
-                  <Link href={`/book/tutor?id=${info?._id}&who=${info?.name}`} target="_self">
+                  <Link
+                    href={`/book/tutor?id=${info?._id}&who=${info?.name}`}
+                    target="_self"
+                  >
                     <h2 className="font-bold text-underline text-red-400 underline">
                       Click here to book an appointment!
                     </h2>
