@@ -2,17 +2,18 @@
 import React from "react";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import { Button, Input, Link } from "@nextui-org/react";
-import axios from "axios";
 
 export default function ProfileClient() {
   const { user, error, isLoading } = useUser();
 
   const setTime = (formData: FormData) => {
-    axios.post(`/api/tutors?name=${user?.name}`, formData, {
-      headers: {
-        "Content-Type": "multipart/from-data",
-      },
-    });
+    const headers = new Headers();
+    headers.append("Content-Type", "application/json")
+    fetch(`/api/tutors?name=${user?.name}`, {
+      method: "POST",
+      headers: headers,
+      body: formData,
+    })
   };
 
   if (isLoading) {
