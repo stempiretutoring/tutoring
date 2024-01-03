@@ -15,7 +15,7 @@ export async function GET(request: NextRequest) {
       const body = {
         collection: "Tutors",
         database: "Tutoring",
-        dataSource: "studyDB",
+        dataSource: "stempireDB",
         filter: {
           name: name,
         },
@@ -34,7 +34,7 @@ export async function GET(request: NextRequest) {
       const body = {
         collection: "Tutors",
         databse: "Tutoring",
-        dataSource: "studyDB",
+        dataSource: "stempireDB",
         filter: {},
       };
 
@@ -69,7 +69,7 @@ export async function POST(request: NextRequest) {
     headers.append("Content-Type", "application/json");
 
     const body = {
-      dataSource: "studyDB",
+      dataSource: "stempireDB",
       database: "Tutoring",
       collection: "Tutors",
       filter: { name: name },
