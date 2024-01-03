@@ -1,7 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import {
-  Button,
   Table,
   TableColumn,
   TableBody,
@@ -19,9 +18,10 @@ export default function Tutor({ email }: tutorProps) {
   const [isTutor, setIsTutor] = useState<boolean>(false);
 
   useEffect(() => {
-    fetch(`/api/tutors?email=${email}`)
+    fetch(`/api/auth/tutors?email=${email}`)
+      .then((response) => response.json())
       .then((data) => {
-        setIsTutor(data.status === 200 ? true : false);
+        setIsTutor(data['res'].includes(email) ? true : false);
       })
       .catch((error) => {
         console.error(`Error fetching data: ${error}`);

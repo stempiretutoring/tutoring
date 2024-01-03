@@ -5,11 +5,7 @@ import {
   Link,
   User,
   Button,
-  Table,
-  TableColumn,
-  TableBody,
-  TableRow,
-  TableHeader,
+  Spinner,
 } from "@nextui-org/react";
 import Tutor from "./components/tutor";
 
@@ -17,7 +13,9 @@ export default function App() {
   const { user, error, isLoading } = useUser();
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <div className="center-all">
+      <Spinner label="Loading..." />
+    </div>;
   }
   if (error) return <div>{error.message}</div>;
 
@@ -32,8 +30,10 @@ export default function App() {
               avatarProps={{ src: user.picture || "user" }}
               description={user.email}
             />
-            <Button className="ml-4" href="/api/auth/logout" color="danger">
+            <Button className="ml-4" color="danger">
+              <Link color="foreground" href="/api/auth/logout">
               Log Out
+              </Link>
             </Button>
           </div>
           <Tutor email={user.email || ""} />
