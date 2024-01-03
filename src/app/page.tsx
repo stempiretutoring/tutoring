@@ -4,7 +4,6 @@ import styles from "./page.module.css";
 import { useUser } from "@auth0/nextjs-auth0/client";
 
 export default function Home() {
-  const { user, isLoading } = useUser();
   return (
     <main className={styles.main}>
       <div className={styles.description}>
