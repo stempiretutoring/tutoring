@@ -13,9 +13,9 @@ export async function GET(request: NextRequest) {
       const name = searchParams.get("name");
 
       const body = {
-        collection: "Tutors",
-        database: "Tutoring",
-        dataSource: "stempireDB",
+        collection: process.env.MONGO_COLLECTION,
+        database: process.env.MONGO_DATABASE,
+        dataSource: process.env.MONGO_DATA_SOURCE,
         filter: {
           name: name,
         },
@@ -32,9 +32,9 @@ export async function GET(request: NextRequest) {
       return NextResponse.json(data, { status: res.status });
     } else {
       const body = {
-        collection: "Tutors",
-        databse: "Tutoring",
-        dataSource: "stempireDB",
+        collection: process.env.MONGO_COLLECTION,
+        database: process.env.MONGO_DATABASE,
+        dataSource: process.env.MONGO_DATA_SOURCE,
         filter: {},
       };
 
@@ -69,9 +69,9 @@ export async function POST(request: NextRequest) {
     headers.append("Content-Type", "application/json");
 
     const body = {
-      dataSource: "stempireDB",
-      database: "Tutoring",
-      collection: "Tutors",
+      collection: process.env.MONGO_COLLECTION,
+      database: process.env.MONGO_DATABASE,
+      dataSource: process.env.MONGO_DATA_SOURCE,
       filter: { name: name },
       update: {
         $set: {
