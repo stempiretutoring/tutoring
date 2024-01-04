@@ -112,4 +112,68 @@ export async function POST(request: NextRequest) {
   }
 }
 
+export async function DELETE(request: NextRequest) {
+  const headers = new Headers();
+  headers.append("Access-Control-Request-Headers", "*");
+  headers.append("api-key", process.env.MONGO_API_KEY || "");
+  headers.append("Content-Type", "application/json");
+
+  const email = (await request.json())["email"];
+
+  const body = {
+    collection: process.env.MONGO_COLLECTION,
+    database: process.env.MONGO_DATABASE,
+    dataSource: process.env.MONGO_DATA_SOURCE,
+    filter: {
+      email: email,
+    },
+  };
+
+  const res = await fetch(process.env.MONGO_URI + "/action/deleteOne", {
+    method: "POST",
+    headers: headers,
+    body: JSON.stringify(body),
+  });
+
+  const data = await res.json();
+
+  return NextResponse.json(data, { status: res.status });
+}
+
+export async function PATCH(request: NextRequest) {
+  // TODO : get the current active status and negate it
+  // will need to change the request body so that instead of containing the 
+  // actual update syntax it tells what value to update
+  // maybe it's easier to just have an update button in which you can change any value?
+  const headers = new Headers();
+  headers.append("Access-Control-Request-Headers", "*");
+  headers.append("api-key", process.env.MONGO_API_KEY || "");
+  headers.append("Content-Type", "application/json");
+
+  const email = (await request.json())["email"];
+  const update = (await request.json())['update']
+
+  const body = {
+    collection: process.env.MONGO_COLLECTION,
+    database: process.env.MONGO_DATABASE,
+    dataSource: process.env.MONGO_DATA_SOURCE,
+    filter: {
+      email: email,
+    },
+    update: {
+      update
+    }
+  };
+
+  const res = await fetch(process.env.MONGO_URI + "/action/updateOne", {
+    method: "POST",
+    headers: headers,
+    body: JSON.stringify(body),
+  });
+
+  const data = await res.json();
+
+  return NextResponse.json(data, { status: res.status });
+
+}
 export const runtime = "edge";
