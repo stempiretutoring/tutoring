@@ -14,6 +14,7 @@
     "@types/dotenv": "^8.2.0",
     "crypto-browserify": "^3.12.0",
     "framer-motion": "^10.16.16",
+    "lint-staged": "^15.2.0",
     "next": "14.0.4",
     "os": "^0.1.2",
     "react": "^18",
