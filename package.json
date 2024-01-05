@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "lint-staged": "lint-staged"
   },
   "dependencies": {
     "@auth0/nextjs-auth0": "^3.5.0",
@@ -30,8 +31,10 @@
     "autoprefixer": "^10.0.1",
     "eslint": "^8",
     "eslint-config-next": "14.0.4",
+    "husky": "^8.0.3",
     "postcss": "^8",
     "tailwindcss": "^3.3.0",
     "typescript": "^5"
-  }
+  },
+  "pre-commit": "lint-staged"
 }
