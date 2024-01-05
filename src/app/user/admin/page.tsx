@@ -47,7 +47,9 @@ export default function App() {
     async sort({ items, sortDescriptor }) {
       return {
         items: items.sort((a, b) => {
+          // eslint-disable-next-line
           let first = a[sortDescriptor.column];
+          // eslint-disable-next-line
           let second = b[sortDescriptor.column];
           let cmp =
             (parseInt(first) || first) < (parseInt(second) || second) ? -1 : 1;

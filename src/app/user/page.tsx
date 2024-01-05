@@ -12,7 +12,7 @@ export default function App() {
     setIsAdmin(
       user?.email === process.env.NEXT_PUBLIC_ADMIN_EMAIL ? true : false,
     );
-  });
+  }, [user?.email]);
 
   if (isLoading) {
     return (

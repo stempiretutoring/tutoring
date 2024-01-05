@@ -9,7 +9,6 @@ import {
   Divider,
 } from "@nextui-org/react";
 import ProfileClient from "./set-time";
-import { useUser } from "@auth0/nextjs-auth0/client";
 
 interface tutorProps {
   email: string;
@@ -27,7 +26,7 @@ export default function Tutor({ email }: tutorProps) {
       .catch((error) => {
         console.error(`Error fetching data: ${error}`);
       });
-  }, []);
+  }, [email]);
 
   return (
     <div className="h-screen w-screen">
