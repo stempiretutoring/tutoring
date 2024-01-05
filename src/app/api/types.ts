@@ -1,4 +1,4 @@
-export type tutorGET = {
+export interface tutorGET {
   _id: string,
   name: string,
   occupation: string,

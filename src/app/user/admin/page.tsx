@@ -16,6 +16,7 @@ import {
   ModalBody,
   ModalFooter,
   Chip,
+  SortDescriptor,
 } from "@nextui-org/react";
 import { tutorGET } from "@/app/api/types";
 import { EyeFilledIcon } from "@/app/components/icons/EyeFilledIcon";
@@ -44,13 +45,19 @@ export default function App() {
         items: json,
       };
     },
-    async sort({ items, sortDescriptor }) {
+    async sort({
+      items,
+      sortDescriptor,
+    }: {
+      items: tutorGET[];
+      sortDescriptor: SortDescriptor;
+    }) {
       return {
         items: items.sort((a, b) => {
-          // eslint-disable-next-line
-          let first = a[sortDescriptor.column];
-          // eslint-disable-next-line
-          let second = b[sortDescriptor.column];
+          console.log(a);
+          console.log(b);
+          let first = a[sortDescriptor.column!];
+          let second = b[sortDescriptor.column!];
           let cmp =
             (parseInt(first) || first) < (parseInt(second) || second) ? -1 : 1;
 
@@ -64,10 +71,13 @@ export default function App() {
     },
   });
 
-  const handleOpen = ({ action, email, status }: actionType) => {
-    setAction({ action, email, status });
-    onOpen();
-  };
+  const handleOpen = useCallback(
+    ({ action, email, status }: actionType) => {
+      setAction({ action, email, status });
+      onOpen();
+    },
+    [onOpen],
+  );
 
   const handleDelete = () => {
     fetch("/api/tutors", {
@@ -92,71 +102,74 @@ export default function App() {
     onClose();
   };
 
-  const renderCell = useCallback((rowValue: tutorGET, columnKey: Key) => {
-    switch (columnKey) {
-      case "name":
-        return rowValue.name;
-      case "email":
-        return rowValue.email;
-      case "subjects":
-        return (
-          <div>
-            {rowValue.subjects.map((subject) => (
-              <Chip key={subject} className="p-1 m-1 text-md">
-                {subject}
-              </Chip>
-            ))}
-          </div>
-        );
-      case "active":
-        return rowValue.active ? (
-          <Chip color="success">Active</Chip>
-        ) : (
-          <Chip color="danger">Not Active</Chip>
-        );
-      case "actions":
-        return (
-          <div className="relative flex items-center gap-2">
-            <Tooltip color="warning" content="Suspend">
-              <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
-                <Button
-                  color="warning"
-                  variant="light"
-                  isIconOnly
-                  onPress={() =>
-                    handleOpen({
-                      action: "suspend",
-                      email: rowValue.email,
-                      status: rowValue.active,
-                    })
-                  }
-                >
-                  <EyeFilledIcon />
-                </Button>
-              </span>
-            </Tooltip>
-            <Tooltip color="danger" content="Delete user">
-              <span className="text-lg text-danger cursor-pointer active:opacity-50">
-                <Button
-                  variant="light"
-                  color="danger"
-                  isIconOnly
-                  onPress={() =>
-                    handleOpen({
-                      action: "delete",
-                      email: rowValue.email,
-                      status: rowValue.active,
-                    })
-                  }
-                >
-                  <DeleteIcon />
-                </Button>
-              </span>
-            </Tooltip>
-          </div>
-        );
-    }
-  }, []);
+  const renderCell = useCallback(
+    (rowValue: tutorGET, columnKey: Key) => {
+      switch (columnKey) {
+        case "name":
+          return rowValue.name;
+        case "email":
+          return rowValue.email;
+        case "subjects":
+          return (
+            <div>
+              {rowValue.subjects.map((subject) => (
+                <Chip key={subject} className="p-1 m-1 text-md">
+                  {subject}
+                </Chip>
+              ))}
+            </div>
+          );
+        case "active":
+          return rowValue.active ? (
+            <Chip color="success">Active</Chip>
+          ) : (
+            <Chip color="danger">Not Active</Chip>
+          );
+        case "actions":
+          return (
+            <div className="relative flex items-center gap-2">
+              <Tooltip color="warning" content="Suspend">
+                <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
+                  <Button
+                    color="warning"
+                    variant="light"
+                    isIconOnly
+                    onPress={() =>
+                      handleOpen({
+                        action: "suspend",
+                        email: rowValue.email,
+                        status: rowValue.active,
+                      })
+                    }
+                  >
+                    <EyeFilledIcon />
+                  </Button>
+                </span>
+              </Tooltip>
+              <Tooltip color="danger" content="Delete user">
+                <span className="text-lg text-danger cursor-pointer active:opacity-50">
+                  <Button
+                    variant="light"
+                    color="danger"
+                    isIconOnly
+                    onPress={() =>
+                      handleOpen({
+                        action: "delete",
+                        email: rowValue.email,
+                        status: rowValue.active,
+                      })
+                    }
+                  >
+                    <DeleteIcon />
+                  </Button>
+                </span>
+              </Tooltip>
+            </div>
+          );
+      }
+    },
+    [handleOpen],
+  );
 
   return (
     <>
@@ -189,10 +202,11 @@ export default function App() {
           </TableBody>
         </Table>
       </div>
-      {updated && 
-        <div className='ml-6 mt-1'>
+      {updated && (
+        <div className="ml-6 mt-1">
           <p className="italic red text-sm">*Reload to see changes</p>
-        </div>}
+        </div>
+      )}
       <div>
         <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
           <ModalContent>
