@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useCallback, Key } from "react";
+import React, { useState, useCallback, Key, useEffect } from "react";
 import {
   Table,
   TableColumn,
@@ -16,12 +16,10 @@ import {
   ModalBody,
   ModalFooter,
   Chip,
-  SortDescriptor,
 } from "@nextui-org/react";
 import { tutorGET } from "@/app/api/types";
 import { EyeFilledIcon } from "@/app/components/icons/EyeFilledIcon";
 import { DeleteIcon } from "@/app/components/icons/DeleteIcon";
-import { useAsyncList } from "@react-stately/data";
 import { columns } from "./lib/data";
 
 type actionType = {
@@ -33,43 +31,8 @@ type actionType = {
 export default function App() {
   const [action, setAction] = useState<actionType>();
   const [updated, setUpdated] = useState<boolean>(false);
+  const [tutors, setTutors] = useState<tutorGET[]>();
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
-
-  let list = useAsyncList<tutorGET>({
-    async load() {
-      let res = await fetch("/api/tutors", {});
-
-      let json = (await res.json())["documents"];
-
-      return {
-        items: json,
-      };
-    },
-    async sort({
-      items,
-      sortDescriptor,
-    }: {
-      items: tutorGET[];
-      sortDescriptor: SortDescriptor;
-    }) {
-      return {
-        items: items.sort((a, b) => {
-          console.log(a);
-          console.log(b);
-          let first = a[sortDescriptor.column!];
-          let second = b[sortDescriptor.column!];
-          let cmp =
-            (parseInt(first) || first) < (parseInt(second) || second) ? -1 : 1;
-
-          if (sortDescriptor.direction === "descending") {
-            cmp *= -1;
-          }
-
-          return cmp;
-        }),
-      };
-    },
-  });
 
   const handleOpen = useCallback(
     ({ action, email, status }: actionType) => {
@@ -171,41 +134,42 @@ export default function App() {
     [handleOpen],
   );
 
+  useEffect(() => {
+    fetch(`/api/tutors`)
+      .then((response) => response.json())
+      .then((data) => setTutors(data["documents"]));
+  }, [updated]);
+
   return (
     <>
-      <div className="mx-5">
-        <Table
-          sortDescriptor={list.sortDescriptor}
-          onSortChange={list.sort}
-          aria-label="Admin tutor table"
-        >
-          <TableHeader columns={columns}>
-            {(col) => (
-              <TableColumn
-                key={col.key}
-                {...(["name", "email"].includes(col.key)
-                  ? { allowsSorting: true }
-                  : {})}
-              >
-                {col.label}
-              </TableColumn>
-            )}
-          </TableHeader>
-          <TableBody items={list.items}>
-            {(item) => (
-              <TableRow key={item._id}>
-                {(columnKey) => (
-                  <TableCell>{renderCell(item, columnKey)}</TableCell>
+      {tutors && (
+        <>
+          <div className="mx-5">
+            <Table aria-label="Admin tutor table">
+              <TableHeader columns={columns}>
+                {(col) => (
+                  <TableColumn
+                    key={col.key}
+                    {...(["name", "email"].includes(col.key)
+                      ? { allowsSorting: true }
+                      : {})}
+                  >
+                    {col.label}
+                  </TableColumn>
                 )}
-              </TableRow>
-            )}
-          </TableBody>
-        </Table>
-      </div>
-      {updated && (
-        <div className="ml-6 mt-1">
-          <p className="italic red text-sm">*Reload to see changes</p>
-        </div>
+              </TableHeader>
+              <TableBody items={tutors}>
+                {(item) => (
+                  <TableRow key={item._id}>
+                    {(columnKey) => (
+                      <TableCell>{renderCell(item, columnKey)}</TableCell>
+                    )}
+                  </TableRow>
+                )}
+              </TableBody>
+            </Table>
+          </div>
+        </>
       )}
       <div>
         <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
