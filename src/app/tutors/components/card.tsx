@@ -19,7 +19,7 @@ export default function TutorCard({ name }: cardProps) {
     fetch(`/api/tutors?name=${name}`)
       .then((response) => response.json())
       .then((data) => setInfo(data["document"]));
-  }, []);
+  }, [name]);
 
   return (
     <>

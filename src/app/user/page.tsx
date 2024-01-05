@@ -1,21 +1,25 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useUser } from "@auth0/nextjs-auth0/client";
-import {
-  Link,
-  User,
-  Button,
-  Spinner,
-} from "@nextui-org/react";
+import { Link, User, Button, Spinner } from "@nextui-org/react";
 import Tutor from "./components/tutor";
 
 export default function App() {
   const { user, error, isLoading } = useUser();
+  const [isAdmin, setIsAdmin] = useState<boolean>(false);
+
+  useEffect(() => {
+    setIsAdmin(
+      user?.email === process.env.NEXT_PUBLIC_ADMIN_EMAIL ? true : false,
+    );
+  }, [user?.email]);
 
   if (isLoading) {
-    return <div className="center-all">
-      <Spinner label="Loading..." />
-    </div>;
+    return (
+      <div className="center-all">
+        <Spinner label="Loading..." />
+      </div>
+    );
   }
   if (error) return <div>{error.message}</div>;
 
@@ -30,9 +34,16 @@ export default function App() {
               avatarProps={{ src: user.picture || "user" }}
               description={user.email}
             />
+            {isAdmin && (
+              <Button className="ml-4" color="warning">
+                <Link color="foreground" href="/user/admin">
+                  Go to admin panel
+                </Link>
+              </Button>
+            )}
             <Button className="ml-4" color="danger">
               <Link color="foreground" href="/api/auth/logout">
-              Log Out
+                Log Out
               </Link>
             </Button>
           </div>
