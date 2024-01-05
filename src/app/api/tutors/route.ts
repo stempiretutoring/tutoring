@@ -18,6 +18,7 @@ export async function GET(request: NextRequest) {
         dataSource: process.env.MONGO_DATA_SOURCE,
         filter: {
           name: name,
+          active: true,
         },
       };
 
@@ -112,4 +113,69 @@ export async function POST(request: NextRequest) {
   }
 }
 
+export async function DELETE(request: NextRequest) {
+  const headers = new Headers();
+  headers.append("Access-Control-Request-Headers", "*");
+  headers.append("api-key", process.env.MONGO_API_KEY || "");
+  headers.append("Content-Type", "application/json");
+
+  const email = (await request.json())["email"];
+
+  const body = {
+    collection: process.env.MONGO_COLLECTION,
+    database: process.env.MONGO_DATABASE,
+    dataSource: process.env.MONGO_DATA_SOURCE,
+    filter: {
+      email: email,
+    },
+  };
+
+  const res = await fetch(process.env.MONGO_URI + "/action/deleteOne", {
+    method: "POST",
+    headers: headers,
+    body: JSON.stringify(body),
+  });
+
+  const data = await res.json();
+
+  return NextResponse.json(data, { status: res.status });
+}
+
+export async function PATCH(request: NextRequest) {
+  const headers = new Headers();
+  headers.append("Access-Control-Request-Headers", "*");
+  headers.append("api-key", process.env.MONGO_API_KEY || "");
+  headers.append("Content-Type", "application/json");
+
+  const req = await request.json();
+
+  const email = req["email"];
+  const active = req["active"];
+
+  console.log(email);
+
+  const body = {
+    collection: process.env.MONGO_COLLECTION,
+    database: process.env.MONGO_DATABASE,
+    dataSource: process.env.MONGO_DATA_SOURCE,
+    filter: {
+      email: email,
+    },
+    update: {
+      $set: {
+        active: active,
+      },
+    },
+  };
+
+  const res = await fetch(process.env.MONGO_URI + "/action/updateOne", {
+    method: "POST",
+    headers: headers,
+    body: JSON.stringify(body),
+  });
+
+  const data = await res.json();
+
+  return NextResponse.json(data, { status: res.status });
+}
 export const runtime = "edge";
