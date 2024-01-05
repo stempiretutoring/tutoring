@@ -9,6 +9,7 @@ import {
   Divider,
 } from "@nextui-org/react";
 import ProfileClient from "./set-time";
+import { useUser } from "@auth0/nextjs-auth0/client";
 
 interface tutorProps {
   email: string;
@@ -21,7 +22,7 @@ export default function Tutor({ email }: tutorProps) {
     fetch(`/api/auth/tutors?email=${email}`)
       .then((response) => response.json())
       .then((data) => {
-        setIsTutor(data['res'].includes(email) ? true : false);
+        setIsTutor(data["res"].includes(email) ? true : false);
       })
       .catch((error) => {
         console.error(`Error fetching data: ${error}`);
@@ -29,14 +30,17 @@ export default function Tutor({ email }: tutorProps) {
   }, []);
 
   return (
-    <>
+    <div className="h-screen w-screen">
       {isTutor && (
         <div>
           <Divider className="my-2" />
-          <h1 className="text-lg w-full flex justify-center content-center my-2 underline mx-auto">Set your schedule</h1>
+          <h1 className="text-lg w-full flex justify-center content-center my-2 underline mx-auto">
+            Set your schedule
+          </h1>
           <ProfileClient />
         </div>
       )}
+
       {!isTutor && (
         <>
           <Table aria-label="Purchase History" className="mx-auto my-5 w-5/6">
@@ -51,6 +55,6 @@ export default function Tutor({ email }: tutorProps) {
           </Table>
         </>
       )}
-    </>
+    </div>
   );
 }

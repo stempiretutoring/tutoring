@@ -18,6 +18,7 @@ export async function GET(request: NextRequest) {
         dataSource: process.env.MONGO_DATA_SOURCE,
         filter: {
           name: name,
+          active: true,
         },
       };
 
@@ -141,17 +142,17 @@ export async function DELETE(request: NextRequest) {
 }
 
 export async function PATCH(request: NextRequest) {
-  // TODO : get the current active status and negate it
-  // will need to change the request body so that instead of containing the 
-  // actual update syntax it tells what value to update
-  // maybe it's easier to just have an update button in which you can change any value?
   const headers = new Headers();
   headers.append("Access-Control-Request-Headers", "*");
   headers.append("api-key", process.env.MONGO_API_KEY || "");
   headers.append("Content-Type", "application/json");
 
-  const email = (await request.json())["email"];
-  const update = (await request.json())['update']
+  const req = await request.json();
+
+  const email = req["email"];
+  const active = req["active"];
+
+  console.log(email);
 
   const body = {
     collection: process.env.MONGO_COLLECTION,
@@ -161,8 +162,10 @@ export async function PATCH(request: NextRequest) {
       email: email,
     },
     update: {
-      update
-    }
+      $set: {
+        active: active,
+      },
+    },
   };
 
   const res = await fetch(process.env.MONGO_URI + "/action/updateOne", {
@@ -174,6 +177,5 @@ export async function PATCH(request: NextRequest) {
   const data = await res.json();
 
   return NextResponse.json(data, { status: res.status });
-
 }
 export const runtime = "edge";

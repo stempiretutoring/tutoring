@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect, useCallback, Key } from "react";
+import React, { useState, useCallback, Key } from "react";
 import {
   Table,
   TableColumn,
@@ -7,7 +7,6 @@ import {
   TableRow,
   TableHeader,
   TableCell,
-  Spinner,
   Tooltip,
   Button,
   useDisclosure,
@@ -21,20 +20,50 @@ import {
 import { tutorGET } from "@/app/api/types";
 import { EyeFilledIcon } from "@/app/components/icons/EyeFilledIcon";
 import { DeleteIcon } from "@/app/components/icons/DeleteIcon";
+import { useAsyncList } from "@react-stately/data";
+import { columns } from "./lib/data";
 
 type actionType = {
   action: "delete" | "suspend";
   email: string;
+  status: boolean;
 };
 
 export default function App() {
-  const [tutors, setTutors] = useState<tutorGET[]>();
   const [action, setAction] = useState<actionType>();
-  const [updated, setUpdated] = useState<string>();
+  const [updated, setUpdated] = useState<boolean>(false);
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
 
-  const handleOpen = ({ action, email }: actionType) => {
-    setAction({ action, email });
+  let list = useAsyncList<tutorGET>({
+    async load() {
+      let res = await fetch("/api/tutors", {});
+
+      let json = (await res.json())["documents"];
+
+      return {
+        items: json,
+      };
+    },
+    async sort({ items, sortDescriptor }) {
+      return {
+        items: items.sort((a, b) => {
+          let first = a[sortDescriptor.column];
+          let second = b[sortDescriptor.column];
+          let cmp =
+            (parseInt(first) || first) < (parseInt(second) || second) ? -1 : 1;
+
+          if (sortDescriptor.direction === "descending") {
+            cmp *= -1;
+          }
+
+          return cmp;
+        }),
+      };
+    },
+  });
+
+  const handleOpen = ({ action, email, status }: actionType) => {
+    setAction({ action, email, status });
     onOpen();
   };
 
@@ -43,53 +72,23 @@ export default function App() {
       method: "DELETE",
       body: JSON.stringify({ email: action?.email }),
     });
-    const date = new Date();
-    setUpdated(date.toString());
+    setUpdated(true);
     onClose();
   };
 
   const handleSuspend = () => {
     const body = {
       email: action?.email,
-      update: {
-        $set: {
-          active: false,
-        },
-      },
+      active: !action?.status,
     };
 
     fetch("/api/tutors", {
       method: "PATCH",
       body: JSON.stringify(body),
     });
-
-    const date = new Date();
-    setUpdated(date.toString());
+    setUpdated(true);
     onClose();
   };
-
-  const columns = [
-    {
-      key: "name",
-      label: "NAME",
-    },
-    {
-      key: "email",
-      label: "EMAIL",
-    },
-    {
-      key: "subjects",
-      label: "SUBJECTS",
-    },
-    {
-      key: "active",
-      label: "STATUS",
-    },
-    {
-      key: "actions",
-      label: "ACTIONS",
-    },
-  ];
 
   const renderCell = useCallback((rowValue: tutorGET, columnKey: Key) => {
     switch (columnKey) {
@@ -98,7 +97,15 @@ export default function App() {
       case "email":
         return rowValue.email;
       case "subjects":
-        return rowValue.subjects.toString();
+        return (
+          <div>
+            {rowValue.subjects.map((subject) => (
+              <Chip key={subject} className="p-1 m-1 text-md">
+                {subject}
+              </Chip>
+            ))}
+          </div>
+        );
       case "active":
         return rowValue.active ? (
           <Chip color="success">Active</Chip>
@@ -115,7 +122,11 @@ export default function App() {
                   variant="light"
                   isIconOnly
                   onPress={() =>
-                    handleOpen({ action: "suspend", email: rowValue.email })
+                    handleOpen({
+                      action: "suspend",
+                      email: rowValue.email,
+                      status: rowValue.active,
+                    })
                   }
                 >
                   <EyeFilledIcon />
@@ -129,7 +140,11 @@ export default function App() {
                   color="danger"
                   isIconOnly
                   onPress={() =>
-                    handleOpen({ action: "delete", email: rowValue.email })
+                    handleOpen({
+                      action: "delete",
+                      email: rowValue.email,
+                      status: rowValue.active,
+                    })
                   }
                 >
                   <DeleteIcon />
@@ -141,70 +156,73 @@ export default function App() {
     }
   }, []);
 
-  useEffect(() => {
-    fetch(`/api/tutors`)
-      .then((response) => response.json())
-      .then((data) => setTutors(data["documents"]));
-  }, [updated]);
-
   return (
     <>
-      {tutors && (
-        <>
-          <div className="mx-5">
-            <Table aria-label="Admin tutor table">
-              <TableHeader columns={columns}>
-                {(col) => <TableColumn key={col.key}>{col.label}</TableColumn>}
-              </TableHeader>
-              <TableBody items={tutors}>
-                {(item) => (
-                  <TableRow key={item._id}>
-                    {(columnKey) => (
-                      <TableCell>{renderCell(item, columnKey)}</TableCell>
-                    )}
-                  </TableRow>
+      <div className="mx-5">
+        <Table
+          sortDescriptor={list.sortDescriptor}
+          onSortChange={list.sort}
+          aria-label="Admin tutor table"
+        >
+          <TableHeader columns={columns}>
+            {(col) => (
+              <TableColumn
+                key={col.key}
+                {...(["name", "email"].includes(col.key)
+                  ? { allowsSorting: true }
+                  : {})}
+              >
+                {col.label}
+              </TableColumn>
+            )}
+          </TableHeader>
+          <TableBody items={list.items}>
+            {(item) => (
+              <TableRow key={item._id}>
+                {(columnKey) => (
+                  <TableCell>{renderCell(item, columnKey)}</TableCell>
                 )}
-              </TableBody>
-            </Table>
-          </div>
-          <div>
-            <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
-              <ModalContent>
-                {(onClose) => (
-                  <>
-                    <ModalHeader className="flex flex-col gap-1 text-bold text-xl">
-                      Confirm {action?.action}
-                    </ModalHeader>
-                    <ModalBody>
-                      <h1 className="text-md">
-                        Are you sure you want to {action?.action} the selected
-                        user?
-                      </h1>
-                    </ModalBody>
-                    <ModalFooter>
-                      <Button color="secondary" onPress={onClose}>
-                        No, I want to go back
-                      </Button>
-                      <Button
-                        onPress={
-                          action?.action === "delete"
-                            ? handleDelete
-                            : handleSuspend
-                        }
-                        color="danger"
-                        variant="ghost"
-                      >
-                        Yes, I want to continue
-                      </Button>
-                    </ModalFooter>
-                  </>
-                )}
-              </ModalContent>
-            </Modal>
-          </div>
-        </>
-      )}
-      {!tutors && <Spinner label="Loading" className="center-all" />}
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
+      </div>
+      {updated && 
+        <div className='ml-6 mt-1'>
+          <p className="italic red text-sm">*Reload to see changes</p>
+        </div>}
+      <div>
+        <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+          <ModalContent>
+            {(onClose) => (
+              <>
+                <ModalHeader className="flex flex-col gap-1 text-bold text-xl">
+                  Confirm {action?.action}
+                </ModalHeader>
+                <ModalBody>
+                  <h1 className="text-md">
+                    Are you sure you want to {action?.action} the selected user?
+                  </h1>
+                </ModalBody>
+                <ModalFooter>
+                  <Button color="secondary" onPress={onClose}>
+                    No, I want to go back
+                  </Button>
+                  <Button
+                    onPress={
+                      action?.action === "delete" ? handleDelete : handleSuspend
+                    }
+                    color="danger"
+                    variant="ghost"
+                  >
+                    Yes, I want to continue
+                  </Button>
+                </ModalFooter>
+              </>
+            )}
+          </ModalContent>
+        </Modal>
+      </div>
     </>
   );
 }

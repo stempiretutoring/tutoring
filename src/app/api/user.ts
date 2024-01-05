@@ -25,7 +25,7 @@ export async function isAdminMiddleware(req: NextRequest, res: NextResponse) {
   if (user) {
     const userEmail = JSON.stringify(user["user"]["email"]).replace(/"/g, "");
 
-    return userEmail === process.env.ADMIN_EMAIL
+    return userEmail === process.env.NEXT_PUBLIC_ADMIN_EMAIL
   } else {
     return false;
   }
