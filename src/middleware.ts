@@ -24,3 +24,4 @@ export default withMiddlewareAuthRequired(async function middleware(
     return res;
   }
 });
+
