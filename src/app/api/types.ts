@@ -10,3 +10,13 @@ export interface tutorGET {
   endTime: string[],
   active: boolean,
 }
+
+export type timeGET = {
+    monday: string[],
+    tuesday: string[],
+    wednesday: string[],
+    thursday: string[],
+    friday: string[],
+    saturday: string[],
+    sunday: string[],
+  }

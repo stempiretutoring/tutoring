@@ -7,11 +7,8 @@ export default function ProfileClient() {
   const { user, error, isLoading } = useUser();
 
   const setTime = (formData: FormData) => {
-    const headers = new Headers();
-    headers.append("Content-Type", "application/json");
     fetch(`/api/tutors?name=${user?.name}`, {
       method: "POST",
-      headers: headers,
       body: formData,
     });
   };
