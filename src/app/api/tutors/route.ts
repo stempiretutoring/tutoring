@@ -63,6 +63,19 @@ export async function POST(request: NextRequest) {
     const { searchParams } = new URL(request.url);
     const form = await request.formData();
     const name = searchParams.get("name");
+    const noDays: string[] | undefined = form
+      .get("noDays")
+      ?.toString()
+      .split(",");
+
+    if (noDays) {
+      for (let day of noDays) {
+        const start = day.toLowerCase() + "-start-time";
+        const end = day.toLowerCase() + "-end-time";
+        form.set(start, "");
+        form.set(end, "");
+      }
+    }
 
     const headers = new Headers();
     headers.append("Access-Control-Request-Headers", "*");
