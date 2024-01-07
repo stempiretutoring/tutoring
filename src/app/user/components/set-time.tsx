@@ -1,12 +1,21 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { useUser } from "@auth0/nextjs-auth0/client";
-import { Button, Input, Link } from "@nextui-org/react";
+import {
+  Button,
+  Input,
+  Link,
+  CheckboxGroup,
+  Checkbox,
+  Tooltip,
+} from "@nextui-org/react";
 
 export default function ProfileClient() {
   const { user, error, isLoading } = useUser();
+  const [selected, setSelected] = useState([]);
 
   const setTime = (formData: FormData) => {
+    formData.append('noDays', selected.toString())
     fetch(`/api/tutors?name=${user?.name}`, {
       method: "POST",
       body: formData,
@@ -33,6 +42,17 @@ export default function ProfileClient() {
               "Sunday",
             ].map((day) => (
               <div key={day} className="flex items-center">
+                <Tooltip
+                  content={`Select if you do not wish to tutor on ${day}`}
+                >
+                  <CheckboxGroup
+                    color="danger"
+                    value={selected}
+                    onValueChange={setSelected}
+                  >
+                    <Checkbox value={day}></Checkbox>
+                  </CheckboxGroup>
+                </Tooltip>
                 <label
                   htmlFor={`${day.toLowerCase()}-start-time`}
                   className="block text-xl font-medium text-gray-700 mr-2"
