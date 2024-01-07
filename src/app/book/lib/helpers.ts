@@ -24,8 +24,6 @@ export function getTimes(times: timeGET, day: string): string[] {
 export function findDisabledKeys(times: timeGET | undefined): string[] {
   let disabledTimes: string[] = [];
 
-  console.log(times);
-
   if (times === undefined) {
     return disabledTimes;
   }

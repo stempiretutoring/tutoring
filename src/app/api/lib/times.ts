@@ -8,9 +8,6 @@ export function splitTime(startTime: string, endTime: string): string[] {
   const startDate = new Date(`2000-01-01T${startTime}`);
   const endDate = new Date(`2000-01-01T${endTime}`);
 
-  console.log(startDate);
-  console.log(startTime);
-
   // Loop through the intervals and add each hour-long interval to the result
   while (startDate < endDate) {
     const nextHour = new Date(startDate);

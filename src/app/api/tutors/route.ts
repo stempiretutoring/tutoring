@@ -165,8 +165,6 @@ export async function PATCH(request: NextRequest) {
   const email = req["email"];
   const active = req["active"];
 
-  console.log(email);
-
   const body = {
     collection: process.env.MONGO_COLLECTION,
     database: process.env.MONGO_DATABASE,
