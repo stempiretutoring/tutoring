@@ -1,4 +1,25 @@
+import { Selection } from "@nextui-org/react";
 import { timeGET } from "../../api/types";
+
+export function getCost(students: string, duration: Selection): string {
+  const studentAmt = parseInt(students);
+  const durationAmt = parseInt(Array.from(duration).toString().substring(0, 1));
+
+  switch (studentAmt) {
+    case 1:
+      return (50 * durationAmt).toString();
+    case 2:
+    case 3:
+    case 4:
+      return (40 * durationAmt * studentAmt).toString();
+    case 5:
+    case 6:
+    case 7:
+      return (35 * durationAmt * studentAmt).toString();
+    default:
+      return studentAmt >= 8 ? (30 * durationAmt * studentAmt).toString() : "";
+  }
+}
 
 export function getTimes(times: timeGET, day: string): string[] {
   switch (day) {
@@ -68,14 +89,10 @@ export const columns = [
   },
   {
     key: "students",
-    label: "STUDENTS"
+    label: "STUDENTS",
   },
   {
     key: "duration",
     label: "DURATION",
-  },
-  {
-    key: "amount",
-    label: "AMOUNT",
   },
 ];

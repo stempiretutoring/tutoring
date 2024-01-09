@@ -18,25 +18,37 @@ import {
   Spacer,
   Link,
   Tooltip,
+  Card,
+  CardHeader,
+  Divider,
+  CardBody,
+  CardFooter,
+  Input,
 } from "@nextui-org/react";
-import { columns, findDisabledKeys, getTimes } from "./lib/helpers";
+import { columns, findDisabledKeys, getTimes, getCost } from "./lib/helpers";
 import { timeGET } from "../api/types";
+import { useRouter } from "next/navigation";
+import { FaShoppingCart } from "react-icons/fa";
 
 export default function App() {
   const params = useSearchParams();
+  const router = useRouter();
+
+  const subject = params.get("subject");
+  const tutorName = params.get("name");
+
   const [freeTime, setFreeTime] = useState<timeGET>();
   const [disabledKeys, setDisabledKeys] = useState<string[]>();
+  const [selectedStudents, setSelectedStudents] = useState<string>("1");
+  const [complete, setComplete] = useState<boolean>(true);
   const [selectedKeys, setSelectedKeys] = useState<Selection>(
     new Set(["Select a date"]),
   );
   const [selectedTimeKey, setSelectedTimeKey] = useState<Selection>(
     new Set(["Select a time"]),
   );
-  const [selectedStudents, setSelectedStudents] = useState<Selection>(
-    new Set(["Select how many students"]),
-  );
   const [selectedLength, setSelectedLength] = useState<Selection>(
-    new Set(["Select a duration"]),
+    new Set(["1 hour"]),
   );
 
   const selectedDate = useMemo(
@@ -48,6 +60,18 @@ export default function App() {
     () => Array.from(selectedTimeKey).join(", ").replace(/^.*_/, ""),
     [selectedTimeKey],
   );
+
+  const handlePress = () => {
+    if (selectedDate !== "Select a date" && selectedTime !== "Select a time") {
+      router.push("/pay");
+    } else {
+      setComplete(false);
+    }
+  };
+
+  const isInvalid = useMemo(() => {
+    return parseInt(selectedStudents) <= 0;
+  }, [selectedStudents]);
 
   useEffect(() => {
     fetch(`/api/tutors/book?name=${params.get("name")}`)
@@ -69,16 +93,21 @@ export default function App() {
             </TableHeader>
             <TableBody>
               <TableRow key="NAME">
-                <TableCell>{params.get("name")}</TableCell>
+                <TableCell>{tutorName}</TableCell>
 
                 <TableCell>
-                  <Chip color="success">{params.get("subject")}</Chip>
+                  <Chip color="success">{subject}</Chip>
                 </TableCell>
 
                 <TableCell>
                   <Dropdown>
                     <DropdownTrigger>
-                      <Button variant="bordered">{selectedDate}</Button>
+                      <Button
+                        color={complete ? "default" : "danger"}
+                        variant="bordered"
+                      >
+                        {selectedDate}
+                      </Button>
                     </DropdownTrigger>
                     <Tooltip
                       showArrow={true}
@@ -108,7 +137,12 @@ export default function App() {
                       <Spacer x={1} />
                       <Dropdown>
                         <DropdownTrigger>
-                          <Button variant="bordered">{selectedTime}</Button>
+                          <Button
+                            color={complete ? "default" : "danger"}
+                            variant="bordered"
+                          >
+                            {selectedTime}
+                          </Button>
                         </DropdownTrigger>
 
                         <DropdownMenu
@@ -139,28 +173,15 @@ export default function App() {
                 </TableCell>
 
                 <TableCell>
-                  <Dropdown>
-                    <DropdownTrigger>
-                      <Button variant="bordered">{selectedStudents}</Button>
-                    </DropdownTrigger>
-                    <DropdownMenu
-                      variant="flat"
-                      aria-label="day dropdown"
-                      disallowEmptySelection
-                      selectionMode="single"
-                      selectedKeys={selectedStudents}
-                      onSelectionChange={setSelectedStudents}
-                    >
-                      <DropdownItem key="1 student">1 student</DropdownItem>
-                      <DropdownItem key="2-4 students">
-                        2-4 students
-                      </DropdownItem>
-                      <DropdownItem key="5-7 students">
-                        5-7 students
-                      </DropdownItem>
-                      <DropdownItem key="8+ students">8+ students</DropdownItem>
-                    </DropdownMenu>
-                  </Dropdown>
+                  <Input
+                    label="Amount of students"
+                    type="number"
+                    value={selectedStudents}
+                    onValueChange={setSelectedStudents}
+                    isInvalid={isInvalid}
+                    color={isInvalid ? "danger" : "default"}
+                    errorMessage={isInvalid && "Amount must be greater than 0"}
+                  />
                 </TableCell>
 
                 <TableCell>
@@ -179,22 +200,44 @@ export default function App() {
                       <DropdownItem key="1 hour">1 hour</DropdownItem>
                       <DropdownItem key="2 hours">2 hours</DropdownItem>
                       <DropdownItem key="3 hours">3 hours</DropdownItem>
-                      <DropdownItem key="4+  hours">4+ hours</DropdownItem>
+                      <DropdownItem key="4 hours">4 hours</DropdownItem>
                     </DropdownMenu>
                   </Dropdown>
-                </TableCell>
-
-                <TableCell>
-                  <p>cost</p>
                 </TableCell>
               </TableRow>
             </TableBody>
           </Table>
         </div>
-        <div className="flex align-center">
-          <Link href="/cart">
-            <Button color="primary">Checkout</Button>
-          </Link>
+        <div>
+          <Card className="mr-3 mt-3">
+            <CardHeader className="flex gap-3">
+              <FaShoppingCart />
+              <div className="flex flex-col">
+                <p className="text-lg">Cart</p>
+              </div>
+            </CardHeader>
+            <Divider />
+            <CardBody>
+              <ul className="ml-3 list-disc">
+                <li>
+                  <p>
+                    Tutoring session with {tutorName} for {selectedLength} with{" "}
+                    {selectedStudents} student(s)
+                  </p>
+                </li>
+              </ul>
+              <Divider className="mt-2 mb-2" />
+              <p className="text-xl font-bold">
+                Total: ${getCost(selectedStudents, selectedLength)}
+              </p>
+            </CardBody>
+            <Divider />
+            <CardFooter>
+              <Button onPress={handlePress} color="primary">
+                Checkout
+              </Button>
+            </CardFooter>
+          </Card>
         </div>
       </div>
     </>
