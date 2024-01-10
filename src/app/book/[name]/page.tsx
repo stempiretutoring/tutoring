@@ -242,3 +242,5 @@ export default function App({ params }: { params: { name: string } }) {
     </>
   );
 }
+
+export const runtime = 'edge';

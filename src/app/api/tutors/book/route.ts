@@ -79,3 +79,5 @@ export async function GET(request: NextRequest) {
 
   return NextResponse.json(times, { status: 200 });
 }
+
+export const runtime = 'edge';
