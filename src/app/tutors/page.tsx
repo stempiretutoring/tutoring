@@ -11,10 +11,10 @@ export default function App() {
     <>
       <div className="flex flex-col items-center justify-center">
         <div className="text-bold text-center mb-2">
-          <h1>Read below to learn more about our tutors!</h1>
+          <h1 className="text-lg">Read below to learn more about our tutors!</h1>
         </div>
         <div className="italic text-center">
-          <small>Hint: click a card to learn more about each tutor</small>
+          <small>Tip: click a card to learn more about each tutor</small>
         </div>
       </div>
       <Divider />
