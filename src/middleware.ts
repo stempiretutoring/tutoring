@@ -7,10 +7,11 @@ import { isAdminMiddleware, isTutorMiddleware } from "./app/api/user";
 export default withMiddlewareAuthRequired(async function middleware(
   req: NextRequest,
 ) {
+  const res = NextResponse.next();
+  const url = req.nextUrl.clone();
+
   if (req.nextUrl.pathname.startsWith("/user/set-time")) {
-    const res = NextResponse.next();
-    const url = req.nextUrl.clone();
-    url.pathname = "/not-allowed"
+    url.pathname = "/not-allowed";
 
     if (!(await isTutorMiddleware(req, res))) {
       return NextResponse.rewrite(url);
@@ -19,7 +20,6 @@ export default withMiddlewareAuthRequired(async function middleware(
   }
 
   if (req.nextUrl.pathname.startsWith("/user/admin")) {
-    const res = NextResponse.next();
     if (!(await isAdminMiddleware(req, res))) {
       return NextResponse.rewrite(url);
     }
