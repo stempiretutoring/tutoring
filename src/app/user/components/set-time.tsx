@@ -12,7 +12,7 @@ import {
 
 export default function ProfileClient() {
   const { user, error, isLoading } = useUser();
-  const [selected, setSelected] = useState([]);
+  const [selected, setSelected] = useState<string[]>([]);
 
   const setTime = (formData: FormData) => {
     formData.append('noDays', selected.toString())
