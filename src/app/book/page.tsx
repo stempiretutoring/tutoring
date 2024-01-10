@@ -13,7 +13,7 @@ import Link from "next/link";
 
 export default function App() {
   const [tutors, setTutors] = useState<tutorGET[]>();
-  const [subjects, setSubjects] = useState<string[]>();
+  const [subjects, setSubjects] = useState<string[]>([]);
   const [book, setBook] = useState<boolean>(false);
 
   const [selectedTutors, setSelectedTutor] = useState<Selection>(
@@ -60,48 +60,52 @@ export default function App() {
 
   return (
     <div className="flex justify-center items-center">
-      <Dropdown>
-        <DropdownTrigger>
-          <Button variant="bordered">{selectedTutor}</Button>
-        </DropdownTrigger>
-        <DropdownMenu
-          aria-label="Tutor Selection"
-          variant="bordered"
-          disallowEmptySelection
-          selectionMode="single"
-          selectedKeys={selectedTutors}
-          onSelectionChange={setSelectedTutor}
-        >
-          {tutors?.map((tutor) => (
-            <DropdownItem key={tutor.name}>{tutor.name}</DropdownItem>
-          ))}
-        </DropdownMenu>
-      </Dropdown>
-      <pre> and </pre>
-      <Dropdown>
-        <DropdownTrigger>
-          <Button variant="bordered">{selectedSubject}</Button>
-        </DropdownTrigger>
-        <DropdownMenu
-          aria-label="Tutor Selection"
-          variant="bordered"
-          disallowEmptySelection
-          selectionMode="single"
-          selectedKeys={selectedSubjects}
-          onSelectionChange={setSelectedSubject}
-        >
-          {subjects?.map((subject) => (
-            <DropdownItem key={subject}>{subject}</DropdownItem>
-          ))}
-        </DropdownMenu>
-      </Dropdown>
-      {book && (
-        <Link href={`/book/${selectedTutor}?subject=${selectedSubject}`}>
-          {" "}
-          <Button className="ml-3" color="success">
-            Book your appointment!
-          </Button>{" "}
-        </Link>
+      {tutors && (
+        <>
+          <Dropdown>
+            <DropdownTrigger>
+              <Button variant="bordered">{selectedTutor}</Button>
+            </DropdownTrigger>
+            <DropdownMenu
+              aria-label="Tutor Selection"
+              variant="bordered"
+              disallowEmptySelection
+              selectionMode="single"
+              selectedKeys={selectedTutors}
+              onSelectionChange={setSelectedTutor}
+            >
+              {tutors?.map((tutor) => (
+                <DropdownItem key={tutor.name}>{tutor.name}</DropdownItem>
+              ))}
+            </DropdownMenu>
+          </Dropdown>
+          <pre> and </pre>
+          <Dropdown>
+            <DropdownTrigger>
+              <Button variant="bordered">{selectedSubject}</Button>
+            </DropdownTrigger>
+            <DropdownMenu
+              aria-label="Tutor Selection"
+              variant="bordered"
+              disallowEmptySelection
+              selectionMode="single"
+              selectedKeys={selectedSubjects}
+              onSelectionChange={setSelectedSubject}
+            >
+              {subjects?.map((subject) => (
+                <DropdownItem key={subject}>{subject}</DropdownItem>
+              ))}
+            </DropdownMenu>
+          </Dropdown>
+          {book && (
+            <Link href={`/book/${selectedTutor}?subject=${selectedSubject}`}>
+              {" "}
+              <Button className="ml-3" color="success">
+                Book your appointment!
+              </Button>{" "}
+            </Link>
+          )}
+        </>
       )}
     </div>
   );
