@@ -2,7 +2,6 @@
 import {
   Selection,
   Dropdown,
-  DropwdownTrigger,
   DropdownMenu,
   DropdownItem,
   DropdownTrigger,
@@ -50,13 +49,13 @@ export default function App() {
   }, [selectedTutor]);
 
   useEffect(
-    () =>{
+    () =>
       setBook(
-        (selectedSubject.toString() != "(Select a tutor first!)" && selectedSubject.toString() !== "Select a subject") &&
+        selectedSubject.toString() != "(Select a tutor first!)" &&
+          selectedSubject.toString() !== "Select a subject" &&
           selectedTutor.toString() != "(Select a tutor)",
       ),
-    [selectedSubject, selectedTutor]
-    }
+    [selectedSubject, selectedTutor],
   );
 
   return (
@@ -96,7 +95,14 @@ export default function App() {
           ))}
         </DropdownMenu>
       </Dropdown>
-      {book && <Link href={`/book/${selectedTutor}?subject=${selectedSubject}`}> <Button className="ml-3" color="success">Book your appointment!</Button> </Link>}
+      {book && (
+        <Link href={`/book/${selectedTutor}?subject=${selectedSubject}`}>
+          {" "}
+          <Button className="ml-3" color="success">
+            Book your appointment!
+          </Button>{" "}
+        </Link>
+      )}
     </div>
   );
 }

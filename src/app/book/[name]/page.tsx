@@ -76,7 +76,7 @@ export default function App({ params }: { params: { name: string } }) {
     fetch(`/api/tutors/book?name=${tutorName}`)
       .then((response) => response.json())
       .then((data) => setFreeTime(data));
-  }, [searchParams]);
+  }, [searchParams, tutorName]);
 
   useEffect(() => setDisabledKeys(findDisabledKeys(freeTime)), [freeTime]);
 
