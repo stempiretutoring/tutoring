@@ -1,11 +1,23 @@
 "use client";
-import React, { useState, useEffect } from "react";
-import { Card, CardHeader, CardBody, Image, Divider } from "@nextui-org/react";
-import { Popover, PopoverTrigger, PopoverContent } from "@nextui-org/react";
+import React, { useState, useEffect, useMemo } from "react";
+import {
+  Card,
+  CardHeader,
+  CardBody,
+  Image,
+  Divider,
+  Selection,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  Dropdown,
+  DropdownTrigger,
+  DropdownMenu,
+  DropdownItem,
+} from "@nextui-org/react";
 import { Spinner, Chip } from "@nextui-org/react";
 import styles from "./page.module.css";
 import { tutorGET } from "@/app/api/types";
-import Link from "next/link";
 
 interface cardProps {
   name: string;
@@ -13,7 +25,15 @@ interface cardProps {
 
 export default function TutorCard({ name }: cardProps) {
   const [info, setInfo] = useState<tutorGET>();
+  const [selectedKeys, setSelectedKeys] = useState<Selection>(
+    new Set(["(click to select subject)"]),
+  );
   const url = process.env.NEXT_PUBLIC_IMAGE_URL;
+
+  const selectedValue = useMemo(
+    () => Array.from(selectedKeys).join(", ").replaceAll("_", " "),
+    [selectedKeys],
+  );
 
   useEffect(() => {
     fetch(`/api/tutors?name=${name}`)
@@ -51,16 +71,37 @@ export default function TutorCard({ name }: cardProps) {
               </Card>
             </PopoverTrigger>
             <PopoverContent>
-              <div className="px-1 py-2">
+              <div className="px-1 py-2 w-full whitespace-nowrap">
                 <div>
-                  <Link
-                    href={`/book/tutor?id=${info?._id}&who=${info?.name}`}
-                    target="_self"
-                  >
-                    <h2 className="font-bold text-underline text-red-400 underline">
-                      Click here to book an appointment!
-                    </h2>
-                  </Link>
+                  <h2 className="font-bold text-red-400 ">
+                    <Dropdown>
+                      <DropdownTrigger>
+                        <p className="text-red-500">
+                          Click here to book an appointment for{" "}
+                          <p className="text-blue-300 underline">
+                            {selectedValue}
+                          </p>
+                        </p>
+                      </DropdownTrigger>
+                      <DropdownMenu
+                        aria-label="subject selection"
+                        variant="flat"
+                        disallowEmptySelection
+                        selectionMode="single"
+                        selectedKeys={selectedKeys}
+                        onSelectionChange={setSelectedKeys}
+                      >
+                        {info?.subjects.map((subject) => (
+                          <DropdownItem
+                            key={subject}
+                            href={`/book/${info.name}?subject=${subject}`}
+                          >
+                            {subject}
+                          </DropdownItem>
+                        ))}
+                      </DropdownMenu>
+                    </Dropdown>
+                  </h2>
                 </div>
                 <Divider />
                 <div className="text-tiny text-black">{info?.bio}</div>

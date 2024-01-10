@@ -9,6 +9,7 @@ import {
   TableCell,
   Divider,
   Button,
+  Link,
 } from "@nextui-org/react";
 
 export default function App() {
@@ -44,7 +45,11 @@ export default function App() {
         </TableBody>
       </Table>
       <div className="mx-auto w-1/2">
-        <Button href="/book" className="mt-3" color="success"> Book your session now! </Button>
+        <Link href="/book">
+          <Button className="mt-3" color="success">
+            Book your session now!
+          </Button>
+        </Link>
       </div>
     </>
   );
