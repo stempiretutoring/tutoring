@@ -4,9 +4,7 @@ import type { NextRequest } from "next/server";
 import { isAdminMiddleware, isTutorMiddleware } from "./app/api/user";
 
 // DOC: middleware to only allow whitelisted tutors to view the freetime set page
-export default withMiddlewareAuthRequired(async function middleware(
-  req: NextRequest,
-) {
+export async function middleware(req: NextRequest) {
   const res = NextResponse.next();
   const url = req.nextUrl.clone();
 
@@ -25,4 +23,4 @@ export default withMiddlewareAuthRequired(async function middleware(
     }
     return res;
   }
-});
+}
