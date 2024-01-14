@@ -20,3 +20,11 @@ export type timeGET = {
   saturday: string[];
   sunday: string[];
 };
+
+export type CartItem = {
+  id: string;
+  name: string;
+  price: number;
+  currency: string;
+  quantity: number;
+};
