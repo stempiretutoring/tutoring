@@ -33,3 +33,5 @@ export async function POST(req: NextRequest, res: NextResponse) {
     return NextResponse.json({ error: "Error creating checkout session" });
   }
 }
+
+export const runtime = 'edge'
