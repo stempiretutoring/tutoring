@@ -26,7 +26,6 @@ import {
 } from "@nextui-org/react";
 import { columns, findDisabledKeys, getTimes, getCost } from "../lib/helpers";
 import { timeGET, CartItem } from "../../api/types";
-import { useRouter } from "next/navigation";
 import { FaShoppingCart } from "react-icons/fa";
 import { loadStripe } from "@stripe/stripe-js";
 import {
@@ -40,7 +39,6 @@ const stripePromise = loadStripe(
 
 export default function App({ params }: { params: { name: string } }) {
   const searchParams = useSearchParams();
-  const router = useRouter();
 
   const subject = searchParams.get("subject");
   const tutorName = decodeURIComponent(params.name);
@@ -76,7 +74,7 @@ export default function App({ params }: { params: { name: string } }) {
       let body: CartItem = {
         id: "price_1OXttRG3TD0P1W4H5qwdMPp7",
         name: "tutoring",
-        price: parseInt("50"),
+        price: parseInt(price) * 100,
         currency: "USD",
         quantity: 1,
       };
@@ -276,7 +274,7 @@ export default function App({ params }: { params: { name: string } }) {
             stripe={stripePromise}
             options={{ clientSecret }}
           >
-            <EmbeddedCheckout />
+            <EmbeddedCheckout className="size-100%" />
           </EmbeddedCheckoutProvider>
         )}
       </div>
