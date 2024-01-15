@@ -14,6 +14,7 @@ import {
   DropdownTrigger,
   DropdownMenu,
   DropdownItem,
+  Button,
 } from "@nextui-org/react";
 import { Spinner, Chip } from "@nextui-org/react";
 import styles from "./page.module.css";
@@ -26,7 +27,7 @@ interface cardProps {
 export default function TutorCard({ name }: cardProps) {
   const [info, setInfo] = useState<tutorGET>();
   const [selectedKeys, setSelectedKeys] = useState<Selection>(
-    new Set(["(click to select subject)"]),
+    new Set(["(select a subject)"]),
   );
   const url = process.env.NEXT_PUBLIC_IMAGE_URL;
 
@@ -76,12 +77,9 @@ export default function TutorCard({ name }: cardProps) {
                   <h2 className="font-bold text-red-400 ">
                     <Dropdown>
                       <DropdownTrigger>
-                        <p className="text-red-500">
-                          Click here to book an appointment for{" "}
-                          <p className="text-blue-300 underline">
-                            {selectedValue}
-                          </p>
-                        </p>
+                        <Button className="text-red-500">
+                          Click here to book an appointment
+                        </Button>
                       </DropdownTrigger>
                       <DropdownMenu
                         aria-label="subject selection"
@@ -94,6 +92,7 @@ export default function TutorCard({ name }: cardProps) {
                         {info?.subjects.map((subject) => (
                           <DropdownItem
                             key={subject}
+                            className='capitalize'
                             href={`/book/${info.name}?subject=${subject}`}
                           >
                             {subject}
