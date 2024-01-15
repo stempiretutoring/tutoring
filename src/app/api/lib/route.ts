@@ -7,7 +7,7 @@ export async function GET(request: NextRequest) {
     headers.append("Access-Control-Request-Headers", "*");
     headers.append("api-key", process.env.MONGO_API_KEY || "");
 
-    const res = await fetch(process.env.MONGO_DISTINCT + "?field=name", {
+    const res = await fetch(`${process.env.MONGO_DISTINCT}?field=name`, {
       method: "GET",
       headers: headers,
     });
