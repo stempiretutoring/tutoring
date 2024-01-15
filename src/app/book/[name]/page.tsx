@@ -71,12 +71,18 @@ export default function App({ params }: { params: { name: string } }) {
 
   const handlePress = () => {
     if (selectedDate !== "Select a date" && selectedTime !== "Select a time") {
+      const bodyPrice = parseInt(price) * 100;
       let body: CartItem = {
         id: "price_1OXttRG3TD0P1W4H5qwdMPp7",
-        name: "tutoring",
-        price: parseInt(price) * 100,
+        name: "Tutoring",
+        price: bodyPrice,
         currency: "USD",
         quantity: 1,
+        metadata: {
+          description: `Tutoring session with ${tutorName} for ${selectedLength} with ${Array.from(
+            selectedStudents,
+          ).join(", ")} student(s) for ${bodyPrice}`,
+        },
       };
       fetch("/api/checkout_session", {
         method: "POST",
