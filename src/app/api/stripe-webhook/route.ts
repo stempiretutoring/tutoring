@@ -27,7 +27,7 @@ export async function POST(req: Request) {
         headers.append("api-key", process.env.MONGO_API_KEY || "");
 
         const body = {
-          collection: process.env.MONGO_COLLECTION,
+          collection: process.env.MONGO_CLIENT_COLLECTION,
           database: process.env.MONGO_DATABASE,
           dataSource: process.env.MONGO_DATA_SOURCE,
           filter: {
@@ -41,12 +41,13 @@ export async function POST(req: Request) {
           upsert: true,
         };
 
-        const res = await fetch(process.env.MONGO_URI + "/action/findOne", {
+        const res = await fetch(process.env.MONGO_URI + "/action/updateOne", {
           method: "POST",
           headers: headers,
           body: JSON.stringify(body),
         });
         const data = await res.json();
+        console.log(data);
         return NextResponse.json(data, { status: res.status });
       default:
         return NextResponse.json({}, { status: 200 });

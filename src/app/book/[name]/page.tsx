@@ -79,9 +79,11 @@ export default function App({ params }: { params: { name: string } }) {
         currency: "USD",
         quantity: 1,
         metadata: {
-          description: `Tutoring session with ${tutorName} for ${selectedLength} with ${Array.from(
-            selectedStudents,
-          ).join(", ")} student(s) for ${bodyPrice}`,
+          description: `Tutoring session with ${tutorName} for ${Array.from(
+            selectedLength,
+          ).join(", ")} with ${Array.from(selectedStudents).join(
+            ", ",
+          )} student(s) for ${bodyPrice}`,
         },
       };
       fetch("/api/checkout_session", {
