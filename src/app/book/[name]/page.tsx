@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useMemo, useEffect } from "react";
+import { withPageAuthRequired } from "@auth0/nextjs-auth0/client";
 import { useSearchParams } from "next/navigation";
 import {
   Table,
@@ -37,7 +38,11 @@ const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || "",
 );
 
-export default function App({ params }: { params: { name: string } }) {
+export default withPageAuthRequired(function App({
+  params,
+}: {
+  params: { name: string };
+}) {
   const searchParams = useSearchParams();
 
   const subject = searchParams.get("subject");
@@ -288,6 +293,6 @@ export default function App({ params }: { params: { name: string } }) {
       </div>
     </>
   );
-}
+});
 
 export const runtime = "edge";
