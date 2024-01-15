@@ -72,7 +72,7 @@ export default function TutorCard({ name }: cardProps) {
               </Card>
             </PopoverTrigger>
             <PopoverContent>
-              <div className="px-1 py-2 w-full whitespace-nowrap">
+              <div className="px-1 py-2 w-full">
                 <div>
                   <h2 className="font-bold text-red-400 ">
                     <Dropdown>
@@ -103,7 +103,7 @@ export default function TutorCard({ name }: cardProps) {
                   </h2>
                 </div>
                 <Divider />
-                <div className="text-tiny text-black">{info?.bio}</div>
+                <div className="text-tiny text-black w-[300px]">{info?.bio}</div>
               </div>
             </PopoverContent>
           </Popover>
