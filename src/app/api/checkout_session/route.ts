@@ -33,7 +33,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
 
     return NextResponse.json({ clientSecret: session.client_secret });
   } catch (err) {
-    console.log(err);
+    console.error(err);
     return NextResponse.json({ error: "Error creating checkout session" });
   }
 }

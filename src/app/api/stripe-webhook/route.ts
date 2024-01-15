@@ -47,7 +47,6 @@ export async function POST(req: Request) {
           body: JSON.stringify(body),
         });
         const data = await res.json();
-        console.log(data);
         return NextResponse.json(data, { status: res.status });
       default:
         return NextResponse.json({}, { status: 200 });
