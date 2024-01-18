@@ -3,7 +3,7 @@ import React from "react";
 export default function App() {
   return (
     <>
-      <div className="center-all m-10">
+      <div className="flex align-items m-10">
         <p className="text-xl">
           STEMpire Tutoring is a private tutoring business that specializes in
           math education for students of all ages and levels. We are run by a
