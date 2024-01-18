@@ -10,8 +10,13 @@ import {
   DropdownItem,
   Selection,
 } from "@nextui-org/react";
+import { useSearchParams } from "next/navigation";
 
 export default function App() {
+  const searchParams = useSearchParams();
+  const tutor = searchParams.get("tutor")?.toString() || "";
+  const subject = searchParams.get("subject")?.toString() || "";
+
   const [preferredMeeting, setPreferredMeeting] = useState<Selection>(
     new Set(["In person"]),
   );
@@ -23,7 +28,12 @@ export default function App() {
 
   const handleForm = (formData: FormData) => {
     formData.append("meeting", selectedMeeting);
-    console.log(formData);
+    formData.append("tutor", tutor);
+    formData.append("subject", subject);
+    fetch(`/api/success?tutor=${tutor}`, {
+      method: "post",
+      body: formData,
+    });
   };
 
   return (

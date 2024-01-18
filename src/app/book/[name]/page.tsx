@@ -89,6 +89,8 @@ export default withPageAuthRequired(function App({
           ).join(", ")} with ${Array.from(selectedStudents).join(
             ", ",
           )} student(s) for ${bodyPrice}`,
+          tutor: tutorName,
+          subject: subject,
         },
       };
       fetch("/api/checkout_session", {
