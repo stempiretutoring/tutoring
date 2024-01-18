@@ -7,11 +7,13 @@ const mailjet = new Mailjet({
 });
 
 export async function sendMail(recipient: sendMailProps) {
+  const sender = process.env.MJ_SENDER || "";
+  
   const request = mailjet.post("send", { version: "v3.1" }).request({
     Messages: [
       {
         From: {
-          Email: "jedimaster3284@gmail.com",
+          Email: sender,
           Name: "STEMpire Tutoring",
         },
         To: [

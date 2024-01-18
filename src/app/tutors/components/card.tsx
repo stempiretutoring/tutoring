@@ -52,7 +52,7 @@ export default function TutorCard({ name }: cardProps) {
                 <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
                   <div className="container mx-full">
                     {info?.subjects.map((subject, idx) => (
-                      <Chip key={idx} className="w-full m-1">
+                      <Chip key={idx} className="w-full m-1 capitalize">
                         {subject}
                       </Chip>
                     ))}
