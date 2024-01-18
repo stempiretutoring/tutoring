@@ -90,7 +90,7 @@ export default withPageAuthRequired(function App({
             ", ",
           )} student(s) for ${bodyPrice}`,
           tutor: tutorName,
-          subject: subject,
+          subject: subject || "",
         },
       };
       fetch("/api/checkout_session", {
