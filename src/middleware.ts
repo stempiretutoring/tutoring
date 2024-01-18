@@ -8,7 +8,7 @@ export async function middleware(req: NextRequest) {
   const res = NextResponse.next();
   const url = req.nextUrl.clone();
 
-  if (req.nextUrl.pathname.startsWith("/user/set-time")) {
+  if (req.nextUrl.pathname.startsWith("/user")) {
     url.pathname = "/not-allowed";
 
     if (!(await isTutorMiddleware(req, res))) {
