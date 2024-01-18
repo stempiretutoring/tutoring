@@ -24,7 +24,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
       line_items: [lineItems],
       mode: "payment",
       ui_mode: "embedded",
-      return_url: `${headersList.get("origin")}/complete?${
+      return_url: `${headersList.get("origin")}/complete?tutor=${
         item.metadata.tutor
       }&subject=${item.metadata.subject}`,
       payment_intent_data: {

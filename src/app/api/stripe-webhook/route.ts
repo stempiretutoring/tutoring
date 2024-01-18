@@ -48,6 +48,8 @@ export async function POST(req: Request) {
         });
         const data = await res.json();
         return NextResponse.json(data, { status: res.status });
+      case "checkout.session.completed":
+        sessionStorage.setItem('purchase', 'completed');
       default:
         return NextResponse.json({}, { status: 200 });
     }

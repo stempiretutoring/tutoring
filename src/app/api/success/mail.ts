@@ -12,7 +12,7 @@ export async function sendMail(recipient: sendMailProps) {
       {
         From: {
           Email: "jedimaster3284@gmail.com",
-          Name: "Mailjet Pilot",
+          Name: "STEMpire Tutoring",
         },
         To: [
           {
