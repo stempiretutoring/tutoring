@@ -46,3 +46,5 @@ export async function POST(request: NextRequest) {
 
   return NextResponse.json(mail);
 }
+
+export const runtime = 'edge';
