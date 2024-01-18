@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useMemo, useEffect } from "react";
+import { withPageAuthRequired } from "@auth0/nextjs-auth0/client";
 import { useSearchParams } from "next/navigation";
 import {
   Table,
@@ -37,7 +38,11 @@ const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || "",
 );
 
-export default function App({ params }: { params: { name: string } }) {
+export default withPageAuthRequired(function App({
+  params,
+}: {
+  params: { name: string };
+}) {
   const searchParams = useSearchParams();
 
   const subject = searchParams.get("subject");
@@ -71,12 +76,22 @@ export default function App({ params }: { params: { name: string } }) {
 
   const handlePress = () => {
     if (selectedDate !== "Select a date" && selectedTime !== "Select a time") {
+      const bodyPrice = parseInt(price) * 100;
       let body: CartItem = {
-        id: "price_1OXttRG3TD0P1W4H5qwdMPp7",
-        name: "tutoring",
-        price: parseInt(price) * 100,
+        id: process.env.NEXT_PUBLIC_PRICE || "",
+        name: "Tutoring",
+        price: bodyPrice,
         currency: "USD",
         quantity: 1,
+        metadata: {
+          description: `Tutoring session with ${tutorName} for ${Array.from(
+            selectedLength,
+          ).join(", ")} with ${Array.from(selectedStudents).join(
+            ", ",
+          )} student(s) for ${bodyPrice}`,
+          tutor: tutorName,
+          subject: subject || "",
+        },
       };
       fetch("/api/checkout_session", {
         method: "POST",
@@ -280,6 +295,6 @@ export default function App({ params }: { params: { name: string } }) {
       </div>
     </>
   );
-}
+});
 
 export const runtime = "edge";

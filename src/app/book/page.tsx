@@ -52,7 +52,7 @@ export default function App() {
     () =>
       setBook(
         selectedSubject.toString() != "(Select a tutor first!)" &&
-          selectedSubject.toString() !== "Select a subject" &&
+          selectedSubject.toString() !== "(Select a subject)" &&
           selectedTutor.toString() != "(Select a tutor)",
       ),
     [selectedSubject, selectedTutor],
@@ -62,6 +62,7 @@ export default function App() {
     <div className="flex justify-center items-center">
       {tutors && (
         <>
+          <pre>Book </pre>
           <Dropdown>
             <DropdownTrigger>
               <Button variant="bordered">{selectedTutor}</Button>
@@ -79,7 +80,7 @@ export default function App() {
               ))}
             </DropdownMenu>
           </Dropdown>
-          <pre> and </pre>
+          <pre> for </pre>
           <Dropdown>
             <DropdownTrigger>
               <Button variant="bordered">{selectedSubject}</Button>

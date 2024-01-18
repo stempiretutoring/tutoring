@@ -27,4 +27,18 @@ export type CartItem = {
   price: number;
   currency: string;
   quantity: number;
+  metadata: {
+    description: string,
+    tutor: string,
+    subject: string,
+  };
 };
+export interface sendMailProps {
+  email: string;
+  child: string;
+  about: string;
+  meeting: string;
+  name: string;
+  subject: string;
+  parentEmail: string;
+}

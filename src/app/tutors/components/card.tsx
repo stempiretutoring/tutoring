@@ -14,6 +14,7 @@ import {
   DropdownTrigger,
   DropdownMenu,
   DropdownItem,
+  Button,
 } from "@nextui-org/react";
 import { Spinner, Chip } from "@nextui-org/react";
 import styles from "./page.module.css";
@@ -26,7 +27,7 @@ interface cardProps {
 export default function TutorCard({ name }: cardProps) {
   const [info, setInfo] = useState<tutorGET>();
   const [selectedKeys, setSelectedKeys] = useState<Selection>(
-    new Set(["(click to select subject)"]),
+    new Set(["(select a subject)"]),
   );
   const url = process.env.NEXT_PUBLIC_IMAGE_URL;
 
@@ -51,7 +52,7 @@ export default function TutorCard({ name }: cardProps) {
                 <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
                   <div className="container mx-full">
                     {info?.subjects.map((subject, idx) => (
-                      <Chip key={idx} className="w-full m-1">
+                      <Chip key={idx} className="w-full m-1 capitalize">
                         {subject}
                       </Chip>
                     ))}
@@ -71,17 +72,14 @@ export default function TutorCard({ name }: cardProps) {
               </Card>
             </PopoverTrigger>
             <PopoverContent>
-              <div className="px-1 py-2 w-full whitespace-nowrap">
+              <div className="px-1 py-2 w-full">
                 <div>
                   <h2 className="font-bold text-red-400 ">
                     <Dropdown>
                       <DropdownTrigger>
-                        <p className="text-red-500">
-                          Click here to book an appointment for{" "}
-                          <p className="text-blue-300 underline">
-                            {selectedValue}
-                          </p>
-                        </p>
+                        <Button className="text-red-500">
+                          Click here to book an appointment
+                        </Button>
                       </DropdownTrigger>
                       <DropdownMenu
                         aria-label="subject selection"
@@ -94,6 +92,7 @@ export default function TutorCard({ name }: cardProps) {
                         {info?.subjects.map((subject) => (
                           <DropdownItem
                             key={subject}
+                            className='capitalize'
                             href={`/book/${info.name}?subject=${subject}`}
                           >
                             {subject}
@@ -104,7 +103,7 @@ export default function TutorCard({ name }: cardProps) {
                   </h2>
                 </div>
                 <Divider />
-                <div className="text-tiny text-black">{info?.bio}</div>
+                <div className="text-tiny text-black w-[300px]">{info?.bio}</div>
               </div>
             </PopoverContent>
           </Popover>

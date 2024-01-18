@@ -24,14 +24,20 @@ export async function POST(req: NextRequest, res: NextResponse) {
       line_items: [lineItems],
       mode: "payment",
       ui_mode: "embedded",
-      return_url: `${headersList.get("origin")}/`,
+      return_url: `${headersList.get("origin")}/complete?tutor=${
+        item.metadata.tutor
+      }&subject=${item.metadata.subject}`,
+      payment_intent_data: {
+        metadata: item.metadata,
+      },
+      submit_type: "book",
     });
 
     return NextResponse.json({ clientSecret: session.client_secret });
   } catch (err) {
-    console.log(err);
+    console.error(err);
     return NextResponse.json({ error: "Error creating checkout session" });
   }
 }
 
-export const runtime = 'edge'
+export const runtime = "edge";
