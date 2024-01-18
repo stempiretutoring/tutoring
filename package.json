@@ -20,6 +20,7 @@
     "framer-motion": "^10.16.16",
     "lint-staged": "^15.2.0",
     "next": "^14.0.4",
+    "node-mailjet": "^6.0.5",
     "os": "^0.1.2",
     "react": "^18",
     "react-dom": "^18",
