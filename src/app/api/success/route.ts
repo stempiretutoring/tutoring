@@ -40,8 +40,6 @@ export async function POST(request: NextRequest) {
 
   email.email = data["document"]["email"];
 
-  console.log(email.email);
-
   const mail = sendMail(email);
 
   return NextResponse.json(mail);
