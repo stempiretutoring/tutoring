@@ -31,7 +31,7 @@ export const POST = withApiAuthRequired(async function checkout(
       line_items: [lineItems],
       mode: "payment",
       ui_mode: "embedded",
-      return_url: `${headersList.get("origin")}/complete?user=${user.name}`,
+      return_url: `${headersList.get("origin")}/complete?user=${user?.name}`,
       payment_intent_data: {
         metadata: item.metadata,
       },
