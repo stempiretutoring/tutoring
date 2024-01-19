@@ -10,15 +10,13 @@ import {
   DropdownItem,
   Selection,
 } from "@nextui-org/react";
-import { useSearchParams } from "next/navigation";
 import Link from "next/link";
+import { purchase } from "../api/types";
+import { useSearchParams } from "next/navigation";
 
 export default function App() {
   const searchParams = useSearchParams();
-  const tutor = searchParams.get("tutor")?.toString() || "";
-  const subject = searchParams.get("subject")?.toString() || "";
-
-  const valid = sessionStorage.getItem("purchase");
+  const [purchaseInfo, setPurchaseInfo] = useState<purchase>();
 
   const [preferredMeeting, setPreferredMeeting] = useState<Selection>(
     new Set(["In person"]),
@@ -31,17 +29,31 @@ export default function App() {
 
   const handleForm = (formData: FormData) => {
     formData.append("meeting", selectedMeeting);
-    formData.append("tutor", tutor);
-    formData.append("subject", subject);
-    fetch(`/api/success?tutor=${tutor}`, {
+    formData.append("tutor", purchaseInfo?.tutorName || "");
+    formData.append("subject", purchaseInfo?.subject || "");
+    formData.append("date", purchaseInfo?.date || "");
+    formData.append("time", purchaseInfo?.time || "");
+
+    fetch(`/api/success/mail`, {
       method: "post",
       body: formData,
     });
   };
 
+  useEffect(() => {
+    fetch(`/api/success/purchase?user=${searchParams.get("user")}`)
+      .then((response) => response.json())
+      .then((data) => {
+        setPurchaseInfo(data);
+      })
+      .catch((error) => {
+        console.error(`Error fetching data: ${error}`);
+      });
+  },  [searchParams]);
+
   return (
     <>
-      {valid ? (
+      {purchaseInfo ? (
         <form action={handleForm}>
           <div className="flex justify-center align-items">
             <div className="w-1/2 grid gap-4 grid-cols-2">

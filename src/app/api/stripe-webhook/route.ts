@@ -13,12 +13,18 @@ export async function POST(req: Request) {
 
   let event: Stripe.Event | null = null;
   try {
+    // TODO: FIX
     event = stripe.webhooks.constructEvent(payload, signature!, webhookSecret);
+    const req = JSON.parse(payload)["data"]["object"];
     switch (event?.type) {
-      case "payment_intent.succeeded":
-        // handle payment_intent.succeded
-        const req = JSON.parse(payload)["data"]["object"];
-        const purchase = req["metadata"]["description"];
+      case "checkout.session.completed":
+        const description = req["metadata"]["description"];
+
+        const tutor = req["metadata"]["tutor"];
+        const date = req["metadata"]["date"];
+        const time = req["metadata"]["time"];
+        const subject = req["metadata"]["subject"];
+
         const email = req["receipt_email"];
 
         const headers = new Headers();
@@ -35,7 +41,12 @@ export async function POST(req: Request) {
           },
           update: {
             $push: {
-              purchases: purchase,
+              purchases: {
+                $push: {
+                  $each: [tutor, subject, date, time, description],
+                },
+                $position: 0,
+              },
             },
           },
           upsert: true,
@@ -46,10 +57,12 @@ export async function POST(req: Request) {
           headers: headers,
           body: JSON.stringify(body),
         });
+
         const data = await res.json();
+
+        const { searchParams } = new URL(req.url);
+        searchParams.set("user", email);
         return NextResponse.json(data, { status: res.status });
-      case "checkout.session.completed":
-        sessionStorage.setItem('purchase', 'completed');
       default:
         return NextResponse.json({}, { status: 200 });
     }
@@ -62,4 +75,4 @@ export async function POST(req: Request) {
   return NextResponse.json({ received: true });
 }
 
-export const runtime = 'edge';
+export const runtime = "edge";
