@@ -38,9 +38,10 @@ export type CartItem = {
 
 export type purchase = {
   tutorName: string,
+  subject: string,
   date: string,
   time: string,
-  subject: string,
+  description: string,
 }
 
 export interface sendMailProps {

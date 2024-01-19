@@ -11,13 +11,17 @@ export async function POST(req: Request) {
   const payload = await req.text();
   const signature = req.headers.get("stripe-signature");
 
-  let event: Stripe.Event | null = null;
+  let event: Promise<Stripe.Event> | null | Stripe.Event = null;
   try {
     // TODO: FIX
-    event = stripe.webhooks.constructEvent(payload, signature!, webhookSecret);
+    event = await stripe.webhooks.constructEventAsync(
+      payload,
+      signature!,
+      webhookSecret,
+    );
     const req = JSON.parse(payload)["data"]["object"];
     switch (event?.type) {
-      case "checkout.session.completed":
+      case "payment_intent.succeeded":
         const description = req["metadata"]["description"];
 
         const tutor = req["metadata"]["tutor"];
@@ -41,12 +45,7 @@ export async function POST(req: Request) {
           },
           update: {
             $push: {
-              purchases: {
-                $push: {
-                  $each: [tutor, subject, date, time, description],
-                },
-                $position: 0,
-              },
+              purchases: [tutor, subject, date, time, description],
             },
           },
           upsert: true,
@@ -60,8 +59,6 @@ export async function POST(req: Request) {
 
         const data = await res.json();
 
-        const { searchParams } = new URL(req.url);
-        searchParams.set("user", email);
         return NextResponse.json(data, { status: res.status });
       default:
         return NextResponse.json({}, { status: 200 });

@@ -17,6 +17,7 @@ export const POST = withApiAuthRequired(async function checkout(
       currency: item.currency,
       product_data: {
         name: item.name,
+        description: "Make sure to use the same email as when you signed up"
       },
       unit_amount: item.price,
     },

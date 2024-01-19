@@ -1,15 +1,15 @@
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { sendMail } from "./mail";
 import { sendMailProps } from "../../types";
 
-export default async function POST(request: NextRequest) {
+export async function POST(request: NextRequest) {
   const formData: FormData = await request.formData();
   const props: sendMailProps = {
     child: formData.get("child")?.toString() || "",
     email: "",
     about: formData.get("about")?.toString() || "",
     meeting: formData.get("meeting")?.toString() || "",
-    name: formData.get("name")?.toString() || "",
+    name: formData.get("tutor")?.toString() || "",
     subject: formData.get("subject")?.toString() || "",
     date: formData.get("date")?.toString() || "",
     time: formData.get("time")?.toString() || "",
@@ -40,5 +40,7 @@ export default async function POST(request: NextRequest) {
 
   props.email = data["document"]["email"];
 
-  return await sendMail(props);
+  const mail = await sendMail(props);
+
+  return NextResponse.json({ body: mail }, { status: 200 });
 }

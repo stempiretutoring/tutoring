@@ -2,6 +2,7 @@
 import React, { useState, useMemo, useEffect } from "react";
 import {
   Input,
+  Link,
   Button,
   Textarea,
   Dropdown,
@@ -9,8 +10,8 @@ import {
   DropdownMenu,
   DropdownItem,
   Selection,
+  Spinner,
 } from "@nextui-org/react";
-import Link from "next/link";
 import { purchase } from "../api/types";
 import { useSearchParams } from "next/navigation";
 
@@ -29,10 +30,10 @@ export default function App() {
 
   const handleForm = (formData: FormData) => {
     formData.append("meeting", selectedMeeting);
-    formData.append("tutor", purchaseInfo?.tutorName || "");
-    formData.append("subject", purchaseInfo?.subject || "");
-    formData.append("date", purchaseInfo?.date || "");
-    formData.append("time", purchaseInfo?.time || "");
+    formData.append("tutor", purchaseInfo[0]);
+    formData.append("subject", purchaseInfo[1]);
+    formData.append("date", purchaseInfo[2]);
+    formData.append("time", purchaseInfo[3]);
 
     fetch(`/api/success/mail`, {
       method: "post",
@@ -44,12 +45,12 @@ export default function App() {
     fetch(`/api/success/purchase?user=${searchParams.get("user")}`)
       .then((response) => response.json())
       .then((data) => {
-        setPurchaseInfo(data);
+        setPurchaseInfo(data[data.length - 1]);
       })
       .catch((error) => {
         console.error(`Error fetching data: ${error}`);
       });
-  },  [searchParams]);
+  }, [searchParams]);
 
   return (
     <>
@@ -71,7 +72,7 @@ export default function App() {
                 <Input
                   type="email"
                   label="Email"
-                  name="email"
+                  name="parentEmail"
                   variant="underlined"
                   description="Parent email"
                   isRequired
@@ -126,8 +127,20 @@ export default function App() {
       ) : (
         <div className="flex align-items justify-center">
           <h1>
-            Complete a purchase to view this page! Return home{" "}
-            <Link href="/">Here</Link>
+            <Spinner
+              color="secondary"
+              label={
+                <div>
+                  <p>Loading...</p>
+                  <p>
+                    If you ended up here by accident you can return home
+                  </p>{" "}
+                  <Link showAnchorIcon href="/" underline="always">
+                    here
+                  </Link>
+                </div>
+              }
+            />
           </h1>
         </div>
       )}
