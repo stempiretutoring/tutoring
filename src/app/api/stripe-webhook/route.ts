@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { Stripe } from "stripe";
+import { format } from "date-fns";
 
 const stripe = new Stripe(process.env.STRIPE_TEST_SECRET_KEY!, {
   apiVersion: "2023-10-16",
@@ -45,7 +46,13 @@ export async function POST(req: Request) {
           },
           update: {
             $push: {
-              purchases: [tutor, subject, date, time, description],
+              purchases: [
+                tutor,
+                subject,
+                format(date, "PPPP"),
+                time,
+                description,
+              ],
             },
           },
           upsert: true,
@@ -56,6 +63,32 @@ export async function POST(req: Request) {
           headers: headers,
           body: JSON.stringify(body),
         });
+
+        console.log(tutor);
+
+        const tutorBody = {
+          collection: process.env.MONGO_COLLECTION,
+          database: process.env.MONGO_DATABASE,
+          dataSource: process.env.MONGO_DATA_SOURCE,
+          filter: {
+            name: tutor,
+          },
+          update: {
+            $push: {
+              booked: `${format(date, 'P')}-${time}`,
+            },
+          },
+          upsert: true,
+        };
+
+        await fetch(
+          process.env.MONGO_URI + "/action/updateOne",
+          {
+            method: "POST",
+            headers: headers,
+            body: JSON.stringify(tutorBody),
+          },
+        );
 
         const data = await res.json();
 

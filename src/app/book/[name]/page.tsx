@@ -91,7 +91,7 @@ export default withPageAuthRequired(function App({
           )} student(s) for ${bodyPrice} on ${date} at ${selectedTime}`,
           tutor: tutorName,
           subject: subject || "",
-          date: format(date, "PPPP"),
+          date: date.toString(),
           time: selectedTime,
         },
       };
