@@ -28,7 +28,12 @@ export default function App() {
       <Divider />
       <div className="flex justify-center items-center">
         <div className="mt-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-5 gap-y-1">
-          {tutors?.map((tutor) => <TutorCard key={tutor._id} name={tutor.name} />)}
+          <TutorCard name="Danny Christensen" />
+          <TutorCard name="Luca Cresti" />
+          <TutorCard name="Daniel DaSilva" />
+          <TutorCard name="Griffin Forminard" />
+          <TutorCard name="Joe Kashani" />
+          <TutorCard name="Jeevan Shah" />
         </div>
       </div>
     </>
