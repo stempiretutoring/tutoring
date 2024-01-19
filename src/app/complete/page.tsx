@@ -12,12 +12,11 @@ import {
   Selection,
   Spinner,
 } from "@nextui-org/react";
-import { purchase } from "../api/types";
 import { useSearchParams } from "next/navigation";
 
 export default function App() {
   const searchParams = useSearchParams();
-  const [purchaseInfo, setPurchaseInfo] = useState<purchase>();
+  const [purchaseInfo, setPurchaseInfo] = useState<string[]>();
 
   const [preferredMeeting, setPreferredMeeting] = useState<Selection>(
     new Set(["In person"]),
@@ -30,11 +29,13 @@ export default function App() {
 
   const handleForm = (formData: FormData) => {
     formData.append("meeting", selectedMeeting);
-    formData.append("tutor", purchaseInfo[0]);
-    formData.append("subject", purchaseInfo[1]);
-    formData.append("date", purchaseInfo[2]);
-    formData.append("time", purchaseInfo[3]);
-
+    if (purchaseInfo) {
+      formData.append("tutor", purchaseInfo[0]);
+      formData.append("subject", purchaseInfo[1]);
+      formData.append("date", purchaseInfo[2]);
+      formData.append("time", purchaseInfo[3]);
+    }
+    
     fetch(`/api/success/mail`, {
       method: "post",
       body: formData,
