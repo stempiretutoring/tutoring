@@ -35,7 +35,7 @@ export default function App() {
       formData.append("date", purchaseInfo[2]);
       formData.append("time", purchaseInfo[3]);
     }
-    
+
     fetch(`/api/success/mail`, {
       method: "post",
       body: formData,
@@ -128,20 +128,13 @@ export default function App() {
       ) : (
         <div className="flex align-items justify-center">
           <h1>
-            <Spinner
-              color="secondary"
-              label={
-                <div>
-                  <p>Loading...</p>
-                  <p>
-                    If you ended up here by accident you can return home
-                  </p>{" "}
-                  <Link showAnchorIcon href="/" underline="always">
-                    here
-                  </Link>
-                </div>
-              }
-            />
+            <Spinner color="secondary" label="Loading.." />
+            <div>
+              <p>If you ended up here by accident you can return home</p>{" "}
+              <Link showAnchorIcon href="/" underline="always">
+                here
+              </Link>
+            </div>
           </h1>
         </div>
       )}
