@@ -44,3 +44,5 @@ export async function POST(request: NextRequest) {
 
   return NextResponse.json({ body: mail }, { status: 200 });
 }
+
+export const runtime = 'edge';
