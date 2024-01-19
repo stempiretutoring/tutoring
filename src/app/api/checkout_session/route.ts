@@ -8,7 +8,8 @@ export const POST = withApiAuthRequired(async function checkout(
   req: NextRequest,
 ) {
   const res = new NextResponse();
-  const { user } = await getSession(req, res);
+  const session = await getSession(req, res);
+  const user = session?.user;
   const headersList = headers();
   const item: CartItem = await req.json();
 
@@ -17,7 +18,7 @@ export const POST = withApiAuthRequired(async function checkout(
       currency: item.currency,
       product_data: {
         name: item.name,
-        description: "Make sure to use the same email as when you signed up"
+        description: "Make sure to use the same email as when you signed up",
       },
       unit_amount: item.price,
     },
