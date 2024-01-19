@@ -1,5 +1,5 @@
 import Mailjet from "node-mailjet";
-import { sendMailProps } from "../types";
+import { sendMailProps } from "../../types";
 
 const mailjet = new Mailjet({
   apiKey: process.env.MJ_APIKEY_PUBLIC || "your-api-key",
@@ -8,7 +8,7 @@ const mailjet = new Mailjet({
 
 export async function sendMail(recipient: sendMailProps) {
   const sender = process.env.MJ_SENDER || "";
-  
+
   const request = mailjet.post("send", { version: "v3.1" }).request({
     Messages: [
       {
@@ -23,7 +23,7 @@ export async function sendMail(recipient: sendMailProps) {
           },
         ],
         Subject: `Tutoring Session with ${recipient.child}`,
-        TextPart: `${recipient.name} -\n you have been booked for a tutoring session with  ${recipient.child} for ${recipient.subject} on date. The parent has provided the below description about the child:\n${recipient.about}\nYou can contact the parent at ${recipient.parentEmail} and their preferred meeting style is ${recipient.meeting}`,
+        TextPart: `${recipient.name} -\n you have been booked for a tutoring session with  ${recipient.child} for ${recipient.subject} on ${recipient.date} from ${recipient.time}. The parent has provided the below description about the child:\n${recipient.about}\nYou can contact the parent at ${recipient.parentEmail} and their preferred meeting style is ${recipient.meeting}`,
       },
     ],
   });

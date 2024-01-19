@@ -31,8 +31,19 @@ export type CartItem = {
     description: string,
     tutor: string,
     subject: string,
+    date: string,
+    time: string,
   };
 };
+
+export type purchase = {
+  tutorName: string,
+  subject: string,
+  date: string,
+  time: string,
+  description: string,
+}
+
 export interface sendMailProps {
   email: string;
   child: string;
@@ -41,4 +52,6 @@ export interface sendMailProps {
   name: string;
   subject: string;
   parentEmail: string;
+  date: string;
+  time: string;
 }

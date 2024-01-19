@@ -17,7 +17,6 @@ import {
   Selection,
   Button,
   Spacer,
-  Tooltip,
   Card,
   CardHeader,
   Divider,
@@ -25,7 +24,7 @@ import {
   CardFooter,
   Input,
 } from "@nextui-org/react";
-import { columns, findDisabledKeys, getTimes, getCost } from "../lib/helpers";
+import { columns, getTimes, getCost } from "../lib/helpers";
 import { timeGET, CartItem } from "../../api/types";
 import { FaShoppingCart } from "react-icons/fa";
 import { loadStripe } from "@stripe/stripe-js";
@@ -33,6 +32,15 @@ import {
   EmbeddedCheckoutProvider,
   EmbeddedCheckout,
 } from "@stripe/react-stripe-js";
+import { format } from "date-fns";
+import { Calendar as CalendarIcon } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { Calendar } from "@/components/ui/calendar";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 
 const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || "",
@@ -48,25 +56,17 @@ export default withPageAuthRequired(function App({
   const subject = searchParams.get("subject");
   const tutorName = decodeURIComponent(params.name);
 
+  const [date, setDate] = useState<Date>();
   const [clientSecret, setClientSecret] = useState("");
   const [freeTime, setFreeTime] = useState<timeGET>();
-  const [disabledKeys, setDisabledKeys] = useState<string[]>();
   const [selectedStudents, setSelectedStudents] = useState<string>("1");
   const [price, setPrice] = useState<string>("");
   const [complete, setComplete] = useState<boolean>(true);
-  const [selectedKeys, setSelectedKeys] = useState<Selection>(
-    new Set(["Select a date"]),
-  );
   const [selectedTimeKey, setSelectedTimeKey] = useState<Selection>(
     new Set(["Select a time"]),
   );
   const [selectedLength, setSelectedLength] = useState<Selection>(
     new Set(["1 hour"]),
-  );
-
-  const selectedDate = useMemo(
-    () => Array.from(selectedKeys).join(", ").replaceAll("_", " "),
-    [selectedKeys],
   );
 
   const selectedTime = useMemo(
@@ -75,7 +75,7 @@ export default withPageAuthRequired(function App({
   );
 
   const handlePress = () => {
-    if (selectedDate !== "Select a date" && selectedTime !== "Select a time") {
+    if (date && selectedTime !== "Select a time") {
       const bodyPrice = parseInt(price) * 100;
       let body: CartItem = {
         id: process.env.NEXT_PUBLIC_PRICE || "",
@@ -88,9 +88,11 @@ export default withPageAuthRequired(function App({
             selectedLength,
           ).join(", ")} with ${Array.from(selectedStudents).join(
             ", ",
-          )} student(s) for ${bodyPrice}`,
+          )} student(s) for ${bodyPrice} on ${date} at ${selectedTime}`,
           tutor: tutorName,
           subject: subject || "",
+          date: date.toString(),
+          time: selectedTime,
         },
       };
       fetch("/api/checkout_session", {
@@ -113,8 +115,6 @@ export default withPageAuthRequired(function App({
       .then((response) => response.json())
       .then((data) => setFreeTime(data));
   }, [searchParams, tutorName]);
-
-  useEffect(() => setDisabledKeys(findDisabledKeys(freeTime)), [freeTime]);
 
   useEffect(
     () => setPrice(getCost(selectedStudents, selectedLength)),
@@ -141,39 +141,34 @@ export default withPageAuthRequired(function App({
                   </TableCell>
 
                   <TableCell>
-                    <Dropdown>
-                      <DropdownTrigger>
+                    <Popover>
+                      <PopoverTrigger asChild>
                         <Button
-                          color={complete ? "default" : "danger"}
                           variant="bordered"
+                          className={cn(
+                            "w-[280px] justify-start text-left font-normal",
+                            !date && "text-muted-foreground",
+                          )}
                         >
-                          {selectedDate}
+                          <CalendarIcon className="mr-2 h-4 w-4" />
+                          {date ? (
+                            format(date, "PPP")
+                          ) : (
+                            <span>Pick a date</span>
+                          )}
                         </Button>
-                      </DropdownTrigger>
-                      <Tooltip
-                        showArrow={true}
-                        content="Grayed out items mean no times are available that day"
-                      >
-                        <DropdownMenu
-                          variant="flat"
-                          aria-label="day dropdown"
-                          disallowEmptySelection
-                          selectionMode="single"
-                          selectedKeys={selectedKeys}
-                          onSelectionChange={setSelectedKeys}
-                          disabledKeys={disabledKeys}
-                        >
-                          <DropdownItem key="Monday">Monday</DropdownItem>
-                          <DropdownItem key="Tuesday">Tuesday</DropdownItem>
-                          <DropdownItem key="Wednesday">Wednesday</DropdownItem>
-                          <DropdownItem key="Thursday">Thursday</DropdownItem>
-                          <DropdownItem key="Friday">Friday</DropdownItem>
-                          <DropdownItem key="Saturday">Saturday</DropdownItem>
-                          <DropdownItem key="Sunday">Sunday</DropdownItem>
-                        </DropdownMenu>
-                      </Tooltip>
-                    </Dropdown>
-                    {selectedDate !== "Select a date" && (
+                      </PopoverTrigger>
+                      <PopoverContent className="w-auto p-0">
+                        <Calendar
+                          mode="single"
+                          selected={date}
+                          onSelect={setDate}
+                          initialFocus
+                          showOutsideDays
+                        />
+                      </PopoverContent>
+                    </Popover>{" "}
+                    {date && (
                       <div>
                         <Spacer x={1} />
                         <Dropdown>
@@ -197,7 +192,7 @@ export default withPageAuthRequired(function App({
                             {freeTime !== undefined ? (
                               getTimes(
                                 freeTime,
-                                selectedDate.toLowerCase(),
+                                date.getDay().toString().toLowerCase(),
                               ).map((time: string, idx: number) => (
                                 <DropdownItem key={`${idx}_${time}`}>
                                   {time}

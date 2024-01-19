@@ -23,19 +23,19 @@ export function getCost(students: string, duration: Selection): string {
 
 export function getTimes(times: timeGET, day: string): string[] {
   switch (day) {
-    case "monday":
+    case "1":
       return times.monday;
-    case "tuesday":
+    case "2":
       return times.tuesday;
-    case "wednesday":
+    case "3":
       return times.wednesday;
-    case "thursday":
+    case "4":
       return times.thursday;
-    case "friday":
+    case "5":
       return times.friday;
-    case "saturday":
+    case "6":
       return times.saturday;
-    case "sunday":
+    case "0":
       return times.sunday;
     default:
       return [];
