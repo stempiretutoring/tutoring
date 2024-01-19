@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { Stripe } from "stripe";
+import { format } from "date-fns";
 
 const stripe = new Stripe(process.env.STRIPE_TEST_SECRET_KEY!, {
   apiVersion: "2023-10-16",
@@ -11,14 +12,24 @@ export async function POST(req: Request) {
   const payload = await req.text();
   const signature = req.headers.get("stripe-signature");
 
-  let event: Stripe.Event | null = null;
+  let event: Promise<Stripe.Event> | null | Stripe.Event = null;
   try {
-    event = stripe.webhooks.constructEvent(payload, signature!, webhookSecret);
+    // TODO: FIX
+    event = await stripe.webhooks.constructEventAsync(
+      payload,
+      signature!,
+      webhookSecret,
+    );
+    const req = JSON.parse(payload)["data"]["object"];
     switch (event?.type) {
       case "payment_intent.succeeded":
-        // handle payment_intent.succeded
-        const req = JSON.parse(payload)["data"]["object"];
-        const purchase = req["metadata"]["description"];
+        const description = req["metadata"]["description"];
+
+        const tutor = req["metadata"]["tutor"];
+        const date = req["metadata"]["date"];
+        const time = req["metadata"]["time"];
+        const subject = req["metadata"]["subject"];
+
         const email = req["receipt_email"];
 
         const headers = new Headers();
@@ -35,7 +46,13 @@ export async function POST(req: Request) {
           },
           update: {
             $push: {
-              purchases: purchase,
+              purchases: [
+                tutor,
+                subject,
+                format(date, "PPPP"),
+                time,
+                description,
+              ],
             },
           },
           upsert: true,
@@ -46,10 +63,36 @@ export async function POST(req: Request) {
           headers: headers,
           body: JSON.stringify(body),
         });
+
+        console.log(tutor);
+
+        const tutorBody = {
+          collection: process.env.MONGO_COLLECTION,
+          database: process.env.MONGO_DATABASE,
+          dataSource: process.env.MONGO_DATA_SOURCE,
+          filter: {
+            name: tutor,
+          },
+          update: {
+            $push: {
+              booked: `${format(date, 'P')}-${time}`,
+            },
+          },
+          upsert: true,
+        };
+
+        await fetch(
+          process.env.MONGO_URI + "/action/updateOne",
+          {
+            method: "POST",
+            headers: headers,
+            body: JSON.stringify(tutorBody),
+          },
+        );
+
         const data = await res.json();
+
         return NextResponse.json(data, { status: res.status });
-      case "checkout.session.completed":
-        sessionStorage.setItem('purchase', 'completed');
       default:
         return NextResponse.json({}, { status: 200 });
     }
@@ -62,4 +105,4 @@ export async function POST(req: Request) {
   return NextResponse.json({ received: true });
 }
 
-export const runtime = 'edge';
+export const runtime = "edge";

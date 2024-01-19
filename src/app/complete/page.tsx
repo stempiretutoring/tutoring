@@ -2,6 +2,7 @@
 import React, { useState, useMemo, useEffect } from "react";
 import {
   Input,
+  Link,
   Button,
   Textarea,
   Dropdown,
@@ -9,16 +10,13 @@ import {
   DropdownMenu,
   DropdownItem,
   Selection,
+  Spinner,
 } from "@nextui-org/react";
 import { useSearchParams } from "next/navigation";
-import Link from "next/link";
 
 export default function App() {
   const searchParams = useSearchParams();
-  const tutor = searchParams.get("tutor")?.toString() || "";
-  const subject = searchParams.get("subject")?.toString() || "";
-
-  const valid = sessionStorage.getItem("purchase");
+  const [purchaseInfo, setPurchaseInfo] = useState<string[]>();
 
   const [preferredMeeting, setPreferredMeeting] = useState<Selection>(
     new Set(["In person"]),
@@ -31,17 +29,33 @@ export default function App() {
 
   const handleForm = (formData: FormData) => {
     formData.append("meeting", selectedMeeting);
-    formData.append("tutor", tutor);
-    formData.append("subject", subject);
-    fetch(`/api/success?tutor=${tutor}`, {
+    if (purchaseInfo) {
+      formData.append("tutor", purchaseInfo[0]);
+      formData.append("subject", purchaseInfo[1]);
+      formData.append("date", purchaseInfo[2]);
+      formData.append("time", purchaseInfo[3]);
+    }
+
+    fetch(`/api/success/mail`, {
       method: "post",
       body: formData,
     });
   };
 
+  useEffect(() => {
+    fetch(`/api/success/purchase?user=${searchParams.get("user")}`)
+      .then((response) => response.json())
+      .then((data) => {
+        setPurchaseInfo(data[data.length - 1]);
+      })
+      .catch((error) => {
+        console.error(`Error fetching data: ${error}`);
+      });
+  }, [searchParams]);
+
   return (
     <>
-      {valid ? (
+      {purchaseInfo ? (
         <form action={handleForm}>
           <div className="flex justify-center align-items">
             <div className="w-1/2 grid gap-4 grid-cols-2">
@@ -59,7 +73,7 @@ export default function App() {
                 <Input
                   type="email"
                   label="Email"
-                  name="email"
+                  name="parentEmail"
                   variant="underlined"
                   description="Parent email"
                   isRequired
@@ -114,8 +128,13 @@ export default function App() {
       ) : (
         <div className="flex align-items justify-center">
           <h1>
-            Complete a purchase to view this page! Return home{" "}
-            <Link href="/">Here</Link>
+            <Spinner color="secondary" label="Loading.." />
+            <div>
+              <p>If you ended up here by accident you can return home</p>{" "}
+              <Link showAnchorIcon href="/" underline="always">
+                here
+              </Link>
+            </div>
           </h1>
         </div>
       )}

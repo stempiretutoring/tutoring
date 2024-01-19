@@ -3,7 +3,8 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
 export async function isTutorMiddleware(req: NextRequest, res: NextResponse) {
-  const user = await getSession(req, res);
+  const session = await getSession(req, res);
+  const user = session?.user;
 
   const emails: string[] = (await (
     await fetch(process.env.NEXT_PUBLIC_BASE_URL + "/api/auth/tutors")
