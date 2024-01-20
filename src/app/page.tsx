@@ -6,10 +6,9 @@ import { Image } from "@nextui-org/react";
 export default function Home() {
   return (
     <main className={styles.main}>
+      <Image width={300} height={300} src="./home.png" />
       <div className={styles.description}>
-        <div className="m-4 flex align-center justify-content">
-        <Image width={300} height={300} src="./home.png" />
-      </div>
+        <div className="m-4 flex align-center justify-content"></div>
 
         <p className="font-bold italic text-2xl">
           At STEMpire Tutoring, we believe quality academic assistance should be
@@ -19,7 +18,7 @@ export default function Home() {
         </p>
       </div>
 
-            <div className={styles.grid}>
+      <div className={styles.grid}>
         <Link
           href="/tutors"
           className={styles.card}
@@ -27,9 +26,42 @@ export default function Home() {
           rel="noopener noreferrer"
         >
           <h2>
-            Meet our tutors <span>-&gt;</span>
+            Tutors <span>-&gt;</span>
           </h2>
           <p>Learn about our staff</p>
+        </Link>
+        <Link
+          href="/about/rates"
+          className={styles.card}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <h2>
+            Prices <span>-&gt;</span>
+          </h2>
+          <p>View our rates</p>
+        </Link>
+        <Link
+          href="/tutors"
+          className={styles.card}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <h2>
+            Booking <span>-&gt;</span>
+          </h2>
+          <p>Schedule an appointment</p>
+        </Link>
+        <Link
+          href="/tutors"
+          className={styles.card}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <h2>
+            Mission Statement <span>-&gt;</span>
+          </h2>
+          <p>What we stand for</p>
         </Link>
       </div>
     </main>

@@ -9,15 +9,15 @@ export async function GET(request: NextRequest) {
     headers.append("api-key", process.env.MONGO_API_KEY || "");
     headers.append("Content-Type", "application/json");
 
-    if (searchParams.has("email")) {
-      const email = searchParams.get("email");
+    if (searchParams.has("name")) {
+      const name = searchParams.get("name");
 
       const body = {
         collection: process.env.MONGO_COLLECTION,
         database: process.env.MONGO_DATABASE,
         dataSource: process.env.MONGO_DATA_SOURCE,
         filter: {
-          email: email,
+          name: name,
           active: true,
         },
       };

@@ -22,7 +22,7 @@ export function Nav() {
   const { user } = useUser();
 
   return (
-    <div className="mb-4">
+    <div className="mb-4 w-screen">
       <Navbar
         isBordered
         classNames={{
@@ -41,7 +41,7 @@ export function Nav() {
             "data-[active=true]:after:bg-primary",
           ],
         }}
-        className="flex flex-wrap nd:flex-nowrap"
+        className="max-w-full"
       >
         <NavbarBrand>
           <Link color="foreground" href="/">
