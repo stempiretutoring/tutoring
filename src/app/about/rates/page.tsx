@@ -14,7 +14,7 @@ import {
 
 export default function App() {
   return (
-    <>
+    <div className="h-dvh">
       <h1 className="mx-auto my-4 w-2/3 text-xl">
         STEMpire focuses on being very affordable while still offering the
         highest quality of education
@@ -51,6 +51,6 @@ export default function App() {
           </Button>
         </Link>
       </div>
-    </>
+    </div>
   );
 }
