@@ -9,15 +9,15 @@ export async function GET(request: NextRequest) {
     headers.append("api-key", process.env.MONGO_API_KEY || "");
     headers.append("Content-Type", "application/json");
 
-    if (searchParams.has("name")) {
-      const name = searchParams.get("name");
+    if (searchParams.has("email")) {
+      const email = searchParams.get("email");
 
       const body = {
         collection: process.env.MONGO_COLLECTION,
         database: process.env.MONGO_DATABASE,
         dataSource: process.env.MONGO_DATA_SOURCE,
         filter: {
-          name: name,
+          email: email,
           active: true,
         },
       };
@@ -62,7 +62,7 @@ export async function POST(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
     const form = await request.formData();
-    const name = searchParams.get("name");
+    const email = searchParams.get("email");
     const noDays: string[] | undefined = form
       .get("noDays")
       ?.toString()
@@ -86,7 +86,7 @@ export async function POST(request: NextRequest) {
       collection: process.env.MONGO_COLLECTION,
       database: process.env.MONGO_DATABASE,
       dataSource: process.env.MONGO_DATA_SOURCE,
-      filter: { name: name },
+      filter: { email: email },
       update: {
         $set: {
           startTime: [

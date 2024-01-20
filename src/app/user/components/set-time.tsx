@@ -15,8 +15,8 @@ export default function ProfileClient() {
   const [selected, setSelected] = useState<string[]>([]);
 
   const setTime = (formData: FormData) => {
-    formData.append('noDays', selected.toString())
-    fetch(`/api/tutors?name=${user?.name}`, {
+    formData.append('noDays', selected.toString());
+    fetch(`/api/tutors?email=${user?.email}`, {
       method: "POST",
       body: formData,
     });
@@ -63,7 +63,6 @@ export default function ProfileClient() {
                   type="time"
                   name={`${day.toLowerCase()}-start-time`}
                   className="block w-full rounded-md col-span-1 shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 mr-2"
-                  value="00:00"
                 />
                 <h1 className="text-2xl inline whitespace-nowrap col-span-1 mx-0 text-gray-400">
                   -
@@ -72,7 +71,6 @@ export default function ProfileClient() {
                   type="time"
                   name={`${day.toLowerCase()}-end-time`}
                   className="block w-full rounded-md shadow-sm border-gray-300 col-span-1 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 ml-2"
-                  value="12:00"
                 />
               </div>
             ))}
