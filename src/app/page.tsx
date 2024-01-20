@@ -6,16 +6,16 @@ import { Image } from "@nextui-org/react";
 export default function Home() {
   return (
     <main className={styles.main}>
-      <Image width={300} height={300} src="./home.png" />
-      <div className={styles.description}>
-        <div className="m-4 flex align-center justify-content"></div>
-
-        <p className="font-bold italic text-2xl">
-          At STEMpire Tutoring, we believe quality academic assistance should be
-          available for a reasonable price. Our experienced team of college and
-          high school students seeks to help those struggling with schoolwork
-          and instill within them a sense of pride in their work.
-        </p>
+      <Image className="m-3" width={300} height={300} src="./home.png" />
+      <div className="sm:text-sm">
+        <div className="m-4 flex align-center justify-content">
+          <p className="font-bold italic text-sm md:text-xl lg:text-2xl">
+            At STEMpire Tutoring, we believe quality academic assistance should
+            be available for a reasonable price. Our experienced team of college
+            and high school students seeks to help those struggling with
+            schoolwork and instill within them a sense of pride in their work.
+          </p>
+        </div>
       </div>
 
       <div className={styles.grid}>
