@@ -75,20 +75,17 @@ export async function POST(req: Request) {
           },
           update: {
             $push: {
-              booked: `${format(date, 'P')}-${time}`,
+              booked: `${format(date, "P")}@${time}`,
             },
           },
           upsert: true,
         };
 
-        await fetch(
-          process.env.MONGO_URI + "/action/updateOne",
-          {
-            method: "POST",
-            headers: headers,
-            body: JSON.stringify(tutorBody),
-          },
-        );
+        fetch(process.env.MONGO_URI + "/action/updateOne", {
+          method: "POST",
+          headers: headers,
+          body: JSON.stringify(tutorBody),
+        });
 
         const data = await res.json();
 

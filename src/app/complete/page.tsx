@@ -54,7 +54,7 @@ export default function App() {
   }, [searchParams]);
 
   return (
-    <>
+    <div className="h-dvh">
       {purchaseInfo ? (
         <form action={handleForm}>
           <div className="flex justify-center align-items">
@@ -138,6 +138,6 @@ export default function App() {
           </h1>
         </div>
       )}
-    </>
+    </div>
   );
 }

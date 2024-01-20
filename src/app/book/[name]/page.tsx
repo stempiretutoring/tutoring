@@ -59,9 +59,11 @@ export default withPageAuthRequired(function App({
   const [date, setDate] = useState<Date>();
   const [clientSecret, setClientSecret] = useState("");
   const [freeTime, setFreeTime] = useState<timeGET>();
+  const [bookedTimes, setBookedTimes] = useState<string[]>();
   const [selectedStudents, setSelectedStudents] = useState<string>("1");
   const [price, setPrice] = useState<string>("");
   const [complete, setComplete] = useState<boolean>(true);
+  const [disabledTimes, setDisabledTimes] = useState<string[]>([]);
   const [selectedTimeKey, setSelectedTimeKey] = useState<Selection>(
     new Set(["Select a time"]),
   );
@@ -113,8 +115,29 @@ export default withPageAuthRequired(function App({
   useEffect(() => {
     fetch(`/api/tutors/book?name=${tutorName}`)
       .then((response) => response.json())
-      .then((data) => setFreeTime(data));
+      .then((data) => {
+        setFreeTime(data["times"]);
+        setBookedTimes(data["booked"]);
+      });
   }, [searchParams, tutorName]);
+
+  useEffect(() => {
+    if (bookedTimes && selectedTime && date && freeTime) {
+      for (let time of bookedTimes) {
+        const bookedDate = time.split("@")[0];
+        const bookedTime = time.split("@")[1];
+
+        const times: string[] = getTimes(
+          freeTime,
+          date.getDay().toString().toLowerCase(),
+        );
+
+        if (bookedDate === format(date, "P") && times.includes(bookedTime)) {
+          setDisabledTimes([...disabledTimes, bookedTime]);
+        }
+      }
+    }
+  }, [bookedTimes, selectedTime, date]);
 
   useEffect(
     () => setPrice(getCost(selectedStudents, selectedLength)),
@@ -124,7 +147,7 @@ export default withPageAuthRequired(function App({
   return (
     <>
       {!clientSecret && (
-        <div className="grid grid-cols-3 gap-4">
+        <div className="h-dvh grid grid-cols-3 gap-4">
           <div className="col-span-2 m-3">
             <Table aria-label="Purchase table">
               <TableHeader columns={columns}>
@@ -188,15 +211,14 @@ export default withPageAuthRequired(function App({
                             selectionMode="single"
                             selectedKeys={selectedTimeKey}
                             onSelectionChange={setSelectedTimeKey}
+                            disabledKeys={disabledTimes}
                           >
                             {freeTime !== undefined ? (
                               getTimes(
                                 freeTime,
                                 date.getDay().toString().toLowerCase(),
-                              ).map((time: string, idx: number) => (
-                                <DropdownItem key={`${idx}_${time}`}>
-                                  {time}
-                                </DropdownItem>
+                              ).map((time: string) => (
+                                <DropdownItem key={time}>{time}</DropdownItem>
                               ))
                             ) : (
                               <DropdownItem key="No times available">
@@ -278,7 +300,7 @@ export default withPageAuthRequired(function App({
           </div>
         </div>
       )}
-      <div id="checkout">
+      <div id="checkout" className="h-dvh">
         {clientSecret && (
           <EmbeddedCheckoutProvider
             stripe={stripePromise}

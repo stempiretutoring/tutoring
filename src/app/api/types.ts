@@ -9,6 +9,7 @@ export interface tutorGET {
   startTime: string[];
   endTime: string[];
   active: boolean;
+  booked: string[];
 }
 
 export type timeGET = {
