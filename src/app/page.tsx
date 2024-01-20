@@ -9,7 +9,7 @@ export default function Home() {
       <Image className="m-3" width={300} height={300} src="./home.png" />
       <div className="sm:text-sm">
         <div className="m-4 flex align-center justify-content">
-          <p className="font-bold italic text-sm md:text-xl lg:text-2xl">
+          <p className="font-bold italic text-md md:text-xl lg:text-2xl">
             At STEMpire Tutoring, we believe quality academic assistance should
             be available for a reasonable price. Our experienced team of college
             and high school students seeks to help those struggling with
