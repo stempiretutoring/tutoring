@@ -13,7 +13,7 @@ export default function App() {
           students achieve their academic goals, enhance their skills, and boost
           their confidence. We are dedicated to delivering personalized,
           high-quality, and affordable tutoring services that are tailored to
-          each student&aposs needs, learning style, and pace. We are proud to be a
+          each student&apos needs, learning style, and pace. We are proud to be a
           socially responsible business that donates 1% of all profits to Khan
           Academy, a non-profit organization that provides free online learning
           resources for everyone.
