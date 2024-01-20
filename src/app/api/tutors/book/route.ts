@@ -39,6 +39,8 @@ export async function GET(request: NextRequest) {
 
   const data: tutorGET = (await res.json())["document"];
 
+  const booked: string[] = data["booked"];
+
   for (let i = 0; i < data.startTime.length; i++) {
     if (data.startTime[i] === "") {
       switch (i) {
@@ -77,7 +79,7 @@ export async function GET(request: NextRequest) {
     }
   }
 
-  return NextResponse.json(times, { status: 200 });
+  return NextResponse.json({ times: times, booked: booked }, { status: 200 });
 }
 
-export const runtime = 'edge';
+export const runtime = "edge";
