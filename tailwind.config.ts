@@ -12,9 +12,6 @@ const config: Config = {
   ],
   theme: {
     extend: {},
-    fontFamily: {
-      'sans': ['JetBrains Mono']
-    }
   },
   darkMode: "class",
   plugins: [nextui()],
