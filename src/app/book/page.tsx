@@ -59,9 +59,9 @@ export default function App() {
   );
 
   return (
-    <div className="flex justify-center items-center">
+    <div className="h-dvh">
       {tutors && (
-        <>
+        <div className="flex justify-center items-center">
           <pre>Book </pre>
           <Dropdown>
             <DropdownTrigger>
@@ -76,14 +76,16 @@ export default function App() {
               onSelectionChange={setSelectedTutor}
             >
               {tutors?.map((tutor) => (
-                <DropdownItem key={tutor.name}>{tutor.name}</DropdownItem>
+                <DropdownItem className="capitalize" key={tutor.name}>
+                  {tutor.name}
+                </DropdownItem>
               ))}
             </DropdownMenu>
           </Dropdown>
           <pre> for </pre>
           <Dropdown>
             <DropdownTrigger>
-              <Button variant="bordered">{selectedSubject}</Button>
+              <Button className="capitalize" variant="bordered">{selectedSubject}</Button>
             </DropdownTrigger>
             <DropdownMenu
               aria-label="Tutor Selection"
@@ -94,7 +96,7 @@ export default function App() {
               onSelectionChange={setSelectedSubject}
             >
               {subjects?.map((subject) => (
-                <DropdownItem key={subject}>{subject}</DropdownItem>
+                <DropdownItem className="capitalize" key={subject}>{subject}</DropdownItem>
               ))}
             </DropdownMenu>
           </Dropdown>
@@ -106,7 +108,7 @@ export default function App() {
               </Button>{" "}
             </Link>
           )}
-        </>
+        </div>
       )}
     </div>
   );
