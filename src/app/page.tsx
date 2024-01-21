@@ -6,7 +6,7 @@ import { Image } from "@nextui-org/react";
 export default function Home() {
   return (
     <main className={styles.main}>
-      <Image className="m-3" width={300} height={300} src="./home.png" />
+      <Image alt="stempire logo" className="m-3" width={300} height={300} src="./home.png" />
       <div className="sm:text-sm">
         <div className="m-4 flex align-center justify-content">
           <p className="font-bold italic text-md md:text-xl lg:text-2xl">

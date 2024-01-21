@@ -137,7 +137,7 @@ export default withPageAuthRequired(function App({
         }
       }
     }
-  }, [bookedTimes, selectedTime, date]);
+  }, [bookedTimes, selectedTime, date, freeTime, disabledTimes]);
 
   useEffect(
     () => setPrice(getCost(selectedStudents, selectedLength)),

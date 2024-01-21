@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import {
   Button,
@@ -13,18 +13,62 @@ import {
 export default function ProfileClient() {
   const { user, error, isLoading } = useUser();
   const [selected, setSelected] = useState<string[]>([]);
+  const [savedStartTime, setSavedStartTime] = useState<string[]>([
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+  ]);
+  const [savedEndTime, setSavedEndTime] = useState<string[]>([
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+  ]);
 
   const setTime = (formData: FormData) => {
-    formData.append('noDays', selected.toString());
+    formData.append("noDays", selected.toString());
     fetch(`/api/tutors?email=${user?.email}`, {
       method: "POST",
       body: formData,
     });
   };
 
+  const handleEndChange = (value: string, idx: number) => {
+    setSavedEndTime((prev) => [
+      ...prev.slice(0, idx),
+      value,
+      ...prev.slice(idx + 1),
+    ]);
+  };
+
+  const handleStartChange = (value: string, idx: number) => {
+    setSavedStartTime((prev) => [
+      ...prev.slice(0, idx),
+      value,
+      ...prev.slice(idx + 1),
+    ]);
+  };
+
+  useEffect(() => {
+    fetch(`/api/tutors?email=${user?.email}`)
+      .then((response) => response.json())
+      .then((data) => {
+        setSavedStartTime(data["document"]["startTime"]);
+        setSavedEndTime(data["document"]["endTime"]);
+      });
+  }, [user?.email]);
+
   if (isLoading) {
     return <div>Loading...</div>;
   }
+
   if (error) return <div>{error.message}</div>;
 
   return (
@@ -40,7 +84,7 @@ export default function ProfileClient() {
               "Friday",
               "Saturday",
               "Sunday",
-            ].map((day) => (
+            ].map((day, index) => (
               <div key={day} className="flex items-center">
                 <Tooltip
                   content={`Select if you do not wish to tutor on ${day}`}
@@ -63,6 +107,8 @@ export default function ProfileClient() {
                   type="time"
                   name={`${day.toLowerCase()}-start-time`}
                   className="block w-full rounded-md col-span-1 shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 mr-2"
+                  value={savedStartTime[index].toString()}
+                  onValueChange={(value) => handleStartChange(value, index)}
                 />
                 <h1 className="text-2xl inline whitespace-nowrap col-span-1 mx-0 text-gray-400">
                   -
@@ -71,6 +117,8 @@ export default function ProfileClient() {
                   type="time"
                   name={`${day.toLowerCase()}-end-time`}
                   className="block w-full rounded-md shadow-sm border-gray-300 col-span-1 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 ml-2"
+                  value={savedEndTime[index]}
+                  onValueChange={(value) => handleEndChange(value, index)}
                 />
               </div>
             ))}
