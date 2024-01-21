@@ -9,18 +9,21 @@ export async function GET(request: NextRequest) {
     headers.append("api-key", process.env.MONGO_API_KEY || "");
     headers.append("Content-Type", "application/json");
 
-    if (searchParams.has("name")) {
-      const name = searchParams.get("name");
-
+    if (searchParams.size > 0) {
       const body = {
         collection: process.env.MONGO_COLLECTION,
         database: process.env.MONGO_DATABASE,
         dataSource: process.env.MONGO_DATA_SOURCE,
-        filter: {
-          name: name,
-          active: true,
-        },
+        filter: {},
       };
+
+      if (searchParams.has("name")) {
+        const name = searchParams.get("name");
+        body.filter = { name: name, active: true };
+      } else if (searchParams.has("email")) {
+        const email = searchParams.get("email");
+        body.filter = { email: email, active: true };
+      }
 
       const res = await fetch(process.env.MONGO_URI + "/action/findOne", {
         method: "POST",

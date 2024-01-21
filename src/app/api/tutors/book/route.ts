@@ -4,7 +4,6 @@ import { splitTime } from "../../lib/times";
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
-  const name = searchParams.get("name");
   const headers = new Headers();
 
   headers.append("Access-Control-Request-Headers", "*");
@@ -15,11 +14,16 @@ export async function GET(request: NextRequest) {
     collection: process.env.MONGO_COLLECTION,
     database: process.env.MONGO_DATABASE,
     dataSource: process.env.MONGO_DATA_SOURCE,
-    filter: {
-      name: name,
-      active: true,
-    },
+    filter: {},
   };
+
+  if (searchParams.has("name")) {
+    const name = searchParams.get("name");
+    body.filter = { name: name, active: true };
+  } else if (searchParams.has("email")) {
+    const email = searchParams.get("email");
+    body.filter = { email: email, active: true };
+  }
 
   const res = await fetch(process.env.MONGO_URI + "/action/findOne", {
     method: "POST",
