@@ -1,9 +1,9 @@
 .main {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: space-evenly;
   align-items: center;
-  padding: 3rem;
+  padding: 2rem;
   min-height: 100vh;
 }
 
@@ -40,6 +40,7 @@
 .grid {
   display: grid;
   grid-template-columns: repeat(50, minmax(auto, auto));
+  justify-content: space-evenly;
   max-width: 100%;
   width: var(--max-width);
 }

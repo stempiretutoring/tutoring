@@ -6,7 +6,7 @@ import { Image } from "@nextui-org/react";
 export default function Home() {
   return (
     <main className={styles.main}>
-      <Image alt="stempire logo" className="m-3" width={300} height={300} src="./home2.png" />
+      <Image alt="stempire logo" className="m-3" width={500} height={500} src="./home2.png" />
       <div className="sm:text-sm">
         <div className="m-4 flex align-center justify-content">
           <p className="font-bold italic text-md md:text-xl lg:text-2xl">
@@ -25,10 +25,10 @@ export default function Home() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          <h2>
+          <h2 className="text-lg">
             Tutors <span>-&gt;</span>
           </h2>
-          <p>Learn about our staff</p>
+          <p className="text-md">Learn about our staff</p>
         </Link>
         <Link
           href="/about/rates"
@@ -36,10 +36,10 @@ export default function Home() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          <h2>
+          <h2 className="text-lg">
             Prices <span>-&gt;</span>
           </h2>
-          <p>View our rates</p>
+          <p className="text-md">View our rates</p>
         </Link>
         <Link
           href="/book"
@@ -47,10 +47,10 @@ export default function Home() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          <h2>
+          <h2 className="text-lg">
             Booking <span>-&gt;</span>
           </h2>
-          <p>Schedule an appointment</p>
+          <p className="text-md">Schedule an appointment</p>
         </Link>
         <Link
           href="/about/mission"
@@ -58,10 +58,10 @@ export default function Home() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          <h2>
+          <h2 className="text-lg">
             Mission Statement <span>-&gt;</span>
           </h2>
-          <p>What we stand for</p>
+          <p className="text-md">What we stand for</p>
         </Link>
       </div>
     </main>
