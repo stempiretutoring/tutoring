@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback, Key } from "react";
 import {
   Table,
   TableColumn,
@@ -7,13 +7,16 @@ import {
   TableRow,
   TableHeader,
   Divider,
+  Chip,
 } from "@nextui-org/react";
 import ProfileClient from "./set-time";
+import Client from "./client";
+import { columns } from "./lib/data";
+import { clientGET } from "@/app/api/types";
 
 interface tutorProps {
   email: string;
 }
-
 export default function Tutor({ email }: tutorProps) {
   const [isTutor, setIsTutor] = useState<boolean>(false);
 
@@ -28,6 +31,19 @@ export default function Tutor({ email }: tutorProps) {
       });
   }, [email]);
 
+  const renderCell = useCallback((rowValue: clientGET, columnKey: Key) => {
+    switch (columnKey) {
+      case "date":
+        return rowValue.purchases[2];
+      case "time":
+        return rowValue.purchases[3];
+      case "subject":
+        return <Chip className="p-1 m-1 text-md">{rowValue.purchases[1]}</Chip>;
+      case "desription":
+        return rowValue.purchases[4];
+    }
+  }, []);
+
   return (
     <div className="h-screen w-screen">
       {isTutor && (
@@ -39,21 +55,7 @@ export default function Tutor({ email }: tutorProps) {
           <ProfileClient />
         </div>
       )}
-
-      {!isTutor && (
-        <>
-          <Table aria-label="Purchase History" className="mx-auto my-5 w-5/6">
-            <TableHeader>
-              <TableColumn> Date </TableColumn>
-              <TableColumn> Price </TableColumn>
-              <TableColumn> Item </TableColumn>
-            </TableHeader>
-            <TableBody emptyContent={"No purchase history found"}>
-              {[]}
-            </TableBody>
-          </Table>
-        </>
-      )}
+      {!isTutor && <Client email={email} />}
     </div>
   );
 }

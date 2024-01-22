@@ -1,3 +1,5 @@
+import { info } from "console";
+
 export interface tutorGET {
   _id: string;
   name: string;
@@ -29,21 +31,21 @@ export type CartItem = {
   currency: string;
   quantity: number;
   metadata: {
-    description: string,
-    tutor: string,
-    subject: string,
-    date: string,
-    time: string,
+    description: string;
+    tutor: string;
+    subject: string;
+    date: string;
+    time: string;
   };
 };
 
 export type purchase = {
-  tutorName: string,
-  subject: string,
-  date: string,
-  time: string,
-  description: string,
-}
+  tutorName: string;
+  subject: string;
+  date: string;
+  time: string;
+  description: string;
+};
 
 export interface sendMailProps {
   email: string;
@@ -55,4 +57,13 @@ export interface sendMailProps {
   parentEmail: string;
   date: string;
   time: string;
+}
+
+export interface clientGET {
+  _id: string;
+  email: string;
+  date: string;
+  name: string;
+  picture: string;
+  purchases: string[];
 }
