@@ -42,7 +42,7 @@ export default function Home() {
           <p>View our rates</p>
         </Link>
         <Link
-          href="/tutors"
+          href="/about/mission"
           className={styles.card}
           target="_blank"
           rel="noopener noreferrer"
@@ -53,7 +53,7 @@ export default function Home() {
           <p>Schedule an appointment</p>
         </Link>
         <Link
-          href="/tutors"
+          href="/book"
           className={styles.card}
           target="_blank"
           rel="noopener noreferrer"
