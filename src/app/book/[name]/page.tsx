@@ -90,7 +90,7 @@ export default withPageAuthRequired(function App({
             selectedLength,
           ).join(", ")} with ${Array.from(selectedStudents).join(
             ", ",
-          )} student(s) for ${bodyPrice} on ${date} at ${selectedTime}`,
+          )} student(s) for \$${bodyPrice / 100} on ${date} at ${selectedTime}`,
           tutor: tutorName,
           subject: subject || "",
           date: date.toString(),
