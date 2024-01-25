@@ -233,8 +233,8 @@ export function Nav() {
                 <DropdownItem key="settings" href="/user">
                   My Profile
                 </DropdownItem>
-                <DropdownItem key="cart" href="/cart">
-                  Cart
+                <DropdownItem key="cart" href="/book">
+                  Booking
                 </DropdownItem>
 
                 <DropdownItem key="help_and_feedback" href="/help">
