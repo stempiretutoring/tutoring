@@ -1,18 +1,9 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Divider } from "@nextui-org/react";
 import TutorCard from "./components/card";
-import { tutorGET } from "../api/types";
 
 export default function App() {
-  const [tutors, setTutors] = useState<tutorGET[]>();
-
-  useEffect(() => {
-    fetch(`/api/tutors`)
-      .then((response) => response.json())
-      .then((data) => setTutors(data["documents"]));
-  }, []);
-
   return (
     <>
       <div className="flex flex-col items-center justify-center">
