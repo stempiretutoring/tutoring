@@ -63,6 +63,19 @@ export default function Home() {
           </h2>
           <p className="text-md">What we stand for</p>
         </Link>
+        
+        <Link
+          href="/about/faq"
+          className={styles.card}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <h2 className="text-lg">
+            FAQ <span>-&gt;</span>
+          </h2>
+          <p className="text-md">Frequently Asked Questions</p>
+        </Link>
+
       </div>
     </main>
   );
