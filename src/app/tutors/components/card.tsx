@@ -1,5 +1,6 @@
 "use client";
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect } from "react";
+import { format } from "date-fns";
 import {
   Card,
   CardHeader,
@@ -19,6 +20,7 @@ import {
 import { Spinner, Chip } from "@nextui-org/react";
 import styles from "./page.module.css";
 import { tutorGET } from "@/app/api/types";
+import { getTimes } from "../lib/time";
 
 interface cardProps {
   name: string;
@@ -29,12 +31,8 @@ export default function TutorCard({ name }: cardProps) {
   const [selectedKeys, setSelectedKeys] = useState<Selection>(
     new Set(["(select a subject)"]),
   );
-  const url = process.env.NEXT_PUBLIC_IMAGE_URL;
 
-  const selectedValue = useMemo(
-    () => Array.from(selectedKeys).join(", ").replaceAll("_", " "),
-    [selectedKeys],
-  );
+  const url = process.env.NEXT_PUBLIC_IMAGE_URL;
 
   useEffect(() => {
     fetch(`/api/tutors?name=${name}`)
@@ -46,7 +44,7 @@ export default function TutorCard({ name }: cardProps) {
     <>
       {info ? (
         <div className={styles.main}>
-          <Popover showArrow placement="right" backdrop="blur" color="primary">
+          <Popover placement="right" backdrop="blur" color="primary">
             <PopoverTrigger>
               <Card className="py-4">
                 <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
@@ -92,7 +90,7 @@ export default function TutorCard({ name }: cardProps) {
                         {info?.subjects.map((subject) => (
                           <DropdownItem
                             key={subject}
-                            className='capitalize'
+                            className="capitalize"
                             href={`/book/${info.name}?subject=${subject}`}
                           >
                             {subject}
@@ -102,8 +100,41 @@ export default function TutorCard({ name }: cardProps) {
                     </Dropdown>
                   </h2>
                 </div>
-                <Divider />
-                <div className="text-tiny text-black w-[300px]">{info?.bio}</div>
+                <Divider className="mt-3 mb-3" />
+                <div className="text-base text-black w-[300px]">{info?.bio}</div>
+                <Divider className="mt-3 mb-3" />
+                <div className="flex align-items ">
+                  <Popover
+                    className="mr-4"
+                    color="secondary"
+                    placement="left-end"
+                  >
+                    <PopoverTrigger>
+                      <Button>View my schedule</Button>
+                    </PopoverTrigger>
+                    <PopoverContent>
+                      <div className="p-2">
+                        {[
+                          "Monday",
+                          "Tuesday",
+                          "Wednesday",
+                          "Thursday",
+                          "Friday",
+                          "Saturday",
+                          "Sunday",
+                        ].map((day: string, index: number) => (
+                          <p key={day} className="text-tiny md:text-sm">
+                            {day}:{" "}
+                            {getTimes(
+                              info["startTime"][index],
+                              info["endTime"][index],
+                            )}
+                          </p>
+                        ))}
+                      </div>
+                    </PopoverContent>
+                  </Popover>
+                </div>
               </div>
             </PopoverContent>
           </Popover>
