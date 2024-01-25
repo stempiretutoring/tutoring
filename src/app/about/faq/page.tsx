@@ -87,8 +87,12 @@ export default function App() {
                         <TableCell>AP/IB Physics 1</TableCell>
                       </TableRow>
                       <TableRow key="12">
+                        <TableCell>Physics: Mechanics</TableCell>
+                        <TableCell>AP Physics C: Mechanics</TableCell>
+                      </TableRow>
+                      <TableRow key="13">
                         <TableCell>Physics: Electricity and Magnetism</TableCell>
-                        <TableCell>AP Physics C</TableCell>
+                        <TableCell>AP Physics C: Electricity and Magnetic</TableCell>
                       </TableRow>
                     </TableBody>
                   </Table>
