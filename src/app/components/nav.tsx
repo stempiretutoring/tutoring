@@ -145,7 +145,7 @@ export function Nav() {
                   Cart
                 </DropdownItem>
 
-                <DropdownItem key="help_and_feedback" href="/help">
+                <DropdownItem key="help_and_feedback" href="/about/faq">
                   Help & Feedback
                 </DropdownItem>
                 <DropdownItem
