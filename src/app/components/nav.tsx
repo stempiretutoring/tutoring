@@ -85,6 +85,10 @@ export function Nav() {
             <DropdownItem href="/about/rates" key="rates">
               Rates
             </DropdownItem>
+            <DropdownItem href="/about/faq" key="faq">
+              FAQs
+            </DropdownItem>
+
           </DropdownMenu>
         </Dropdown>
 
@@ -141,10 +145,6 @@ export function Nav() {
                 <DropdownItem key="settings" href="/user">
                   My Profile
                 </DropdownItem>
-                <DropdownItem key="cart" href="/cart">
-                  Cart
-                </DropdownItem>
-
                 <DropdownItem key="help_and_feedback" href="/about/faq">
                   Help & Feedback
                 </DropdownItem>
@@ -177,6 +177,11 @@ export function Nav() {
               <li className="indent-2">
                 <Link href="/about/mission" underline="always">
                   Mission
+                </Link>
+              </li>
+              <li className="indent-2">
+                <Link href="/about/faq" underline="always">
+                  FAQs
                 </Link>
               </li>
             </ol>

@@ -8,6 +8,7 @@ import {
   TableRow,
   TableCell,
 } from "@nextui-org/react";
+import { Snippet } from "@nextui-org/react";
 
 export default function App() {
   return (
@@ -93,6 +94,15 @@ export default function App() {
                   </Table>
                   <p className="text-sm italic md:hidden pt-2 pl-1">* On devices with smaller screens you may have to scroll to view the entire table</p>
                 </div>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <p className="text-xl underline">Questions? Comments? Concerns?</p>
+            <ul className="list-disc">
+              <li className="text-base mt-2">
+                We&#39;d love to hear from you! Reach out to us:{" "}
+                <Snippet symbol='' variant="flat">support@stempiretutoring.com</Snippet>
               </li>
             </ul>
           </li>
