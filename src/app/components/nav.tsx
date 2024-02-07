@@ -88,7 +88,6 @@ export function Nav() {
             <DropdownItem href="/about/faq" key="faq">
               FAQs
             </DropdownItem>
-
           </DropdownMenu>
         </Dropdown>
 
@@ -160,27 +159,43 @@ export function Nav() {
           </NavbarContent>
         )}
       </Navbar>
-      <Navbar onMenuOpenChange={setIsMenuOpen} className="md:hidden">
+      <Navbar
+        onMenuOpenChange={setIsMenuOpen}
+        isMenuOpen={isMenuOpen}
+        className="md:hidden"
+      >
         <NavbarMenuToggle
           aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-          className="sm:hidden"
+          className="md:hidden"
         />
         <NavbarMenu>
           <NavbarMenuItem>
             <ol>
               About
               <li className="indent-2">
-                <Link href="/about/rates" underline="always">
+                <Link
+                  href="/about/rates"
+                  underline="always"
+                  onPress={() => setIsMenuOpen(false)}
+                >
                   Rates
                 </Link>
               </li>
               <li className="indent-2">
-                <Link href="/about/mission" underline="always">
+                <Link
+                  href="/about/mission"
+                  underline="always"
+                  onPress={() => setIsMenuOpen(false)}
+                >
                   Mission
                 </Link>
               </li>
               <li className="indent-2">
-                <Link href="/about/faq" underline="always">
+                <Link
+                  href="/about/faq"
+                  underline="always"
+                  onPress={() => setIsMenuOpen(false)}
+                >
                   FAQs
                 </Link>
               </li>
@@ -188,13 +203,21 @@ export function Nav() {
           </NavbarMenuItem>
 
           <NavbarMenuItem>
-            <Link href="/tutors" underline="always">
+            <Link
+              href="/tutors"
+              underline="always"
+              onPress={() => setIsMenuOpen(false)}
+            >
               Tutors
             </Link>
           </NavbarMenuItem>
 
           <NavbarMenuItem>
-            <Link href="/book" underline="always">
+            <Link
+              href="/book"
+              underline="always"
+              onPress={() => setIsMenuOpen(false)}
+            >
               Appointments
             </Link>
           </NavbarMenuItem>

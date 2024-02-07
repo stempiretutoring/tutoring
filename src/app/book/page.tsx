@@ -61,7 +61,7 @@ export default function App() {
   return (
     <div className="h-dvh">
       {tutors && (
-        <div className="flex justify-center items-center">
+        <div className="md:flex justify-center items-center m-2 md:m-0">
           <pre>Book </pre>
           <Dropdown>
             <DropdownTrigger>
