@@ -60,7 +60,7 @@ export default function App() {
                       </TableRow>
                       <TableRow key="5">
                         <TableCell>Pre-Calculus</TableCell>
-                        <TableCell>N/A</TableCell>
+                        <TableCell>AP Pre-Calculus</TableCell>
                       </TableRow>
                       <TableRow key="6">
                         <TableCell>Calculus 1</TableCell>
