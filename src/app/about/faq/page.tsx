@@ -32,7 +32,7 @@ export default function App() {
             <ul className="list-disc">
               <li className="text-base">
                 Each STEMpire tutor is extremely well versed in all level of
-                mathematics up to calculus 1! Besides that each tutor focuses on
+                mathematics up to calculus 1! Besides that, each tutor focuses on
                 different areas and levels of STEM subjects. You can find the
                 full list below:
                 <div className="m-3 w-full md:w-7/12">
