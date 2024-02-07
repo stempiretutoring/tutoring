@@ -82,6 +82,10 @@ export default function App() {
                         <TableCell>Real Analysis</TableCell>
                         <TableCell>N/A</TableCell>
                       </TableRow>
+                      <TableRow key="14">
+                        <TableCell>Linear Algebra</TableCell>
+                        <TableCell>N/A</TableCell>
+                      </TableRow>
                       <TableRow key="11">
                         <TableCell>Physics 1</TableCell>
                         <TableCell>AP/IB Physics 1</TableCell>
