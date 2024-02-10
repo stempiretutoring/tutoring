@@ -33,7 +33,7 @@ export default function Subjects({ subjects }: subjectProps) {
             {subject}
           </Chip>
         ))}
-        <Popover placement="bottom">
+        <Popover className="pr-2" placement="bottom">
           <PopoverTrigger>
             <Chip variant="bordered" endContent={<PiCursorClickFill />}>More</Chip>
           </PopoverTrigger>
