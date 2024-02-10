@@ -25,7 +25,7 @@ export default function App() {
       quantity: 1,
       metadata: {
         description: `Tutoring session with Danny Chris for 1 hour and 1 student(s) for $50 on 01/01/2000 at 12:00AM`,
-        tutor: "Danny Chris",
+        tutor: "Danny Christensen",
         subject: "Math",
         date: "01/01/2000",
         time: "12:00AM",
