@@ -160,7 +160,7 @@ export default withPageAuthRequired(function App({
                   <TableCell>{tutorName}</TableCell>
 
                   <TableCell>
-                    <Chip color="success">{subject}</Chip>
+                    <Chip color="success" className="capitalize">{subject}</Chip>
                   </TableCell>
 
                   <TableCell>
