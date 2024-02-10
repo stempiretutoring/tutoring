@@ -21,6 +21,7 @@ import { tutorGET } from "@/app/api/types";
 import { EyeFilledIcon } from "@/app/components/icons/EyeFilledIcon";
 import { DeleteIcon } from "@/app/components/icons/DeleteIcon";
 import { columns } from "./lib/data";
+import Link from "next/link";
 
 type actionType = {
   action: "delete" | "suspend";
@@ -141,7 +142,7 @@ export default function App() {
   }, [updated]);
 
   return (
-    <>
+    <div className="h-dvh">
       {tutors && (
         <>
           <div className="mx-5">
@@ -202,7 +203,10 @@ export default function App() {
             )}
           </ModalContent>
         </Modal>
+        <Button as={Link} href="/user/admin/pay" color="danger">
+          Click to pay
+        </Button>
       </div>
-    </>
+    </div>
   );
 }
