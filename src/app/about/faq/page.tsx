@@ -113,15 +113,6 @@ export default function App() {
             </ul>
           </li>
           <li>
-            <p className="text-xl underline">How to book an appointment?</p>
-            <div>
-              <video controls playsInline preload="metadata">
-                <source src="/videos/Stempire Tutoring.mp4" type="video/mp4" />
-                Your broweser does not support this video :(
-              </video>
-            </div>
-          </li>
-          <li>
             <p className="text-xl underline">Questions? Comments? Concerns?</p>
             <ul className="list-disc">
               <li className="text-base mt-2">
