@@ -16,7 +16,7 @@ export default function App() {
   const [clientSecret, setClientSecret] = useState("");
 
   const handlePress = () => {
-    const bodyPrice = parseInt("1") * 100;
+    const bodyPrice = parseInt("1") * 129 + 30;
     let body: CartItem = {
       id: process.env.NEXT_PUBLIC_PRICE || "",
       name: "Tutoring",
