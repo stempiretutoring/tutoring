@@ -32,8 +32,8 @@ export default function App() {
             <ul className="list-disc">
               <li className="text-base">
                 Each STEMpire tutor is extremely well versed in all level of
-                mathematics up to calculus 1! Besides that, each tutor focuses on
-                different areas and levels of STEM subjects. You can find the
+                mathematics up to calculus 1! Besides that, each tutor focuses
+                on different areas and levels of STEM subjects. You can find the
                 full list below:
                 <div className="m-3 w-full md:w-7/12">
                   <Table aria-label="Subjects table">
@@ -95,22 +95,40 @@ export default function App() {
                         <TableCell>AP Physics C: Mechanics</TableCell>
                       </TableRow>
                       <TableRow key="13">
-                        <TableCell>Physics: Electricity and Magnetism</TableCell>
-                        <TableCell>AP Physics C: Electricity and Magnetic</TableCell>
+                        <TableCell>
+                          Physics: Electricity and Magnetism
+                        </TableCell>
+                        <TableCell>
+                          AP Physics C: Electricity and Magnetic
+                        </TableCell>
                       </TableRow>
                     </TableBody>
                   </Table>
-                  <p className="text-sm italic md:hidden pt-2 pl-1">* On devices with smaller screens you may have to scroll to view the entire table</p>
+                  <p className="text-sm italic md:hidden pt-2 pl-1">
+                    * On devices with smaller screens you may have to scroll to
+                    view the entire table
+                  </p>
                 </div>
               </li>
             </ul>
+          </li>
+          <li>
+            <p className="text-xl underline">How to book an appointment?</p>
+            <div>
+              <video controls playsInline preload="metadata">
+                <source src="/videos/Stempire Tutoring.mp4" type="video/mp4" />
+                Your broweser does not support this video :(
+              </video>
+            </div>
           </li>
           <li>
             <p className="text-xl underline">Questions? Comments? Concerns?</p>
             <ul className="list-disc">
               <li className="text-base mt-2">
                 We&#39;d love to hear from you! Reach out to us:{" "}
-                <Snippet symbol='' variant="flat">support@stempiretutoring.com</Snippet>
+                <Snippet symbol="" variant="flat">
+                  support@stempiretutoring.com
+                </Snippet>
               </li>
             </ul>
           </li>
