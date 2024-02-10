@@ -1,6 +1,5 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { format } from "date-fns";
 import {
   Card,
   CardHeader,
@@ -21,6 +20,7 @@ import { Spinner, Chip } from "@nextui-org/react";
 import styles from "./page.module.css";
 import { tutorGET } from "@/app/api/types";
 import { getTimes } from "../lib/time";
+import Subjects from "./subjects";
 
 interface cardProps {
   name: string;
@@ -49,11 +49,7 @@ export default function TutorCard({ name }: cardProps) {
               <Card className="py-4">
                 <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
                   <div className="container mx-full">
-                    {info?.subjects.map((subject, idx) => (
-                      <Chip key={idx} className="w-full m-1 capitalize">
-                        {subject}
-                      </Chip>
-                    ))}
+                    <Subjects subjects={info.subjects} />
                   </div>
                   <small className="text-default-500">{info?.occupation}</small>
                   <h3 className="font-bold text-large">{info?.name}</h3>
@@ -101,7 +97,9 @@ export default function TutorCard({ name }: cardProps) {
                   </h2>
                 </div>
                 <Divider className="mt-3 mb-3" />
-                <div className="text-base text-black w-[300px]">{info?.bio}</div>
+                <div className="text-base text-black w-[300px]">
+                  {info?.bio}
+                </div>
                 <Divider className="mt-3 mb-3" />
                 <div className="flex align-items ">
                   <Popover
