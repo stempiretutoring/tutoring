@@ -69,7 +69,7 @@ export default function ProfileClient() {
     return <div>Loading...</div>;
   }
 
-  if (error) return <div>{error.message}</div>;
+  if (error) return <div>Uh oh! Something went wrong! Error message: {error.message}</div>;
 
   return (
     <>
