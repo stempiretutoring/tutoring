@@ -78,7 +78,7 @@ export default withPageAuthRequired(function App({
 
   const handlePress = () => {
     if (date && selectedTime !== "Select a time") {
-      const bodyPrice = parseInt(price) * 100;
+      const bodyPrice = parseInt(price) * 129 + 30;
       let body: CartItem = {
         id: process.env.NEXT_PUBLIC_PRICE || "",
         name: "Tutoring",
