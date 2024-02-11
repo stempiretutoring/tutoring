@@ -44,6 +44,7 @@ export default function App() {
           </TableRow>
         </TableBody>
       </Table>
+      <p className="mx-auto w-1/2">*Note that prices are subject to processing fees</p>
       <div className="mx-auto w-1/2">
         <Link href="/book">
           <Button className="mt-3" color="success">

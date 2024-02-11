@@ -47,6 +47,7 @@ export default function App() {
       .then((response) => response.json())
       .then((data) => {
         setPurchaseInfo(data[data.length - 1]);
+        console.log(data);
       })
       .catch((error) => {
         console.error(`Error fetching data: ${error}`);

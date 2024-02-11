@@ -40,9 +40,9 @@ export async function POST(request: NextRequest) {
 
   props.email = data["document"]["email"];
 
-  const mail = await sendMail(props);
+  await sendMail(props);
 
-  return NextResponse.json({ body: mail }, { status: 200 });
+  return NextResponse.json({ body: props }, { status: 200 });
 }
 
 export const runtime = 'edge';
