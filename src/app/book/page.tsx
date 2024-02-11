@@ -10,6 +10,7 @@ import {
 import React, { useState, useMemo, useEffect } from "react";
 import { tutorGET } from "../api/types";
 import Link from "next/link";
+import { Image } from "@nextui-org/react";
 
 export default function App() {
   const [tutors, setTutors] = useState<tutorGET[]>();
@@ -85,7 +86,9 @@ export default function App() {
           <pre> for </pre>
           <Dropdown>
             <DropdownTrigger>
-              <Button className="capitalize" variant="bordered">{selectedSubject}</Button>
+              <Button className="capitalize" variant="bordered">
+                {selectedSubject}
+              </Button>
             </DropdownTrigger>
             <DropdownMenu
               aria-label="Tutor Selection"
@@ -96,7 +99,9 @@ export default function App() {
               onSelectionChange={setSelectedSubject}
             >
               {subjects?.map((subject) => (
-                <DropdownItem className="capitalize" key={subject}>{subject}</DropdownItem>
+                <DropdownItem className="capitalize" key={subject}>
+                  {subject}
+                </DropdownItem>
               ))}
             </DropdownMenu>
           </Dropdown>
@@ -110,6 +115,15 @@ export default function App() {
           )}
         </div>
       )}
+      <div className="flex justify-center items-center h-5/6">
+        <Image
+          alt="stempire logo"
+          className="m-3"
+          width={500}
+          height={500}
+          src="../../home2.png"
+        />
+      </div>
     </div>
   );
 }

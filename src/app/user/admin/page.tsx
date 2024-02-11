@@ -203,9 +203,6 @@ export default function App() {
             )}
           </ModalContent>
         </Modal>
-        <Button as={Link} href="/user/admin/pay" color="danger">
-          Click to pay
-        </Button>
       </div>
     </div>
   );

@@ -88,6 +88,10 @@ export function Nav() {
             <DropdownItem href="/about/faq" key="faq">
               FAQs
             </DropdownItem>
+            <DropdownItem href="/about/why" key="faq">
+              Why Us
+            </DropdownItem>
+
           </DropdownMenu>
         </Dropdown>
 
@@ -197,6 +201,15 @@ export function Nav() {
                   onPress={() => setIsMenuOpen(false)}
                 >
                   FAQs
+                </Link>
+              </li>
+              <li className="indent-2">
+                <Link
+                  href="/about/why"
+                  underline="always"
+                  onPress={() => setIsMenuOpen(false)}
+                >
+                  Why Us
                 </Link>
               </li>
             </ol>

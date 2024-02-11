@@ -14,9 +14,9 @@ export default function App() {
   return (
     <div className="h-dvh w-screen">
       <div className="flex justify-center align-items">
-        <h1 className="text-2xl font-bold">Frequently Asked Questions</h1>
+        <h1 className="text-2xl font-bold underline">Frequently Asked Questions</h1>
       </div>
-      <div className="flex justify-center mt-5">
+      <div className="flex justify-center mt-5 mb-5">
         <ol className="list-decimal w-9/12">
           <li>
             <p className="text-xl underline">How are sessions conducted?</p>
@@ -32,7 +32,7 @@ export default function App() {
             <ul className="list-disc">
               <li className="text-base">
                 Each STEMpire tutor is extremely well versed in all level of
-                mathematics up to calculus 1! Besides that, each tutor focuses
+                mathematics up to Calculus 1! Besides that, each tutor focuses
                 on different areas and levels of STEM subjects. You can find the
                 full list below:
                 <div className="m-3 w-full md:w-7/12">
@@ -102,6 +102,16 @@ export default function App() {
                           AP Physics C: Electricity and Magnetic
                         </TableCell>
                       </TableRow>
+                      <TableRow key="15">
+                        <TableCell>Computer Programming</TableCell>
+                        <TableCell>AP Computer Science A</TableCell>
+                      </TableRow>
+                      <TableRow key="16">
+                        <TableCell>Computer Science</TableCell>
+                        <TableCell>
+                          AP Computer Science Principles/IB-SL Computer Science
+                        </TableCell>
+                      </TableRow>
                     </TableBody>
                   </Table>
                   <p className="text-sm italic md:hidden pt-2 pl-1">
@@ -109,6 +119,72 @@ export default function App() {
                     view the entire table
                   </p>
                 </div>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <p className="text-xl underline">
+              What types of payments are accepted?
+            </p>
+            <ul className="list-disc">
+              <li className="text-base mt-2">
+                Google pay, link, and credit card are all accepted. We are
+                currently working on implementing other payment methods.
+              </li>
+            </ul>
+          </li>
+          <li>
+            <p className="text-xl underline">
+              Where are the in-person sessions located?
+            </p>
+            <ul className="list-disc">
+              <li className="text-base mt-2">
+                If the tutor lives near the client, an in-person session can be
+                conducted within the home of the client or the tutor, a local
+                library, a school, or a different meeting location, whatever is
+                preferred by the client works for us.
+              </li>
+            </ul>
+          </li>
+          <li>
+            <p className="text-xl underline">
+              Will I get a confirmation email with the details of the session?
+            </p>
+            <ul className="list-disc">
+              <li className="text-base mt-2">
+                Yes, after confirming your payment you will be redirected to a
+                page that allows the client detail their specific requests on
+                the subjects and material to be covered. After filling out this
+                form you will recieve a copy of this email as well as a google
+                meet link (if applicable).
+              </li>
+            </ul>
+          </li>
+          <li>
+            <p className="text-xl underline">
+              What do I need for an online session?
+            </p>
+            <ul className="list-disc">
+              <li className="text-base mt-2">
+                You will need a computer, a piece of paper, and something to
+                write with. We strongly suggest that a computer, not a phone, be
+                used for the google meet because it is important to be able to
+                see what the tutor is writing. The tutors may either share their
+                screen and write their on a viertual writing platform, such as
+                Kami, or they may set up their computer facing a chalkboard of
+                whiteboard for the client to follow their work.
+              </li>
+            </ul>
+          </li>
+          <li>
+            <p className="text-xl underline">
+              What is the cancellation policy?
+            </p>
+            <ul className="list-disc">
+              <li className="text-base mt-2">
+                You may cancel your session up to 24 hours in advance to get a
+                complete refund. Refunds will not be granted within 24 hours of
+                the scheduled session out of respect for out tutors&#39; times.
               </li>
             </ul>
           </li>
