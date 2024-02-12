@@ -89,7 +89,7 @@ export function Nav() {
               FAQs
             </DropdownItem>
             <DropdownItem href="/about/why" key="faq">
-              Why Us
+              Why Us?
             </DropdownItem>
 
           </DropdownMenu>
@@ -209,7 +209,7 @@ export function Nav() {
                   underline="always"
                   onPress={() => setIsMenuOpen(false)}
                 >
-                  Why Us
+                  Why Us?
                 </Link>
               </li>
             </ol>
