@@ -44,7 +44,13 @@ export default function App() {
           </TableRow>
         </TableBody>
       </Table>
-      <p className="mx-auto w-1/2">*Note that prices are subject to processing fees</p>
+      <p className="text-sm italic md:hidden mx-auto w-1/2 pt-2 pl-1">
+        * On devices with smaller screens you may have to scroll to view the
+        entire table
+      </p>
+      <p className="mx-auto w-1/2">
+        *Note that prices are subject to processing fees
+      </p>
       <div className="mx-auto w-1/2">
         <Link href="/book">
           <Button className="mt-3" color="success">
