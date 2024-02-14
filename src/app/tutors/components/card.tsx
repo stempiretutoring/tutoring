@@ -44,7 +44,7 @@ export default function TutorCard({ name }: cardProps) {
     <>
       {info ? (
         <div className={styles.main}>
-          <Popover placement="right" backdrop="blur" color="primary">
+          <Popover placement="right" backdrop="blur" color="default">
             <PopoverTrigger>
               <Card className="py-4">
                 <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
@@ -71,7 +71,7 @@ export default function TutorCard({ name }: cardProps) {
                   <h2 className="font-bold text-red-400 ">
                     <Dropdown>
                       <DropdownTrigger>
-                        <Button className="text-red-500">
+                        <Button className="text-orange-500">
                           Click here to book an appointment
                         </Button>
                       </DropdownTrigger>
@@ -97,7 +97,7 @@ export default function TutorCard({ name }: cardProps) {
                   </h2>
                 </div>
                 <Divider className="mt-3 mb-3" />
-                <div className="text-base text-black w-[300px]">
+                <div className="text-base text-white w-[300px]">
                   {info?.bio}
                 </div>
                 <Divider className="mt-3 mb-3" />
