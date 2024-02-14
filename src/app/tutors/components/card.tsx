@@ -16,7 +16,7 @@ import {
   DropdownItem,
   Button,
 } from "@nextui-org/react";
-import { Spinner, Chip } from "@nextui-org/react";
+import { Spinner } from "@nextui-org/react";
 import styles from "./page.module.css";
 import { tutorGET } from "@/app/api/types";
 import { getTimes } from "../lib/time";
@@ -44,7 +44,11 @@ export default function TutorCard({ name }: cardProps) {
     <>
       {info ? (
         <div className={styles.main}>
-          <Popover placement="right" backdrop="blur" color="default">
+          <Popover
+            placement={window.innerWidth < 768 ? "bottom" : "right"}
+            backdrop="blur"
+            color="default"
+          >
             <PopoverTrigger>
               <Card className="py-4">
                 <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
