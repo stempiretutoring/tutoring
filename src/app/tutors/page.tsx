@@ -7,13 +7,13 @@ export default function App() {
   return (
     <>
       <div className="flex flex-col items-center justify-center">
-        <div className="text-bold text-center mb-2">
-          <h1 className="text-lg">
+        <div className="text-center mb-2">
+          <h1 className="text-2xl font-bold">
             Read below to learn more about our tutors!
           </h1>
         </div>
         <div className="italic text-center">
-          <small>Tip: click a card to learn more about each tutor</small>
+          <p className="text-sm">Tip: click a card to learn more about each tutor</p>
         </div>
       </div>
       <Divider />
