@@ -49,7 +49,7 @@ export default function Tutor({ email }: tutorProps) {
       {isTutor && (
         <div>
           <Divider className="my-2" />
-          <h1 className="text-lg w-full flex justify-center content-center my-2 underline mx-auto">
+          <h1 className="text-3xl font-bold mb-5 w-full flex justify-center content-center my-2 underline mx-auto">
             Set your schedule
           </h1>
           <ProfileClient />

@@ -8,11 +8,19 @@ import {
   CheckboxGroup,
   Checkbox,
   Tooltip,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  useDisclosure,
+  ModalContent,
+  ModalFooter,
 } from "@nextui-org/react";
 
 export default function ProfileClient() {
   const { user, error, isLoading } = useUser();
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [selected, setSelected] = useState<string[]>([]);
+  const [good, setGood] = useState<boolean>(false);
   const [savedStartTime, setSavedStartTime] = useState<string[]>([
     "",
     "",
@@ -38,6 +46,7 @@ export default function ProfileClient() {
       method: "POST",
       body: formData,
     });
+    setGood(true);
   };
 
   const handleEndChange = (value: string, idx: number) => {
@@ -69,7 +78,10 @@ export default function ProfileClient() {
     return <div>Loading...</div>;
   }
 
-  if (error) return <div>Uh oh! Something went wrong! Error message: {error.message}</div>;
+  if (error)
+    return (
+      <div>Uh oh! Something went wrong! Error message: {error.message}</div>
+    );
 
   return (
     <>
@@ -123,7 +135,12 @@ export default function ProfileClient() {
               </div>
             ))}
             <div className="flex justify-center mt-4">
-              <Button color="primary" type="submit">
+              <Button
+                onPress={onOpen}
+                color="primary"
+                type="submit"
+                className="text-xl font-bold p-5"
+              >
                 Submit
               </Button>
             </div>
@@ -137,6 +154,25 @@ export default function ProfileClient() {
             Login Here!
           </Link>
         </div>
+      )}
+      {good && (
+        <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+          <ModalContent>
+            {(onClose) => (
+              <>
+                <ModalHeader className="flex flex-col gap-1">
+                  Sucess!
+                </ModalHeader>
+                <ModalBody>Your schedule has been updated!</ModalBody>
+                <ModalFooter>
+                  <Button color="primary" onPress={onClose}>
+                    Close
+                  </Button>
+                </ModalFooter>
+              </>
+            )}
+          </ModalContent>
+        </Modal>
       )}
     </>
   );
