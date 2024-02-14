@@ -51,7 +51,7 @@ export async function sendMail(recipient: sendMailProps) {
           },
         ],
         Subject: `STEMpire Confirmation`,
-        TextPart: `Hi ${recipient.child},\nYou have booked a tutoring session with  ${recipient.name} for ${recipient.subject} on ${recipient.date} from ${recipient.time}. You provided the below description:\n${recipient.about}\nand set your preferred meeting style as ${recipient.meeting}\nYou can contact the tutor at ${recipient.email}.\nWe look forward to working with you!`,
+        TextPart: `Hi ${recipient.child},\nThank you for booking a tutoring session with STEMpire TUtoring! You have booked a tutoring session with ${recipient.name} for ${recipient.subject} on ${recipient.date} from ${recipient.time}. You provided the below description:\n${recipient.about}\nand set your preferred meeting style as ${recipient.meeting}\nYou can contact the tutor at ${recipient.email}.\nWe look forward to working with you!`,
       },
     ],
   };
