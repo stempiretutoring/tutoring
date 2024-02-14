@@ -64,8 +64,6 @@ export async function POST(req: Request) {
           body: JSON.stringify(body),
         });
 
-        console.log(tutor);
-
         const tutorBody = {
           collection: process.env.MONGO_COLLECTION,
           database: process.env.MONGO_DATABASE,

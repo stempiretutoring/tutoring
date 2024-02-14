@@ -19,7 +19,7 @@ export async function sendMail(recipient: sendMailProps) {
           },
         ],
         Subject: `Tutoring Session with ${recipient.child}`,
-        TextPart: `${recipient.name} -\n you have been booked for a tutoring session with  ${recipient.child} for ${recipient.subject} on ${recipient.date} from ${recipient.time}. The parent has provided the below description about the child:\n${recipient.about}\nYou can contact the parent at ${recipient.parentEmail} and their preferred meeting style is ${recipient.meeting}`,
+        TextPart: `${recipient.name} -\n you have been booked for a tutoring session with  ${recipient.child} for ${recipient.subject} on ${recipient.date} from ${recipient.time}. The the below description has been provided:\n${recipient.about}\nYou can contact the client at ${recipient.parentEmail} and their preferred meeting style is ${recipient.meeting}`,
       },
     ],
   };
@@ -51,7 +51,7 @@ export async function sendMail(recipient: sendMailProps) {
           },
         ],
         Subject: `STEMpire Confirmation`,
-        TextPart: `To the parent's/guardians of ${recipient.child},\nYou have booked a tutoring session with  ${recipient.name} for ${recipient.subject} on ${recipient.date} from ${recipient.time}. You provided the below description about your child:\n${recipient.about}\nand set your preferred meeting style as ${recipient.meeting}\nYou can contact the tutor at ${recipient.email}.\nWe look forward to working with you!`,
+        TextPart: `Hi ${recipient.child},\nYou have booked a tutoring session with  ${recipient.name} for ${recipient.subject} on ${recipient.date} from ${recipient.time}. You provided the below description:\n${recipient.about}\nand set your preferred meeting style as ${recipient.meeting}\nYou can contact the tutor at ${recipient.email}.\nWe look forward to working with you!`,
       },
     ],
   };

@@ -76,14 +76,14 @@ export default function App() {
                   label="Email"
                   name="parentEmail"
                   variant="underlined"
-                  description="Parent email"
+                  description="Preferred Client Email"
                   isRequired
                 />
               </div>
               <div className="col-span-1">
                 <Input
                   type="text"
-                  label="Child Name"
+                  label="Preferred Client Name"
                   name="child"
                   variant="underlined"
                   isRequired
