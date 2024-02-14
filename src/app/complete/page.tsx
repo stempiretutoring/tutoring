@@ -119,7 +119,13 @@ export default function App() {
                 </Dropdown>
               </div>
               <div className="col-span-2">
-                <Button type="submit" color="primary">
+                <Button
+                  as={Link}
+                  href="/complete/done"
+                  showAnchorIcon
+                  type="submit"
+                  color="primary"
+                >
                   Submit
                 </Button>
               </div>
