@@ -170,7 +170,7 @@ export default function App() {
                 write with. We strongly suggest that a computer, not a phone, be
                 used for the google meet because it is important to be able to
                 see what the tutor is writing. The tutors may either share their
-                screen and write their on a viertual writing platform, such as
+                screen and write their on a virtual writing platform, such as
                 Kami, or they may set up their computer facing a chalkboard of
                 whiteboard for the client to follow their work.
               </li>
@@ -184,7 +184,7 @@ export default function App() {
               <li className="text-base mt-2">
                 You may cancel your session up to 24 hours in advance to get a
                 complete refund. Refunds will not be granted within 24 hours of
-                the scheduled session out of respect for out tutors&#39; times.
+                the scheduled session out of respect for our tutors&#39; times.
               </li>
             </ul>
           </li>
