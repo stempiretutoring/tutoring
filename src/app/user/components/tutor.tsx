@@ -25,6 +25,7 @@ export default function Tutor({ email }: tutorProps) {
       .then((response) => response.json())
       .then((data) => {
         setIsTutor(data["res"].includes(email) ? true : false);
+        console.log(data);
       })
       .catch((error) => {
         console.error(`Error fetching data: ${error}`);
