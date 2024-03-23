@@ -5,7 +5,7 @@ import TutorCard from "./components/card";
 
 export default function App() {
   return (
-    <>
+    <div className="h-screen">
       <div className="flex flex-col items-center justify-center">
         <div className="text-center mb-2">
           <h1 className="text-2xl font-bold">
@@ -13,7 +13,9 @@ export default function App() {
           </h1>
         </div>
         <div className="italic text-center">
-          <p className="text-sm">Tip: click a card to learn more about each tutor</p>
+          <p className="text-sm">
+            Tip: click a card to learn more about each tutor
+          </p>
         </div>
       </div>
       <Divider />
@@ -28,8 +30,9 @@ export default function App() {
           <TutorCard name="Joe Kashani" />
           <TutorCard name="Nikhil Kulkarni" />
           <TutorCard name="Jeevan Shah" />
+          <TutorCard name="Shelton Shieh" />
         </div>
       </div>
-    </>
+    </div>
   );
 }

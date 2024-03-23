@@ -21,7 +21,6 @@ import { tutorGET } from "@/app/api/types";
 import { EyeFilledIcon } from "@/app/components/icons/EyeFilledIcon";
 import { DeleteIcon } from "@/app/components/icons/DeleteIcon";
 import { columns } from "./lib/data";
-import Link from "next/link";
 
 type actionType = {
   action: "delete" | "suspend";
