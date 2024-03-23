@@ -19,8 +19,8 @@ export default function App() {
         </div>
       </div>
       <Divider />
-      <div className="flex justify-center items-center">
-        <div className="mt-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-5 gap-y-1">
+      <div className="flex justify-center items-center pb-6">
+        <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-5 gap-y-1">
           <TutorCard name="Danny Christensen" />
           <TutorCard name="Luca Cresti" />
           <TutorCard name="Daniel DaSilva" />
