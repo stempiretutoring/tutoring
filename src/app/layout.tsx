@@ -4,6 +4,7 @@ import "./globals.css";
 import { Providers } from "./providers";
 import { Nav } from "./components/nav";
 import { UserProvider } from "@auth0/nextjs-auth0/client";
+import { GoogleTagManager } from "@next/third-parties/google"
 
 const jbm = JetBrains_Mono({ subsets: ["latin"] });
 
@@ -26,6 +27,7 @@ export default function RootLayout({
           </Providers>
         </UserProvider>
       </body>
+      <GoogleTagManager gtmId="AW-11460557564" />
     </html>
   );
 }
