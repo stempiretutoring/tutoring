@@ -128,7 +128,7 @@ export default function App() {
             </p>
             <ul className="list-disc">
               <li className="text-base mt-2">
-                Google pay, link, and credit card are all accepted. We are
+                Google Pay, link, and credit card are all accepted. We are
                 currently working on implementing other payment methods.
               </li>
             </ul>
@@ -155,8 +155,8 @@ export default function App() {
                 Yes, after confirming your payment you will be redirected to a
                 page that allows the client detail their specific requests on
                 the subjects and material to be covered. After filling out this
-                form you will recieve a copy of this email as well as a google
-                meet link (if applicable).
+                form you will recieve a copy of this email as well as a Google
+                Meet link (if applicable).
               </li>
             </ul>
           </li>
@@ -168,7 +168,7 @@ export default function App() {
               <li className="text-base mt-2">
                 You will need a computer, a piece of paper, and something to
                 write with. We strongly suggest that a computer, not a phone, be
-                used for the google meet because it is important to be able to
+                used for the Google Meet because it is important to be able to
                 see what the tutor is writing. The tutors may either share their
                 screen and write their on a virtual writing platform, such as
                 Kami, or they may set up their computer facing a chalkboard of
