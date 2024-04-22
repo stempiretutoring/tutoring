@@ -66,7 +66,7 @@ export default function App() {
           <pre>Book </pre>
           <Dropdown>
             <DropdownTrigger>
-              <Button variant="bordered">{selectedTutor}</Button>
+              <Button className="capitalize" variant="bordered">{selectedTutor}</Button>
             </DropdownTrigger>
             <DropdownMenu
               aria-label="Tutor Selection"
