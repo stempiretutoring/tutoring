@@ -11,14 +11,14 @@ import React, { useState, useMemo, useEffect } from "react";
 import { tutorGET } from "../api/types";
 import Link from "next/link";
 import { Image } from "@nextui-org/react";
+import { subjects as subjectList } from "./lib/helpers";
 
 export default function App() {
   const [tutors, setTutors] = useState<tutorGET[]>();
-  const [subjects, setSubjects] = useState<string[]>([]);
   const [book, setBook] = useState<boolean>(false);
 
   const [selectedTutors, setSelectedTutor] = useState<Selection>(
-    new Set(["(Select a tutor)"]),
+    new Set(["(Select a subject first)"]),
   );
   const [selectedSubjects, setSelectedSubject] = useState<Selection>(
     new Set(["(Select a subject)"]),
@@ -34,20 +34,10 @@ export default function App() {
   );
 
   useEffect(() => {
-    fetch(`/api/tutors`)
+    fetch(`/api/subjects?subject=${selectedSubject}`)
       .then((response) => response.json())
       .then((data) => setTutors(data["documents"]));
-  }, []);
-
-  useEffect(() => {
-    fetch(`/api/tutors?name=${selectedTutor}`)
-      .then((response) => response.json())
-      .then((data) =>
-        data["document"] !== null
-          ? setSubjects(data["document"]["subjects"])
-          : setSubjects([]),
-      );
-  }, [selectedTutor]);
+  }, [selectedSubject]);
 
   useEffect(
     () =>
@@ -66,28 +56,28 @@ export default function App() {
           <pre>Book </pre>
           <Dropdown>
             <DropdownTrigger>
-              <Button className="capitalize" variant="bordered">{selectedTutor}</Button>
+              <Button variant="bordered">{selectedSubject}</Button>
             </DropdownTrigger>
             <DropdownMenu
               aria-label="Tutor Selection"
               variant="bordered"
               disallowEmptySelection
               selectionMode="single"
-              selectedKeys={selectedTutors}
-              onSelectionChange={setSelectedTutor}
+              selectedKeys={selectedSubject}
+              onSelectionChange={setSelectedSubject}
             >
-              {tutors?.map((tutor) => (
-                <DropdownItem className="capitalize" key={tutor.name}>
-                  {tutor.name}
+              {subjectList.map((subject) => (
+                <DropdownItem className="capitalize" key={subject}>
+                  {subject}
                 </DropdownItem>
               ))}
             </DropdownMenu>
           </Dropdown>
-          <pre> for </pre>
+          <pre> with </pre>
           <Dropdown>
             <DropdownTrigger>
               <Button className="capitalize" variant="bordered">
-                {selectedSubject}
+                {selectedTutor}
               </Button>
             </DropdownTrigger>
             <DropdownMenu
@@ -95,12 +85,12 @@ export default function App() {
               variant="bordered"
               disallowEmptySelection
               selectionMode="single"
-              selectedKeys={selectedSubjects}
-              onSelectionChange={setSelectedSubject}
+              selectedKeys={selectedTutor}
+              onSelectionChange={setSelectedTutor}
             >
-              {subjects?.map((subject) => (
-                <DropdownItem className="capitalize" key={subject}>
-                  {subject}
+              {tutors?.map((tutor) => (
+                <DropdownItem className="capitalize" key={tutor.name}>
+                  {tutor.name}
                 </DropdownItem>
               ))}
             </DropdownMenu>

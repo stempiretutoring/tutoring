@@ -96,3 +96,22 @@ export const columns = [
     label: "DURATION",
   },
 ];
+
+export const subjects = [
+  "pre-algebra",
+  "algebra 1",
+  "geometry",
+  "algebra 2",
+  "pre-calculus",
+  "calculus 1",
+  "calculus 2",
+  "calculus 3",
+  "differential equations",
+  "real analysis",
+  "linear algebra",
+  "physics 1",
+  "physics: mechanics",
+  "physics: electricity and magnetism",
+  "computer programming",
+  "computer science",
+];
