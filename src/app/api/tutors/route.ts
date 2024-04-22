@@ -15,6 +15,7 @@ export async function GET(request: NextRequest) {
         database: process.env.MONGO_DATABASE,
         dataSource: process.env.MONGO_DATA_SOURCE,
         filter: {},
+        projection: {},
       };
 
       if (searchParams.has("name")) {
