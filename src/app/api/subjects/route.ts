@@ -13,11 +13,25 @@ export async function GET(request: NextRequest) {
       collection: process.env.MONGO_COLLECTION,
       database: process.env.MONGO_DATABASE,
       dataSource: process.env.MONGO_DATA_SOURCE,
-      filter: {
-        subjects: { $in: [searchParams.get("subject")?.toLowerCase()] },
-      },
+      filter: {},
       projection: { name: 1, subjects: 1 },
     };
+
+    if (
+      [
+        "pre-algebra",
+        "algebra 1",
+        "geometry",
+        "algebra 2",
+        "pre-calculus",
+      ].includes(searchParams.get("subject") || "")
+    ) {
+      body.filter = {};
+    } else {
+      body.filter = {
+        subjects: { $in: [searchParams.get("subject")?.toLowerCase()] },
+      };
+    }
 
     const res = await fetch(process.env.MONGO_URI + "/action/find", {
       method: "POST",
