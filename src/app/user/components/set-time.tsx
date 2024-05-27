@@ -163,7 +163,7 @@ export default function ProfileClient() {
                 <ModalHeader className="flex flex-col gap-1">
                   Sucess!
                 </ModalHeader>
-                <ModalBody>Your schedule has been updated!</ModalBody>
+                <ModalBody>Your schedule has been updated! Refresh to double check all changes saved properly!</ModalBody>
                 <ModalFooter>
                   <Button color="primary" onPress={onClose}>
                     Close
