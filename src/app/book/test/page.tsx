@@ -77,7 +77,7 @@ export default withPageAuthRequired(function App({
   );
 
   const handlePress = () => {
-    if (date && selectedTime !== "Select a time") {
+    if (date) {
       const bodyPrice =  1;
       let body: CartItem = {
         id: process.env.NEXT_PUBLIC_PRICE || "",
