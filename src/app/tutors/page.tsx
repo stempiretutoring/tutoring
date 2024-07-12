@@ -28,7 +28,6 @@ export default function App() {
           <TutorCard name="Arya Gorti" />
           <TutorCard name="Shreyansh Kabir" />
           <TutorCard name="Joe Kashani" />
-          <TutorCard name="Nikhil Kulkarni" />
           <TutorCard name="Jeevan Shah" />
           <TutorCard name="Shelton Shieh" />
         </div>
