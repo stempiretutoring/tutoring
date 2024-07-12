@@ -41,7 +41,7 @@ export const POST = withApiAuthRequired(async function checkout(
     return NextResponse.json({ clientSecret: session.client_secret });
   } catch (err) {
     console.log(err);
-    return NextResponse.json({ error: "Error creating checkout session" });
+    return NextResponse.json({ error: `Error: ${err}` });
   }
 });
 
