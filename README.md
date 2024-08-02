@@ -67,5 +67,5 @@ To host a local version follow the following instructions
     * `MJ_SENDER`: The email address you want to be listed as the sender for all emails sent from your site
 4. Once you have a filled in version of `.env.example` you can run the command `bun run dev` and visit http://localhost:3000 to view your version of the website
 
-> ![WARNING]
+> [!WARNING]
 > You will have to manually create the data entries for the tutors inside your mongodb tutor collection. The website will not automatically instantiate them for you. 
