@@ -10,6 +10,7 @@ import {
   Chip,
 } from "@nextui-org/react";
 import ProfileClient from "./set-time";
+import CalTime from "./new-cal";
 import Client from "./client";
 import { columns } from "./lib/data";
 import { clientGET } from "@/app/api/types";
@@ -53,7 +54,9 @@ export default function Tutor({ email }: tutorProps) {
           <h1 className="text-3xl font-bold mb-5 w-full flex justify-center content-center my-2 underline mx-auto">
             Set your schedule
           </h1>
-          <ProfileClient />
+          <div className="w-full m-4 flex justify-center content-center">
+            <CalTime />
+          </div>
         </div>
       )}
       {!isTutor && <Client email={email} />}
