@@ -70,8 +70,7 @@ To host a local version follow the following instructions
 > [!WARNING]
 > You will have to manually create the data entries for the tutors inside your mongodb tutor collection. The website will not automatically instantiate them for you. 
 > Each document inside the tutoring collection should have the following structure:
-> ```json 
-{
+> ```json {
     _id: ObjectID(...),
     name: string,
     oppucation: string,
