@@ -87,4 +87,3 @@ To host a local version follow the following instructions
 >        times: string[]
 >    }
 > } 
-```
