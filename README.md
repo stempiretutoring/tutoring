@@ -21,7 +21,7 @@ To host a local version follow the following instructions
 * git
 
 > [!NOTE]
-> Because of the fact that these are Prerequesites, I will assume that they are already installed and operational on your system. If that is not the case, look online for instructions on how to get them installed and set up
+> Because of the fact that these are prerequesites, I will assume that they are already installed and operational on your system. If that is not the case, look online for instructions on how to get them installed and set up
 
 > [!IMPORTANT]
 > This guide will be written with bun in mind
