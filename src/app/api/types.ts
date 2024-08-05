@@ -8,8 +8,7 @@ export interface tutorGET {
   subjects: string[];
   picture: string;
   bio: string;
-  startTime: string[];
-  endTime: string[];
+  schedule: object;
   active: boolean;
   booked: string[];
 }

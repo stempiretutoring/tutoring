@@ -45,44 +45,6 @@ export async function GET(request: NextRequest) {
 
   const booked: string[] = data["booked"];
 
-  for (let i = 0; i < data.startTime.length; i++) {
-    if (data.startTime[i] === "") {
-      switch (i) {
-        case 0:
-          times.monday = [];
-        case 1:
-          times.tuesday = [];
-        case 2:
-          times.wednesday = [];
-        case 3:
-          times.thursday = [];
-        case 4:
-          times.friday = [];
-        case 5:
-          times.saturday = [];
-        case 6:
-          times.sunday = [];
-      }
-    } else {
-      switch (i) {
-        case 0:
-          times.monday = splitTime(data.startTime[i], data.endTime[i]);
-        case 1:
-          times.tuesday = splitTime(data.startTime[i], data.endTime[i]);
-        case 2:
-          times.wednesday = splitTime(data.startTime[i], data.endTime[i]);
-        case 3:
-          times.thursday = splitTime(data.startTime[i], data.endTime[i]);
-        case 4:
-          times.friday = splitTime(data.startTime[i], data.endTime[i]);
-        case 5:
-          times.saturday = splitTime(data.startTime[i], data.endTime[i]);
-        case 6:
-          times.sunday = splitTime(data.startTime[i], data.endTime[i]);
-      }
-    }
-  }
-
   return NextResponse.json({ times: times, booked: booked }, { status: 200 });
 }
 
