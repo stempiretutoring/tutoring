@@ -1,5 +1,5 @@
 import { NextResponse, NextRequest } from "next/server";
-import type { TimeInputValue } from "@nextui-org/react";
+import type { TimeValue } from "@react-types/datepicker";
 
 export async function GET(request: NextRequest) {
   try {
@@ -66,7 +66,7 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
-    const req: TimeInputValue[][] = await request.json();
+    const req: TimeValue[][] = await request.json();
 
     const email = searchParams.get("email");
     const date = (searchParams.get("date") || "").toString();
@@ -100,7 +100,7 @@ export async function POST(request: NextRequest) {
 
     const exists = findData["documents"].length === 0;
 
-    const scheduleBuilder = (schedule: TimeInputValue[][]) => {
+    const scheduleBuilder = (schedule: TimeValue[][]) => {
       let mongoSchedule: string[] = [];
       for (let row of schedule) {
         mongoSchedule.push(

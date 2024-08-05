@@ -1,51 +1,81 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import {
   Calendar,
   TimeInput,
   Spacer,
-  TimeInputValue,
   Button,
   Tooltip,
 } from "@nextui-org/react";
 import type { DateValue } from "@nextui-org/react";
 import {
   today,
-  ZonedDateTime,
   getLocalTimeZone,
   parseAbsoluteToLocal,
+  parseDateTime,
+  toZoned,
 } from "@internationalized/date";
 import { FiPlusCircle } from "react-icons/fi";
 import { FaTrashAlt, FaCheck } from "react-icons/fa";
+import type { TimeValue } from "@react-types/datepicker";
 
 export default function CalTime() {
   const { user, error, isLoading } = useUser();
 
   let [date, setDate] = useState<DateValue>(today(getLocalTimeZone()));
-  let [times, setTimes] = useState<TimeInputValue[][]>([
-    [
-      parseAbsoluteToLocal(`${date}T18:45:22Z`),
-      parseAbsoluteToLocal(`${date}T19:45:22Z`),
-    ],
-  ]);
+  let [times, setTimes] = useState<TimeValue[][]>([[]]);
 
-  const handleTimesChange = (
-    row: number,
-    col: number,
-    value: TimeInputValue,
-  ) => {
+  const timeValidator = (time: string): string => {
+    return time.replace(/:(\d):/, (match, p1) => `:0${p1}:`);
+  };
+
+  useEffect(() => {
+    fetch(`/api/tutors?email=${user?.email}`)
+      .then((response) => response.json())
+      .then((data) => {
+        for (const time of data["document"]["schedule"]) {
+          if (time["date"] === date.toString().replaceAll(/-/g, "")) {
+            console.log(times);
+            let newTimes: TimeValue[][] = [];
+            for (const t of time["times"]) {
+              newTimes = [
+                ...newTimes,
+                [
+                  toZoned(
+                    parseDateTime(`${date}T${timeValidator(t.split("-")[0])}`),
+                    getLocalTimeZone(),
+                  ),
+                  toZoned(
+                    parseDateTime(`${date}T${timeValidator(t.split("-")[1])}`),
+                    getLocalTimeZone(),
+                  ),
+                ],
+              ];
+              setTimes(newTimes);
+            }
+            break;
+          } else {
+            setTimes([[]]);
+          }
+        }
+      });
+  }, [date]);
+
+  const handleTimesChange = (row: number, col: number, value: TimeValue) => {
     const newTimes = [...times];
     newTimes[row][col] = value;
     setTimes(newTimes);
-    console.log(date.toString().replaceAll(/-/g, ''));
   };
 
   const handleSubmit = () => {
-    fetch(`/api/tutors?email=${user?.email}&date=${date.toString().replaceAll(/-/g, '')}`, {
-      method: "POST",
-      body: JSON.stringify(times),
-    });
+    fetch(
+      `/api/tutors?email=${user?.email}&date=${date.toString().replaceAll(/-/g, "")}`,
+      {
+        method: "POST",
+        body: JSON.stringify(times),
+      },
+    );
   };
 
   return (
