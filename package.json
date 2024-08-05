@@ -17,6 +17,7 @@
     "@radix-ui/react-popover": "^1.0.7",
     "@radix-ui/react-slot": "^1.0.2",
     "@react-stately/data": "^3.11.0",
+    "@react-types/datepicker": "^3.8.1",
     "@stripe/react-stripe-js": "^2.4.0",
     "@stripe/stripe-js": "^2.3.0",
     "@types/dotenv": "^8.2.0",
