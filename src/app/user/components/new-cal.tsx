@@ -15,16 +15,16 @@ import {
   parseAbsoluteToLocal,
   parseDateTime,
   toZoned,
+  ZonedDateTime,
 } from "@internationalized/date";
 import { FiPlusCircle } from "react-icons/fi";
 import { FaTrashAlt, FaCheck } from "react-icons/fa";
-import type { TimeValue } from "@react-types/datepicker";
 
 export default function CalTime() {
   const { user, error, isLoading } = useUser();
 
   let [date, setDate] = useState<DateValue>(today(getLocalTimeZone()));
-  let [times, setTimes] = useState<TimeValue[][]>([[]]);
+  let [times, setTimes] = useState<ZonedDateTime[][]>([[]]);
 
   const timeValidator = (time: string): string => {
     return time.replace(/:(\d):/, (match, p1) => `:0${p1}:`);
@@ -37,7 +37,7 @@ export default function CalTime() {
         for (const time of data["document"]["schedule"]) {
           if (time["date"] === date.toString().replaceAll(/-/g, "")) {
             console.log(times);
-            let newTimes: TimeValue[][] = [];
+            let newTimes: ZonedDateTime[][] = [];
             for (const t of time["times"]) {
               newTimes = [
                 ...newTimes,
@@ -62,7 +62,7 @@ export default function CalTime() {
       });
   }, [date]);
 
-  const handleTimesChange = (row: number, col: number, value: TimeValue) => {
+  const handleTimesChange = (row: number, col: number, value: ZonedDateTime) => {
     const newTimes = [...times];
     newTimes[row][col] = value;
     setTimes(newTimes);
