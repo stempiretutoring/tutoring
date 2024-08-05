@@ -24,10 +24,22 @@ export default function CalTime() {
   const { user, error, isLoading } = useUser();
 
   let [date, setDate] = useState<DateValue>(today(getLocalTimeZone()));
-  let [times, setTimes] = useState<ZonedDateTime[][]>([[]]);
+  let [times, setTimes] = useState<ZonedDateTime[][]>([
+    [
+      toZoned(parseDateTime(`${date}T00:00:22`), getLocalTimeZone()),
+      toZoned(parseDateTime(`${date}T00:00:22`), getLocalTimeZone()),
+    ],
+  ]);
 
   const timeValidator = (time: string): string => {
-    return time.replace(/:(\d):/, (match, p1) => `:0${p1}:`);
+    // Split the time string into its components based on colons
+    const parts = time.split(":");
+
+    // Map over the parts and pad each with leading zeros if necessary
+    const formattedParts = parts.map((part) => part.padStart(2, "0"));
+
+    // Join the formatted parts back into a time string
+    return formattedParts.join(":");
   };
 
   useEffect(() => {
@@ -56,13 +68,22 @@ export default function CalTime() {
             }
             break;
           } else {
-            setTimes([[]]);
+            setTimes([
+              [
+                toZoned(parseDateTime(`${date}T00:00:22`), getLocalTimeZone()),
+                toZoned(parseDateTime(`${date}T00:00:22`), getLocalTimeZone()),
+              ],
+            ]);
           }
         }
       });
   }, [date]);
 
-  const handleTimesChange = (row: number, col: number, value: ZonedDateTime) => {
+  const handleTimesChange = (
+    row: number,
+    col: number,
+    value: ZonedDateTime,
+  ) => {
     const newTimes = [...times];
     newTimes[row][col] = value;
     setTimes(newTimes);
@@ -128,8 +149,14 @@ export default function CalTime() {
               setTimes([
                 ...times,
                 [
-                  parseAbsoluteToLocal(`${date}T18:45:22Z`),
-                  parseAbsoluteToLocal(`${date}T19:45:22Z`),
+                  toZoned(
+                    parseDateTime(`${date}T00:00:22`),
+                    getLocalTimeZone(),
+                  ),
+                  toZoned(
+                    parseDateTime(`${date}T00:00:22`),
+                    getLocalTimeZone(),
+                  ),
                 ],
               ])
             }
