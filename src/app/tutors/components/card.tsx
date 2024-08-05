@@ -106,36 +106,7 @@ export default function TutorCard({ name }: cardProps) {
                 </div>
                 <Divider className="mt-3 mb-3" />
                 <div className="flex align-items ">
-                  <Popover
-                    className="mr-4"
-                    color="secondary"
-                    placement="left-end"
-                  >
-                    <PopoverTrigger>
-                      <Button>View my schedule</Button>
-                    </PopoverTrigger>
-                    <PopoverContent>
-                      <div className="p-2">
-                        {[
-                          "Monday",
-                          "Tuesday",
-                          "Wednesday",
-                          "Thursday",
-                          "Friday",
-                          "Saturday",
-                          "Sunday",
-                        ].map((day: string, index: number) => (
-                          <p key={day} className="text-tiny md:text-sm">
-                            {day}:{" "}
-                            {getTimes(
-                              info["startTime"][index],
-                              info["endTime"][index],
-                            )}
-                          </p>
-                        ))}
-                      </div>
-                    </PopoverContent>
-                  </Popover>
+                  <Button>View my schedule</Button>
                 </div>
               </div>
             </PopoverContent>
