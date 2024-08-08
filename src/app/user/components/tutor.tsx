@@ -32,6 +32,7 @@ export default function Tutor({ email }: tutorProps) {
       method: "PATCH",
       body: JSON.stringify({
         occupation: tag,
+        email: email,
       }),
     });
   };
@@ -41,6 +42,7 @@ export default function Tutor({ email }: tutorProps) {
       method: "PATCH",
       body: JSON.stringify({
         bio: bio,
+        email: email
       }),
     });
   };
