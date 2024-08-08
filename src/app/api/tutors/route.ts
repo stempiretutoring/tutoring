@@ -199,8 +199,8 @@ export async function PATCH(request: NextRequest) {
 
   const email = req["email"];
   const active = req["active"] || null;
-  const bio = req["occupation"] || null;
-  const tag = req["tag"] || null;
+  const bio = req["bio"] || null;
+  const tag = req["occupation"] || null;
 
   const body = {
     collection: process.env.MONGO_COLLECTION,
