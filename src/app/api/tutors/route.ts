@@ -198,7 +198,8 @@ export async function PATCH(request: NextRequest) {
   const req = await request.json();
 
   const email = req["email"];
-  const active = req["active"];
+  const active = req["active"] || null;
+  const bio = req["bio"] || null;
 
   const body = {
     collection: process.env.MONGO_COLLECTION,
@@ -207,12 +208,24 @@ export async function PATCH(request: NextRequest) {
     filter: {
       email: email,
     },
-    update: {
+    update: {},
+  };
+
+  if (active !== null) {
+    body.update = {
       $set: {
         active: active,
       },
-    },
-  };
+    };
+  }
+
+  if (bio !== null) {
+    body.update = {
+      $set: {
+        bio: bio,
+      },
+    };
+  }
 
   const res = await fetch(process.env.MONGO_URI + "/action/updateOne", {
     method: "POST",

@@ -8,18 +8,42 @@ import {
   TableHeader,
   Divider,
   Chip,
+  Textarea,
+  Button,
 } from "@nextui-org/react";
-import ProfileClient from "./set-time";
 import CalTime from "./new-cal";
 import Client from "./client";
-import { columns } from "./lib/data";
+//import { columns } from "./lib/data";
 import { clientGET } from "@/app/api/types";
+import { IoSend } from "react-icons/io5";
 
 interface tutorProps {
   email: string;
 }
+
 export default function Tutor({ email }: tutorProps) {
   const [isTutor, setIsTutor] = useState<boolean>(false);
+  const [bio, setBio] = useState<string>("");
+
+  const handleBioSubmit = () => {
+    fetch(`/api/tutors?email=${email}`, {
+      method: "PATCH",
+      body: JSON.stringify({
+        bio: bio,
+      }),
+    });
+  };
+
+  useEffect(() => {
+    fetch(`/api/tutors?email=${email}`)
+      .then((response) => response.json())
+      .then((data) => {
+        setBio(data["document"]["bio"]);
+      })
+      .catch((error) => {
+        console.error(`Error fetching data: ${error}`);
+      });
+  }, [email]);
 
   useEffect(() => {
     fetch(`/api/auth/tutors?email=${email}`)
@@ -55,7 +79,20 @@ export default function Tutor({ email }: tutorProps) {
             Set your schedule
           </h1>
           <div className="w-full m-4 flex justify-center content-center">
-            <CalTime />
+            <div className="w-full flex flex-col gap-2 max-w-[340px] mr-2">
+              <Textarea
+                variant="faded"
+                value={bio}
+                onValueChange={setBio}
+                label="Bio"
+                labelPlacement="inside"
+                placeholder="Write a small blurb about yourself!"
+              />
+              <Button className="w-full" isIconOnly onClick={handleBioSubmit}>
+                <IoSend />
+              </Button>
+              <CalTime />
+            </div>
           </div>
         </div>
       )}
