@@ -199,7 +199,7 @@ export async function PATCH(request: NextRequest) {
 
   const email = req["email"];
   const active = req["active"] || null;
-  const bio = req["bio"] || null;
+  const bio = req["occupation"] || null;
   const tag = req["tag"] || null;
 
   const body = {
