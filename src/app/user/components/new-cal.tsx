@@ -101,13 +101,15 @@ export default function CalTime() {
 
   return (
     <div>
-      <Calendar
-        aria-label="Date (Controlled)"
-        value={date}
-        onChange={setDate}
-        visibleMonths={1}
-        minValue={today(getLocalTimeZone())}
-      />
+      <div className="w-1/2 mx-auto">
+        <Calendar
+          aria-label="Date (Controlled)"
+          value={date}
+          onChange={setDate}
+          visibleMonths={1}
+          minValue={today(getLocalTimeZone())}
+        />
+      </div>
       <div>
         {times.map((input, index) => (
           <div className="flex items-center my-2" key={index}>

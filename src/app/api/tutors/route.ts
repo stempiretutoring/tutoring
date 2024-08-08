@@ -200,6 +200,7 @@ export async function PATCH(request: NextRequest) {
   const email = req["email"];
   const active = req["active"] || null;
   const bio = req["bio"] || null;
+  const tag = req["tag"] || null;
 
   const body = {
     collection: process.env.MONGO_COLLECTION,
@@ -223,6 +224,14 @@ export async function PATCH(request: NextRequest) {
     body.update = {
       $set: {
         bio: bio,
+      },
+    };
+  }
+
+  if (tag !== null) {
+    body.update = {
+      $set: {
+        occupation: tag,
       },
     };
   }
